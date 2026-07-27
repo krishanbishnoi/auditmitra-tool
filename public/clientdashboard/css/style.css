@@ -1,0 +1,711 @@
+body {
+    font-family: "Poppins", system-ui;
+
+    font-size: 13px;
+    font-weight: 400;
+    background: #F7FAFC;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f5f4f4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e3e3e3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #EFEFEF;
+}
+
+.mainHead {
+    padding: 12px 0;
+    background: #fff;
+    box-shadow: 0px 0px 6px #00000029;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 65px;
+    z-index: 999;
+}
+
+.topRightInner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.priofileDropdown .dropdown-toggle {
+    border: none;
+    box-shadow: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+}
+
+.priofileDropdown .dropdown-toggle img {
+    width: 36px;
+    height: 36px;
+    border-radius: 100px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.priofileDropdown .dropdown-menu {
+    border: none;
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.13);
+    padding: 0;
+    overflow: hidden;
+}
+
+.priofileDropdown .dropdown-menu .dropdown-item {
+    padding: 12px 15px;
+    color: #9f9f9f;
+    font-size: 13px;
+    border-bottom: 1px solid #f2f2f2;
+    background-color: #fff !important;
+}
+
+.priofileDropdown .dropdown-menu .dropdown-item:hover {
+    color: #21317D;
+}
+
+.dashboardMain {
+    padding: 80px 15px 15px 257px;
+    transition: .2s all;
+}
+
+.siderBar {
+    position: fixed;
+    top: 80px;
+    left: 12px;
+    width: 230px;
+    height: calc(100% - 95px);
+    transition: .2s all;
+    box-shadow: 0px 0px 6px #00000029;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.sideMenu {
+    width: 100%;
+    height: 100%;
+
+    padding: 3px 0;
+    overflow: hidden;
+}
+
+.sideHead {
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 15px 10px;
+}
+
+.sideHead h4 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+    color: #00376a;
+}
+
+.menuList {
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.menuList>li {
+    display: block;
+    padding: 15px 15px;
+}
+
+.menuList>li a {
+    display: flex;
+    align-items: center;
+    color: #B0B0B0;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.menuList>li a.active,
+.menuList>li a:hover,
+.collapseTgl[aria-expanded="true"] {
+    color: #21317D;
+    font-weight: 600;
+}
+
+.submenuList {
+    padding: 10px;
+}
+
+.submenuList>li {
+    padding: 7px 10px;
+}
+
+/* rishabh css start  */
+
+.heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: #21317D;
+    padding-bottom: 6px;
+}
+
+.overallImg.scoreimgBg {
+
+    background-color: #F9D179;
+
+}
+
+.cardboxInner.score {
+    background-color: #FFECC2;
+}
+
+.cardboxInner.count {
+    background-color: #E8D6FF;
+}
+
+.cardboxInner {
+    padding: 12px 10px;
+    border-radius: 5px;
+    background-color: #FFC8D1;
+    border: 0.9px solid #E7E7E7;
+
+}
+
+.cardboxInner span {
+    color: #000;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+.cardboxInner p {
+    color: #2C68C9;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 4px;
+}
+
+.cardboxInner span strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.text-danger {
+    color: #FF0000 !important;
+}
+
+.text-success {
+    color: #09df3b !important;
+
+}
+
+.tbleDiv .table thead tr th {
+    background: #E1F4FC;
+    color: #242222;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 14px 15px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.tbleDiv .table tbody tr td {
+    color: #060606;
+    font-size: 12px;
+    font-weight: 500;
+    border-bottom: 0.6px solid #d8d8d8;
+    padding: 15px 15px;
+    vertical-align: middle;
+}
+
+.cardBox {
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #F2F2F2;
+    background: #fff;
+    border-radius: 7px;
+    padding: 12px;
+}
+
+.managerTxt {
+    margin: 6px;
+}
+
+.managerTxt h4 {
+    font-size: 17px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 700;
+}
+
+.managerTxt h4 b {
+    font-weight: 700;
+    color: #2C68C9;
+}
+
+.managerTxt p {
+    font-size: 12px;
+    color: #929292;
+    font-weight: 500;
+    margin: 0;
+    line-height: 16px;
+}
+
+.managerTxt p b {
+    display: block;
+    font-size: 13px;
+    color: #000000;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+
+.managerTxt span {
+    display: block;
+    color: #000000;
+    font-weight: 500;
+}
+
+.managerTxt strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.managerTxt hr {
+    border-top-color: #dee2e6;
+    opacity: 1;
+}
+
+.managerTxt h5 {
+    font-size: 13px;
+    color: #929292;
+    font-weight: 500;
+}
+
+.scoreList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 13px;
+}
+
+.scoreList>li {
+    flex: 1 0 0%;
+}
+
+.scoreList>li span {
+    padding: 7px 3px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.scoreList>li span.bg-danger {
+    background-color: #F7476B !important;
+}
+
+.scoreList>li span.bg-success {
+    background-color: #3ADA53 !important;
+}
+
+.managerSlide .owl-nav {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.managerSlide.owl-carousel .owl-nav button.owl-prev,
+.managerSlide.owl-carousel .owl-nav button.owl-next {
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    font-size: 0 !important;
+    background-repeat: no-repeat !important;
+    background-size: 20px !important;
+    background-position: center !important;
+}
+
+.managerSlide.owl-carousel .owl-nav button.owl-prev {
+    background-image: url(../images/arrow-left.svg);
+}
+
+.managerSlide.owl-carousel .owl-nav button.owl-next {
+    background-image: url(../images/arrow-right.svg);
+}
+
+/* rishabh css start  */
+.lastMonth {
+    display: flex;
+    text-align: center;
+    gap: 4px;
+
+}
+
+.namea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.namea strong {
+    font-weight: 500;
+}
+
+.cardboxInner p {
+    display: flex;
+    gap: 5px;
+}
+
+.namea {
+    padding-bottom: 10px;
+}
+
+.namea strong b {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.retailInner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.retailInner figure {
+    margin: 0;
+}
+
+.namea strong b {
+    font-size: 20px;
+}
+
+.retailInner span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #21317D;
+}
+
+.retailOne {
+    background-color: #FFFFFFC2;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.retailOne strong,
+.retailOne strong b {
+    display: block;
+}
+
+.retailOne strong b {
+    font-weight: 600;
+    color: #000;
+}
+
+.retailOne strong {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.text-primary {
+    color: #21317D !important;
+}
+
+.cardBox h6 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cardBox h6 span {
+    color: #2C68C9;
+}
+
+.zoneTabs {
+    gap: 5px;
+    border: 0;
+}
+
+.zoneTabs .nav-link {
+    background-color: #DADADA;
+    padding: 6px 30px;
+    border-radius: 4px;
+    font-size: 12px;
+
+}
+
+.zoneTabs .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    background-color: #21317D !important;
+    color: #fff;
+}
+
+.leftSec {
+    width: 40%;
+}
+
+.rightSec {
+    width: 60%;
+}
+
+.rightSec>img {
+    margin-right: 6px;
+}
+
+.rightSec select {
+    width: 200px;
+    height: 34px;
+    padding: 7px 4px;
+    border: 0.5px solid #B8B3B3;
+    border-radius: 4px;
+}
+
+.auditScore {
+    display: block;
+    color: #929292;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.auditScore b {
+    color: #40DB59;
+    font-size: 16px;
+    font-weight: 600;
+
+}
+
+.datalMain span b {
+    display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.datalMain span {
+    font-size: 12px;
+    color: #929292;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.gradeWisemain {
+    text-align: center;
+}
+
+.listDown {
+    color: #0039D6;
+    text-decoration: underline;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.gradeSelect {
+    width: 160px;
+    height: 34px;
+    padding: 4px 4px;
+    border: 0.5px solid #B8B3B3;
+    border-radius: 4px;
+}
+
+.dropdown-menu {
+    border: none;
+    background: #fff;
+    box-shadow: 0px 0px 16px #0000001A;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.dropdown-item {
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+.text-start {
+    text-align: left;
+}
+
+.table thead th {
+    border: 0;
+}
+
+.border-start {
+    border-left: 1px solid #dee2e6 !important;
+
+}
+
+.border-end {
+    border-right: 1px solid #dee2e6 !important;
+}
+
+.border-top {
+    border-top: 1px solid #dee2e6 !important;
+
+}
+
+.tableBg{
+    background-color: #828AF418 !important;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.btn-primary {
+    background-color: #21317d !important;
+    color: #fff;
+    padding: 6px 15px;
+    text-decoration: none !important;
+    font-size: 14px;
+    border-radius: 3px;
+    margin-right: 20px;
+}
+
+.countmain {
+    width: 80px;
+    text-align: left;
+    position: absolute;
+    right: 0;
+}
+
+.fw-semibold {
+    font-weight: 700 !important;
+}
+
+.scoreList li {
+    color: #000;
+    font-size: 9px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.managerTxt .auditScore {
+    font-size: 13px;
+    color: #929292;
+    display: flex;
+    align-items: center;
+}
+
+.managerTxt .auditScore b {
+    font-size: 13px;
+}
+
+.reject {
+    background-color: #ffcdcd;
+    color: #ff3535;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+
+.pending {
+    background-color: #ffe3cd;
+    color: #ff9335;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+
+.approved {
+    background-color: #caebcd;
+    color: #4bbb52;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+
+.text-yellow {
+    color: #ff9335 !important;
+}
+
+.managerTxt .zoneTabs .nav-link {
+    font-size: 10px;
+    padding: 8px 14px !important;
+    cursor: pointer;
+}
+
+.zoneTabs .nav-link {
+    cursor: pointer;
+
+}
+
+.bgTransparent {
+    background: transparent;
+    cursor: pointer;
+}
+
+.dropdown-menu.show {
+    left: -60px !important;
+}
+
+.completed,
+.completed b {
+    padding-left: 54px;
+}
+
+.tbleDiv tr td {
+    white-space: nowrap;
+}
+
+.text-black {
+    color: #000;
+}
+
+.me-2 {
+    margin-right: 6px;
+}

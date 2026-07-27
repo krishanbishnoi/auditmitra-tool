@@ -1,0 +1,381 @@
+body {
+    font-family: "Poppins", system-ui;
+
+    font-size: 13px;
+    font-weight: 400;
+    background: #F7FAFC;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f5f4f4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e3e3e3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #EFEFEF;
+}
+
+.mainHead {
+    padding: 12px 0;
+    background: #fff;
+    box-shadow: 0px 0px 6px #00000029;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 65px;
+    z-index: 999;
+}
+
+.topRightInner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.priofileDropdown .dropdown-toggle {
+    border: none;
+    box-shadow: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+}
+
+.priofileDropdown .dropdown-toggle img {
+    width: 36px;
+    height: 36px;
+    border-radius: 100px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.priofileDropdown .dropdown-menu {
+    border: none;
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.13);
+    padding: 0;
+    overflow: hidden;
+}
+
+.priofileDropdown .dropdown-menu .dropdown-item {
+    padding: 12px 15px;
+    color: #9f9f9f;
+    font-size: 13px;
+    border-bottom: 1px solid #f2f2f2;
+    background-color: #fff !important;
+}
+
+.priofileDropdown .dropdown-menu .dropdown-item:hover {
+    color: #21317D;
+}
+
+.dashboardMain {
+    padding: 80px 15px 15px 257px;
+    transition: .2s all;
+}
+
+.siderBar {
+    position: fixed;
+    top: 80px;
+    left: 12px;
+    width: 230px;
+    height: calc(100% - 95px);
+    transition: .2s all;
+    box-shadow: 0px 0px 6px #00000029;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.sideMenu {
+    width: 100%;
+    height: 100%;
+
+    padding: 3px 0;
+    overflow: hidden;
+}
+
+.sideHead {
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 15px 10px;
+}
+
+.sideHead h4 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+    color: #00376a;
+}
+
+.menuList {
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.menuList>li {
+    display: block;
+    padding: 15px 15px;
+}
+
+.menuList>li a {
+    display: flex;
+    align-items: center;
+    color: #B0B0B0;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.menuList>li a.active,
+.menuList>li a:hover,
+.collapseTgl[aria-expanded="true"] {
+    color: #21317D;
+    font-weight: 600;
+}
+
+.submenuList {
+    padding: 10px;
+}
+
+.submenuList>li {
+    padding: 7px 10px;
+}
+
+/* rishabh css start  */
+
+.heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: #21317D;
+    padding-bottom: 6px;
+}
+
+.overallImg.scoreimgBg {
+
+    background-color: #F9D179;
+
+}
+
+.cardboxInner.score {
+    background-color: #FFECC2;
+}
+
+.cardboxInner {
+    padding: 12px 10px;
+    border-radius: 5px;
+    background-color: #FFC8D1;
+    border: 0.9px solid #E7E7E7;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cardboxInner span {
+    color: #000;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+.cardboxInner p {
+    color: #2C68C9;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 4px;
+}
+
+.cardboxInner span strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.overallImg {
+    background-color: #FB90A6;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 0;
+    width: 100px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.text-danger {
+    color: #FF0000 !important;
+}
+
+.tbleDiv .table thead tr th {
+    background: #E1F4FC;
+    color: #242222;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 14px 15px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.tbleDiv .table tbody tr td {
+    color: #060606;
+    font-size: 12px;
+    font-weight: 500;
+    border-bottom: 0.6px solid #d8d8d8;
+    padding: 15px 15px;
+    vertical-align: middle;
+}
+
+.cardBox {
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #F2F2F2;
+    background: #fff;
+    border-radius: 7px;
+    padding: 12px;
+}
+.managerTxt{
+    margin: 6px;
+}
+.managerTxt h4 {
+    font-size: 17px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 700;
+}
+
+.managerTxt h4 b {
+    font-weight: 700;
+    color: #2C68C9;
+}
+
+.managerTxt p {
+    font-size: 12px;
+    color: #929292;
+    font-weight: 500;
+    margin: 0;
+    line-height: 16px;
+}
+
+.managerTxt p b {
+    display: block;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+
+.managerTxt span {
+    display: block;
+    color: #000000;
+    font-weight: 500;
+}
+
+.managerTxt strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.managerTxt hr {
+    border-top-color: #dee2e6;
+    opacity: 1;
+}
+
+.managerTxt h5 {
+    font-size: 12px;
+    color: #929292;
+    font-weight: 500;
+}
+
+.scoreList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 13px;
+}
+
+.scoreList>li {
+    flex: 1 0 0%;
+}
+
+.scoreList>li span {
+    padding: 7px 3px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.scoreList>li span.bg-danger {
+    background-color: #F7476B !important;
+}
+
+.scoreList>li span.bg-success {
+    background-color: #3ADA53 !important;
+}
+
+.managerSlide .owl-nav {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+.managerSlide.owl-carousel .owl-nav button.owl-prev,
+.managerSlide.owl-carousel .owl-nav button.owl-next{
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    font-size: 0 !important;
+    background-repeat: no-repeat !important;
+    background-size: 20px !important;
+    background-position: center !important;
+}
+.managerSlide.owl-carousel .owl-nav button.owl-prev{
+    background-image: url(../images/arrow-left.svg);
+}
+.managerSlide.owl-carousel .owl-nav button.owl-next{
+    background-image: url(../images/arrow-right.svg);
+}

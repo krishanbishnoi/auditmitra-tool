@@ -1,0 +1,39 @@
+# Laravel specific
+/vendor
+/node_modules
+/public/storage
+/public/hot
+/storage/*.key
+/storage/logs/*
+!storage/logs/.gitignore
+/storage/framework/views/*
+!storage/framework/views/.gitignore
+/storage/framework/cache/*
+!storage/framework/cache/.gitignore
+/bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# Uploads and public files
+uploads/
+public/images/avatar/
+public/download/
+
+# Test and environment files
+.phpunit.result.cache
+.env
+.env.backup
+
+# Homestead and debug files
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Cache and build files
+/storage/app/public/
+bootstrap/cache/*.php
+
+# Misc
+.htaccess
+/public/.htaccess
+

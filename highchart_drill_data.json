@@ -1,0 +1,1452 @@
+{
+  "main_series": [
+    {
+      "name": "Mar",
+      "y": 76,
+      "audit_count": 12,
+      "repeat_issues": 10,
+      "drilldown": "Mar"
+    },
+    {
+      "name": "Apr",
+      "y": 87,
+      "audit_count": 39,
+      "repeat_issues": 8,
+      "drilldown": "Apr"
+    },
+    {
+      "name": "May",
+      "y": 64,
+      "audit_count": 47,
+      "repeat_issues": 8,
+      "drilldown": "May"
+    },
+    {
+      "name": "Jun",
+      "y": 97,
+      "audit_count": 46,
+      "repeat_issues": 9,
+      "drilldown": "Jun"
+    },
+    {
+      "name": "Jul",
+      "y": 42,
+      "audit_count": 17,
+      "repeat_issues": 3,
+      "drilldown": "Jul"
+    },
+    {
+      "name": "Aug",
+      "y": 75,
+      "audit_count": 36,
+      "repeat_issues": 3,
+      "drilldown": "Aug"
+    }
+  ],
+  "drilldown_series": [
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Mar_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          91
+        ],
+        [
+          "Checklist 2",
+          41
+        ],
+        [
+          "Checklist 3",
+          88
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Mar_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          72
+        ],
+        [
+          "Checklist 2",
+          48
+        ],
+        [
+          "Checklist 3",
+          79
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Mar_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          84
+        ],
+        [
+          "Checklist 2",
+          61
+        ],
+        [
+          "Checklist 3",
+          93
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "Mar_Product A",
+      "data": [
+        [
+          "Process",
+          52
+        ],
+        [
+          "Infosec",
+          83
+        ],
+        [
+          "Tele-calling",
+          78
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Mar_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          68
+        ],
+        [
+          "Checklist 2",
+          82
+        ],
+        [
+          "Checklist 3",
+          85
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Mar_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          85
+        ],
+        [
+          "Checklist 2",
+          43
+        ],
+        [
+          "Checklist 3",
+          54
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Mar_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          89
+        ],
+        [
+          "Checklist 2",
+          80
+        ],
+        [
+          "Checklist 3",
+          77
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "Mar_Product B",
+      "data": [
+        [
+          "Process",
+          56
+        ],
+        [
+          "Infosec",
+          88
+        ],
+        [
+          "Tele-calling",
+          70
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Mar_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          48
+        ],
+        [
+          "Checklist 2",
+          68
+        ],
+        [
+          "Checklist 3",
+          72
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Mar_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          82
+        ],
+        [
+          "Checklist 2",
+          51
+        ],
+        [
+          "Checklist 3",
+          46
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Mar_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          88
+        ],
+        [
+          "Checklist 2",
+          86
+        ],
+        [
+          "Checklist 3",
+          98
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "Mar_Product C",
+      "data": [
+        [
+          "Process",
+          59
+        ],
+        [
+          "Infosec",
+          60
+        ],
+        [
+          "Tele-calling",
+          95
+        ]
+      ]
+    },
+    {
+      "name": "Mar (Products)",
+      "id": "Mar",
+      "data": [
+        [
+          "Product A",
+          74
+        ],
+        [
+          "Product B",
+          100
+        ],
+        [
+          "Product C",
+          90
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Apr_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          99
+        ],
+        [
+          "Checklist 2",
+          71
+        ],
+        [
+          "Checklist 3",
+          69
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Apr_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          67
+        ],
+        [
+          "Checklist 2",
+          59
+        ],
+        [
+          "Checklist 3",
+          88
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Apr_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          45
+        ],
+        [
+          "Checklist 2",
+          56
+        ],
+        [
+          "Checklist 3",
+          80
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "Apr_Product A",
+      "data": [
+        [
+          "Process",
+          45
+        ],
+        [
+          "Infosec",
+          58
+        ],
+        [
+          "Tele-calling",
+          58
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Apr_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          65
+        ],
+        [
+          "Checklist 2",
+          49
+        ],
+        [
+          "Checklist 3",
+          60
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Apr_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          98
+        ],
+        [
+          "Checklist 2",
+          92
+        ],
+        [
+          "Checklist 3",
+          81
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Apr_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          55
+        ],
+        [
+          "Checklist 2",
+          100
+        ],
+        [
+          "Checklist 3",
+          95
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "Apr_Product B",
+      "data": [
+        [
+          "Process",
+          43
+        ],
+        [
+          "Infosec",
+          50
+        ],
+        [
+          "Tele-calling",
+          95
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Apr_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          91
+        ],
+        [
+          "Checklist 2",
+          69
+        ],
+        [
+          "Checklist 3",
+          45
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Apr_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          49
+        ],
+        [
+          "Checklist 2",
+          85
+        ],
+        [
+          "Checklist 3",
+          46
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Apr_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          79
+        ],
+        [
+          "Checklist 2",
+          49
+        ],
+        [
+          "Checklist 3",
+          81
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "Apr_Product C",
+      "data": [
+        [
+          "Process",
+          47
+        ],
+        [
+          "Infosec",
+          69
+        ],
+        [
+          "Tele-calling",
+          77
+        ]
+      ]
+    },
+    {
+      "name": "Apr (Products)",
+      "id": "Apr",
+      "data": [
+        [
+          "Product A",
+          69
+        ],
+        [
+          "Product B",
+          42
+        ],
+        [
+          "Product C",
+          51
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "May_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          80
+        ],
+        [
+          "Checklist 2",
+          100
+        ],
+        [
+          "Checklist 3",
+          50
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "May_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          92
+        ],
+        [
+          "Checklist 2",
+          47
+        ],
+        [
+          "Checklist 3",
+          41
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "May_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          81
+        ],
+        [
+          "Checklist 2",
+          75
+        ],
+        [
+          "Checklist 3",
+          77
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "May_Product A",
+      "data": [
+        [
+          "Process",
+          71
+        ],
+        [
+          "Infosec",
+          60
+        ],
+        [
+          "Tele-calling",
+          43
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "May_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          62
+        ],
+        [
+          "Checklist 2",
+          92
+        ],
+        [
+          "Checklist 3",
+          78
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "May_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          44
+        ],
+        [
+          "Checklist 2",
+          72
+        ],
+        [
+          "Checklist 3",
+          58
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "May_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          78
+        ],
+        [
+          "Checklist 2",
+          70
+        ],
+        [
+          "Checklist 3",
+          79
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "May_Product B",
+      "data": [
+        [
+          "Process",
+          83
+        ],
+        [
+          "Infosec",
+          44
+        ],
+        [
+          "Tele-calling",
+          53
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "May_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          50
+        ],
+        [
+          "Checklist 2",
+          40
+        ],
+        [
+          "Checklist 3",
+          47
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "May_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          79
+        ],
+        [
+          "Checklist 2",
+          93
+        ],
+        [
+          "Checklist 3",
+          41
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "May_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          50
+        ],
+        [
+          "Checklist 2",
+          88
+        ],
+        [
+          "Checklist 3",
+          62
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "May_Product C",
+      "data": [
+        [
+          "Process",
+          46
+        ],
+        [
+          "Infosec",
+          63
+        ],
+        [
+          "Tele-calling",
+          56
+        ]
+      ]
+    },
+    {
+      "name": "May (Products)",
+      "id": "May",
+      "data": [
+        [
+          "Product A",
+          80
+        ],
+        [
+          "Product B",
+          52
+        ],
+        [
+          "Product C",
+          99
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jun_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          99
+        ],
+        [
+          "Checklist 2",
+          65
+        ],
+        [
+          "Checklist 3",
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jun_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          62
+        ],
+        [
+          "Checklist 2",
+          99
+        ],
+        [
+          "Checklist 3",
+          97
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jun_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          61
+        ],
+        [
+          "Checklist 2",
+          66
+        ],
+        [
+          "Checklist 3",
+          57
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "Jun_Product A",
+      "data": [
+        [
+          "Process",
+          70
+        ],
+        [
+          "Infosec",
+          80
+        ],
+        [
+          "Tele-calling",
+          48
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jun_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          65
+        ],
+        [
+          "Checklist 2",
+          55
+        ],
+        [
+          "Checklist 3",
+          78
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jun_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          100
+        ],
+        [
+          "Checklist 2",
+          76
+        ],
+        [
+          "Checklist 3",
+          51
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jun_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          73
+        ],
+        [
+          "Checklist 2",
+          72
+        ],
+        [
+          "Checklist 3",
+          75
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "Jun_Product B",
+      "data": [
+        [
+          "Process",
+          81
+        ],
+        [
+          "Infosec",
+          68
+        ],
+        [
+          "Tele-calling",
+          91
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jun_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          90
+        ],
+        [
+          "Checklist 2",
+          48
+        ],
+        [
+          "Checklist 3",
+          82
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jun_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          70
+        ],
+        [
+          "Checklist 2",
+          80
+        ],
+        [
+          "Checklist 3",
+          66
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jun_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          92
+        ],
+        [
+          "Checklist 2",
+          59
+        ],
+        [
+          "Checklist 3",
+          45
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "Jun_Product C",
+      "data": [
+        [
+          "Process",
+          46
+        ],
+        [
+          "Infosec",
+          72
+        ],
+        [
+          "Tele-calling",
+          76
+        ]
+      ]
+    },
+    {
+      "name": "Jun (Products)",
+      "id": "Jun",
+      "data": [
+        [
+          "Product A",
+          95
+        ],
+        [
+          "Product B",
+          70
+        ],
+        [
+          "Product C",
+          94
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jul_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          82
+        ],
+        [
+          "Checklist 2",
+          94
+        ],
+        [
+          "Checklist 3",
+          69
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jul_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          45
+        ],
+        [
+          "Checklist 2",
+          87
+        ],
+        [
+          "Checklist 3",
+          71
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jul_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          72
+        ],
+        [
+          "Checklist 2",
+          52
+        ],
+        [
+          "Checklist 3",
+          85
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "Jul_Product A",
+      "data": [
+        [
+          "Process",
+          70
+        ],
+        [
+          "Infosec",
+          86
+        ],
+        [
+          "Tele-calling",
+          65
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jul_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          84
+        ],
+        [
+          "Checklist 2",
+          49
+        ],
+        [
+          "Checklist 3",
+          48
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jul_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          63
+        ],
+        [
+          "Checklist 2",
+          51
+        ],
+        [
+          "Checklist 3",
+          77
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jul_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          40
+        ],
+        [
+          "Checklist 2",
+          81
+        ],
+        [
+          "Checklist 3",
+          63
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "Jul_Product B",
+      "data": [
+        [
+          "Process",
+          62
+        ],
+        [
+          "Infosec",
+          94
+        ],
+        [
+          "Tele-calling",
+          93
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Jul_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          97
+        ],
+        [
+          "Checklist 2",
+          95
+        ],
+        [
+          "Checklist 3",
+          62
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Jul_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          49
+        ],
+        [
+          "Checklist 2",
+          45
+        ],
+        [
+          "Checklist 3",
+          74
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Jul_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          43
+        ],
+        [
+          "Checklist 2",
+          45
+        ],
+        [
+          "Checklist 3",
+          53
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "Jul_Product C",
+      "data": [
+        [
+          "Process",
+          43
+        ],
+        [
+          "Infosec",
+          59
+        ],
+        [
+          "Tele-calling",
+          53
+        ]
+      ]
+    },
+    {
+      "name": "Jul (Products)",
+      "id": "Jul",
+      "data": [
+        [
+          "Product A",
+          89
+        ],
+        [
+          "Product B",
+          89
+        ],
+        [
+          "Product C",
+          50
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Aug_Product A_Process",
+      "data": [
+        [
+          "Checklist 1",
+          42
+        ],
+        [
+          "Checklist 2",
+          56
+        ],
+        [
+          "Checklist 3",
+          86
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Aug_Product A_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          61
+        ],
+        [
+          "Checklist 2",
+          72
+        ],
+        [
+          "Checklist 3",
+          81
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Aug_Product A_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          41
+        ],
+        [
+          "Checklist 2",
+          54
+        ],
+        [
+          "Checklist 3",
+          63
+        ]
+      ]
+    },
+    {
+      "name": "Product A (Parameters)",
+      "id": "Aug_Product A",
+      "data": [
+        [
+          "Process",
+          90
+        ],
+        [
+          "Infosec",
+          74
+        ],
+        [
+          "Tele-calling",
+          73
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Aug_Product B_Process",
+      "data": [
+        [
+          "Checklist 1",
+          97
+        ],
+        [
+          "Checklist 2",
+          72
+        ],
+        [
+          "Checklist 3",
+          47
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Aug_Product B_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          54
+        ],
+        [
+          "Checklist 2",
+          52
+        ],
+        [
+          "Checklist 3",
+          69
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Aug_Product B_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          89
+        ],
+        [
+          "Checklist 2",
+          58
+        ],
+        [
+          "Checklist 3",
+          95
+        ]
+      ]
+    },
+    {
+      "name": "Product B (Parameters)",
+      "id": "Aug_Product B",
+      "data": [
+        [
+          "Process",
+          67
+        ],
+        [
+          "Infosec",
+          91
+        ],
+        [
+          "Tele-calling",
+          97
+        ]
+      ]
+    },
+    {
+      "name": "Process (Sub Parameters)",
+      "id": "Aug_Product C_Process",
+      "data": [
+        [
+          "Checklist 1",
+          58
+        ],
+        [
+          "Checklist 2",
+          88
+        ],
+        [
+          "Checklist 3",
+          73
+        ]
+      ]
+    },
+    {
+      "name": "Infosec (Sub Parameters)",
+      "id": "Aug_Product C_Infosec",
+      "data": [
+        [
+          "Checklist 1",
+          58
+        ],
+        [
+          "Checklist 2",
+          68
+        ],
+        [
+          "Checklist 3",
+          98
+        ]
+      ]
+    },
+    {
+      "name": "Tele-calling (Sub Parameters)",
+      "id": "Aug_Product C_Tele-calling",
+      "data": [
+        [
+          "Checklist 1",
+          69
+        ],
+        [
+          "Checklist 2",
+          65
+        ],
+        [
+          "Checklist 3",
+          97
+        ]
+      ]
+    },
+    {
+      "name": "Product C (Parameters)",
+      "id": "Aug_Product C",
+      "data": [
+        [
+          "Process",
+          72
+        ],
+        [
+          "Infosec",
+          62
+        ],
+        [
+          "Tele-calling",
+          71
+        ]
+      ]
+    },
+    {
+      "name": "Aug (Products)",
+      "id": "Aug",
+      "data": [
+        [
+          "Product A",
+          70
+        ],
+        [
+          "Product B",
+          58
+        ],
+        [
+          "Product C",
+          95
+        ]
+      ]
+    }
+  ]
+}

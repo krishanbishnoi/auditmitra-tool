@@ -1,0 +1,5 @@
+date,agent_name,agent_id,receipt_no,receipt_date,month,reference_no,product_1,total_rec_amt,deposite_date,bb_pay_batch_date,delay_deposite_bucket,agency_id,receipt_time_1,time_bkt
+8/2/2021,RAKESHD KHAMKAR,34856,3012225647,7-Oct-20,Oct'20,13288303,TW,15000,,15-Oct-20,6 To 10 Day,3600081,10:24 PM,22
+8/2/2021,PARVIN TADVI,40685,3016702209,9-Oct-20,Oct'20,31976858,TW,2814,14-Oct-20,,3 To 5 Day,3200920,10:40 PM,22
+8/2/2021,VANITA SHELKE,42940,3015358862,15-Oct-20,Oct'20,13530226,TW,2361,,20-Oct-20,3 To 5 Day,3201131,10:31 PM,22
+8/2/2021,SUDHAKAR JAGAKAR,37064,3015966613,18-Sep-20,Sep'20,29914217,PLCL,10932,,23-Sep-20,3 To 5 Day,3201117,10:04 PM,22
