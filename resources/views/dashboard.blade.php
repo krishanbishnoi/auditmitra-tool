@@ -1,7 +1,3 @@
-use Illuminate\Support\Facades\DB;
-
-
-
 @extends('layouts.master')
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -162,33 +158,35 @@ use Illuminate\Support\Facades\DB;
             </div>
 
             <!-- V Filter Date Range Start ---------->
-            @if (request('start_date') || request('end_date'))
-                <div class="card shadow-sm border-0 mb-4">
-                    <div class="card-body">
-                        <!-- Custom Date Range Inputs -->
-                        <form method="GET" action="{{ route('dashboard') }}" class="row align-items-end"
-                            id="filter-form">
-                            <div id="custom-date-range" style="display: {{ request('start_date') ? 'block' : 'none' }};">
-                                <div class="col-md-4">
-                                    <label for="start-date">Start Date:</label>
-                                    <input type="text" id="start-date" name="start_date"
-                                        value="{{ request('start_date') }}" class="form-control flatpickr">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="end-date">End Date:</label>
-                                    <input type="text" id="end-date" name="end_date" value="{{ request('end_date') }}"
-                                        class="form-control flatpickr">
-                                </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary">
-                                        Filter
-                                    </button>
-                                    <a href="{{ route('dashboard') }}" class="btn btn-primary">Reset</a>
-                                </div>
-                        </form>
-                    </div>
+            {{-- @if (request('start_date') || request('end_date'))
+                <div class="card shadow-sm border-0 mb-4"> --}}
+        <div class="card shadow-sm border-0 mb-4" id="custom-date-card"
+    style="{{ request('start_date') ? '' : 'display:none;' }}">
+                <div class="card-body">
+                    <!-- Custom Date Range Inputs -->
+                    <form method="GET" action="{{ route('dashboard') }}" id="filter-form">
+                        <div id="custom-date-range" class="row align-items-end">
+                            <div class="col-md-4">
+                                <label for="start-date" class="mr-2 vdate">Start Date:</label>
+                                <input type="text" id="start-date" name="start_date" value="{{ request('start_date') }}"
+                                    class="form-control flatpickr">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="end-date" class="mr-2 vdate">End Date:</label>
+                                <input type="text" id="end-date" name="end_date" value="{{ request('end_date') }}"
+                                    class="form-control flatpickr">
+                            </div>
+                            <div class="col-md-4">
+                                <button id="filter-button" class="btn btn-primary">
+                                    Filter
+                                </button>
+                                <a href="{{ route('dashboard') }}" class="btn btn-primary">Reset</a>
+                            </div>
+                             </div>
+                    </form>
                 </div>
-            @endif
+            </div>
+            {{-- @endif --}}
             <!-- V Filter Date Range End ---------->
 
             <!-- V Filter Date Range End ---------->
@@ -206,7 +204,7 @@ use Illuminate\Support\Facades\DB;
                                     @csrf
                                     <div class="col-md-4 form-group">
                                         <label for="agency_name">Select Agency</label>
-                                       <select class="form-control" name="agency_name" id="agency_name">
+                                        <select class="form-control" name="agency_name" id="agency_name">
                                             @if ($agency->isEmpty())
                                                 <option value="all">Select Agency</option>
                                                 <option class="text-danger" value="">Audit not performed</option>
@@ -218,7 +216,7 @@ use Illuminate\Support\Facades\DB;
                                                         {{ $item->name }}
                                                     </option>
                                                 @endforeach
-                                            @endif  
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-4 form-group">
@@ -236,11 +234,11 @@ use Illuminate\Support\Facades\DB;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                          @if ($agency->isEmpty())
+                                @if ($agency->isEmpty())
                                     <button type="submit" class="btn btn-danger disabled">Download</button>
                                 @else
                                     <button type="submit" class="btn btn-primary">Download</button>
-                                @endif 
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -421,12 +419,12 @@ use Illuminate\Support\Facades\DB;
 
                             <div class="col-lg-4 col-md-6 mb-3">
                                 @include('dashboard.card', [
-                               'title' => 'Total Allocation',
-                                'count' => $totalAllocation,
-                                'icon' => 'fa-list',
-                                'color' => 'primary',
-                                'route' => route('audit_allocation_assign.index'), 
-                                 ]) 
+                                    'title' => 'Total Allocation',
+                                    'count' => $totalAllocation,
+                                    'icon' => 'fa-list',
+                                    'color' => 'primary',
+                                    'route' => route('audit_allocation_assign.index'),
+                                ])
                             </div>
 
                             {{-- <div class="card dashboard-card shadow-sm border-0">
@@ -459,13 +457,13 @@ use Illuminate\Support\Facades\DB;
                             {{-- </div> --}}
 
                             <div class="col-lg-4 col-md-6 mb-3">
-                                 @include('dashboard.card', [
-                                'title' => 'Total Submitted Audits',
-                                'count' => $totalSubmittedAuditsbyAgency,
-                                'icon' => 'fa-check',
-                                'color' => 'success',
-                                'route' => route('submit_audited_list'),
-                            ]) 
+                                @include('dashboard.card', [
+                                    'title' => 'Total Submitted Audits',
+                                    'count' => $totalSubmittedAuditsbyAgency,
+                                    'icon' => 'fa-check',
+                                    'color' => 'success',
+                                    'route' => route('submit_audited_list'),
+                                ])
                             </div>
                             {{-- <div class="col-lg-4 col-md-4">
                                 <div class="card cardboxInner h-100" style="background-color: #f2d6d1;">
@@ -494,13 +492,13 @@ use Illuminate\Support\Facades\DB;
                             </div> --}}
 
                             <div class="col-lg-4 col-md-6 mb-3">
-                              @include('dashboard.card', [
-                                'title' => 'Saved Audits',
-                                'count' => $totalSavedAuditsbyAgency,
-                                'icon' => 'fa-save',
-                                'color' => 'warning',
-                                'route' => route('save_audited_list'),
-                            ]) 
+                                @include('dashboard.card', [
+                                    'title' => 'Saved Audits',
+                                    'count' => $totalSavedAuditsbyAgency,
+                                    'icon' => 'fa-save',
+                                    'color' => 'warning',
+                                    'route' => route('save_audited_list'),
+                                ])
                             </div>
 
                             {{-- <div class="col-lg-4 col-md-4">
@@ -532,12 +530,12 @@ use Illuminate\Support\Facades\DB;
 
                             <div class="col-lg-4 col-md-6 mb-3">
                                 @include('dashboard.card', [
-                                'title' => 'Audit Sent For Action Plan',
-                                'count' => $auditSendForActionPlan,
-                                'icon' => 'fa-paper-plane',
-                                'color' => 'info',
-                                'route' => route('audit.closure.list', 0),
-                            ]) 
+                                    'title' => 'Audit Sent For Action Plan',
+                                    'count' => $auditSendForActionPlan,
+                                    'icon' => 'fa-paper-plane',
+                                    'color' => 'info',
+                                    'route' => route('audit.closure.list', 0),
+                                ])
                             </div>
 
 
@@ -570,13 +568,13 @@ use Illuminate\Support\Facades\DB;
                             </div> --}}
 
                             <div class="col-lg-4 col-md-6 mb-3">
-                               @include('dashboard.card', [
-                                'title' => 'Received Action Plan',
-                                'count' => $receivedforActionPlanAudits,
-                                'icon' => 'fa-file',
-                                'color' => 'secondary',
-                                'route' => route('audit.closure.list', 2),
-                            ]) 
+                                @include('dashboard.card', [
+                                    'title' => 'Received Action Plan',
+                                    'count' => $receivedforActionPlanAudits,
+                                    'icon' => 'fa-file',
+                                    'color' => 'secondary',
+                                    'route' => route('audit.closure.list', 2),
+                                ])
                             </div>
 
                             {{-- <!-- Received Action Plan -->
@@ -608,13 +606,13 @@ use Illuminate\Support\Facades\DB;
                             </div> --}}
 
                             <div class="col-lg-4 col-md-6 mb-3">
-                               @include('dashboard.card', [
-                                'title' => 'Closed Audits',
-                                'count' => $totalClosedAudits,
-                                'icon' => 'fa-check-circle',
-                                'color' => 'dark',
-                                'route' => route('audit.closure.list', 1),
-                            ]) 
+                                @include('dashboard.card', [
+                                    'title' => 'Closed Audits',
+                                    'count' => $totalClosedAudits,
+                                    'icon' => 'fa-check-circle',
+                                    'color' => 'dark',
+                                    'route' => route('audit.closure.list', 1),
+                                ])
 
                             </div>
                         </div>
@@ -668,11 +666,10 @@ use Illuminate\Support\Facades\DB;
                                 </tr>
                             </thead>
                             <tbody>
-                               {{-- @php
+                                {{-- @php
                                     dd($auditors);
                                 @endphp --}}
                                 @forelse($auditors as $auditor)
-                                 
                                     <tr>
                                         <td>{{ $auditor->name }}</td>
                                         <td>{{ $auditor->total_audits }}</td>
@@ -701,85 +698,85 @@ use Illuminate\Support\Facades\DB;
 
 
                 <!-- <div class="col-lg-3 col-md-6">
-                                                                                                                                                                        <div class="card">
-                                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                                        <div class="stat-heading">Audit Submited - QC Pass</div>
-                                                                                                                                                                                        <div class="stat-text"><span class="count2">{{ $qa['totalpass'] ?? 0 }}</span></div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                            
-                                                                                                                                                                    <div class="col-lg-3 col-md-6">
-                                                                                                                                                                        <div class="card">
-                                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                                        <div class="stat-heading">Audit Submited - QC Fail</div>
-                                                                                                                                                                                        <div class="stat-text"><span class="count2">{{ $qa['totalfaild'] ?? 0 }}</span></div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                                <div class="stat-heading">Audit Submited - QC Pass</div>
+                                                                                                                                                                                                                <div class="stat-text"><span class="count2">{{ $qa['totalpass'] ?? 0 }}</span></div>
+                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                    
+                                                                                                                                                                                            <div class="col-lg-3 col-md-6">
+                                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                                <div class="stat-heading">Audit Submited - QC Fail</div>
+                                                                                                                                                                                                                <div class="stat-text"><span class="count2">{{ $qa['totalfaild'] ?? 0 }}</span></div>
+                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div> -->
             </div>
             <!-- <div class="row">
-                                                                                                                                                    <div class="col-lg-3 col-md-6">
-                                                                                                                                                        <div class="card">
-                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                        <div class="stat-heading">Total Pending To Approved</div>
-                                                                                                                                                                        <div class="stat-text"><span class="count2">{{ $qc['totalpending'] ?? 0 }}</span>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
+                                                                                                                                                                            <div class="col-lg-3 col-md-6">
+                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                <div class="stat-heading">Total Pending To Approved</div>
+                                                                                                                                                                                                <div class="stat-text"><span class="count2">{{ $qc['totalpending'] ?? 0 }}</span>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
 
-                                                                                                                                                    <div class="col-lg-3 col-md-6">
-                                                                                                                                                        <div class="card">
-                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                        <div class="stat-heading">Audit Approved</div>
-                                                                                                                                                                        <div class="stat-text"><span
-                                                                                                                                                                                class="count2">{{ $qc['totalApproved'] ?? 0 }}</span></div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="col-lg-3 col-md-6">
-                                                                                                                                                        <div class="card">
-                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                        <div class="stat-heading">Audit Approved Without Changes</div>
-                                                                                                                                                                        <div class="stat-text"><span class="count2">{{ $qc['totalpass'] ?? 0 }}</span>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="col-lg-3 col-md-6">
-                                                                                                                                                        <div class="card">
-                                                                                                                                                            <div class="card-body">
-                                                                                                                                                                <div class="stat-widget-five text-center">
-                                                                                                                                                                    <div class="text-center dib">
-                                                                                                                                                                        <div class="stat-heading">Audit Approved With Changes</div>
-                                                                                                                                                                        <div class="stat-text"><span
-                                                                                                                                                                                class="count2">{{ $qc['totalpassChange'] ?? 0 }}</span></div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                            <div class="col-lg-3 col-md-6">
+                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                <div class="stat-heading">Audit Approved</div>
+                                                                                                                                                                                                <div class="stat-text"><span
+                                                                                                                                                                                                        class="count2">{{ $qc['totalApproved'] ?? 0 }}</span></div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="col-lg-3 col-md-6">
+                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                <div class="stat-heading">Audit Approved Without Changes</div>
+                                                                                                                                                                                                <div class="stat-text"><span class="count2">{{ $qc['totalpass'] ?? 0 }}</span>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="col-lg-3 col-md-6">
+                                                                                                                                                                                <div class="card">
+                                                                                                                                                                                    <div class="card-body">
+                                                                                                                                                                                        <div class="stat-widget-five text-center">
+                                                                                                                                                                                            <div class="text-center dib">
+                                                                                                                                                                                                <div class="stat-heading">Audit Approved With Changes</div>
+                                                                                                                                                                                                <div class="stat-text"><span
+                                                                                                                                                                                                        class="count2">{{ $qc['totalpassChange'] ?? 0 }}</span></div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div> -->
             {{-- <div class="col-lg-3 col-md-6">
                                     <div class="card">
                                         <div class="card-body">
@@ -1051,43 +1048,43 @@ use Illuminate\Support\Facades\DB;
         }
 
         // Initialize Start Date Picker
-        const startDatePicker = flatpickr("#start-date", {
-            dateFormat: "Y-m-d",
-            onChange: function(selectedDates, dateStr, instance) {
-                endDatePicker.set('minDate', dateStr);
-            },
-            onDayCreate: highlightSundays
-        });
+        // const startDatePicker = flatpickr("#start-date", {
+        //     dateFormat: "Y-m-d",
+        //     onChange: function(selectedDates, dateStr, instance) {
+        //         endDatePicker.set('minDate', dateStr);
+        //     },
+        //     onDayCreate: highlightSundays
+        // });
 
-        // Initialize End Date Picker
-        const endDatePicker = flatpickr("#end-date", {
-            dateFormat: "Y-m-d",
-            onDayCreate: highlightSundays
-        });
+        // // Initialize End Date Picker
+        // const endDatePicker = flatpickr("#end-date", {
+        //     dateFormat: "Y-m-d",
+        //     onDayCreate: highlightSundays
+        // });
     </script>
 @endsection
 @section('js')
     <!-- <script src="{{ URL::asset('js/highmaps.js') }}"></script>
-                                                            <script src="{{ URL::asset('js/exporting.js') }}"></script>
-                                                            <script src="{{ URL::asset('js/in-all.js') }}"></script>
-                                                            <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-                                                            <script src="{{ URL::asset('js/dashboard.js') }}"></script>
-                                                            <script src="https://code.highcharts.com/modules/pareto.js"></script>
-                                                            <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-                                                            <script>
-                                                                jQuery(document).ready(function() {
+                                                                        <script src="{{ URL::asset('js/exporting.js') }}"></script>
+                                                                        <script src="{{ URL::asset('js/in-all.js') }}"></script>
+                                                                        <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+                                                                        <script src="{{ URL::asset('js/dashboard.js') }}"></script>
+                                                                        <script src="https://code.highcharts.com/modules/pareto.js"></script>
+                                                                        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+                                                                        <script>
+                                                                            jQuery(document).ready(function() {
 
-                                                                    jQuery('.flatpickr').flatpickr({
-                                                                        dateFormat: "yyyy-mm-dd"
-                                                                    });
+                                                                                jQuery('.flatpickr').flatpickr({
+                                                                                    dateFormat: "yyyy-mm-dd"
+                                                                                });
 
-                                                                    indiaMap([]);
-                                                                    // jQuery('#add-product').modal('show')
-                                                                    // pareto();
-                                                                    jQuery('#collection_manager_table').DataTable()
-                                                                    jQuery('#nationalResult').trigger('click');
-                                                                })
-                                                            </script> -->
+                                                                                indiaMap([]);
+                                                                                // jQuery('#add-product').modal('show')
+                                                                                // pareto();
+                                                                                jQuery('#collection_manager_table').DataTable()
+                                                                                jQuery('#nationalResult').trigger('click');
+                                                                            })
+                                                                        </script> -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -1096,12 +1093,12 @@ use Illuminate\Support\Facades\DB;
     <!--V Date for DumpDownload Start --------------------------------------->
     <script>
         jQuery(document).ready(function() {
-            jQuery('.flatpickr').flatpickr({
-                dateFormat: "yy-mm-dd",
-                onSelect: function() {
-                    jQuery(this).flatpickr('hide');
-                }
-            });
+            // jQuery('.flatpickr').flatpickr({
+            //     dateFormat: "yy-mm-dd",
+            //     onSelect: function() {
+            //         jQuery(this).flatpickr('hide');
+            //     }
+            // });
 
             indiaMap([]);
         });
@@ -1136,51 +1133,108 @@ use Illuminate\Support\Facades\DB;
         });
     </script> -->
     <script>
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const filterDropdown = document.getElementById("time-filter");
+        //     const customDateContainer = document.getElementById("custom-date-range");
+        //     const filterButton = document.getElementById("filter-button");
+        //     const startDateInput = document.getElementById("start-date");
+        //     const endDateInput = document.getElementById("end-date");
+
+        //     toggleCustomFilter(filterDropdown.value);
+
+        //     filterDropdown.addEventListener("change", function() {
+        //         toggleCustomFilter(filterDropdown.value);
+        //     });
+
+        //     startDateInput.addEventListener("change", function() {
+        //         setMinEndDate(startDateInput.value);
+        //     });
+
+        //     function toggleCustomFilter(selectedValue) {
+        //         if (selectedValue === "custom") {
+        //             customDateContainer.style.display = "block";
+        //             filterButton.style.display = "inline-block";
+        //         } else {
+        //             customDateContainer.style.display = "none";
+        //             filterButton.style.display = "none";
+        //         }
+        //     }
+
+        //     function setMinEndDate(startDate) {
+        //         const formattedStartDate = new Date(startDate);
+        //         const formattedStartDateString = formattedStartDate.toISOString().split('T')[0];
+
+        //         endDateInput.setAttribute("min", formattedStartDateString);
+
+        //         const formattedEndDate = new Date(endDateInput.value);
+        //         if (formattedEndDate < formattedStartDate) {
+        //             endDateInput.value = '';
+        //         }
+        //     }
+
+        //     // jQuery('.flatpickr').flatpickr({
+        //     //     dateFormat: "yy-mm-dd",
+        //     //     onSelect: function() {
+        //     //         jQuery(this).flatpickr('hide');
+        //     //     }
+        //     // });
+
+        // });
+
         document.addEventListener("DOMContentLoaded", function() {
+
             const filterDropdown = document.getElementById("time-filter");
-            const customDateContainer = document.getElementById("custom-date-range");
+            const customDateContainer = document.getElementById("custom-date-card");
             const filterButton = document.getElementById("filter-button");
             const startDateInput = document.getElementById("start-date");
             const endDateInput = document.getElementById("end-date");
 
-            toggleCustomFilter(filterDropdown.value);
+            // Initialize all Flatpickr inputs
+            flatpickr(".flatpickr", {
+                dateFormat: "Y-m-d"
+            });
 
-            filterDropdown.addEventListener("change", function() {
+            // Run only if filter dropdown exists
+            if (filterDropdown) {
                 toggleCustomFilter(filterDropdown.value);
-            });
+                filterDropdown.addEventListener("change", function() {
+                    if (this.value === "current") {
+                        window.location.href = "{{ route('dashboard') }}";
+                    } else {
+                        toggleCustomFilter(this.value);
+                    }
+                });
+            }
 
-            startDateInput.addEventListener("change", function() {
-                setMinEndDate(startDateInput.value);
-            });
+            // Start Date Change
+            if (startDateInput && endDateInput) {
+                startDateInput.addEventListener("change", function() {
+                    setMinEndDate(startDateInput.value);
+                });
+            }
 
             function toggleCustomFilter(selectedValue) {
+                if (!customDateContainer) return;
                 if (selectedValue === "custom") {
-                    customDateContainer.style.display = "block";
-                    filterButton.style.display = "inline-block";
+                          customDateContainer.style.display = "block";
+                    if (filterButton) {
+                        filterButton.style.display = "inline-block";
+                    }
                 } else {
                     customDateContainer.style.display = "none";
-                    filterButton.style.display = "none";
+                    if (filterButton) {
+                        filterButton.style.display = "none";
+                    }
                 }
             }
 
             function setMinEndDate(startDate) {
-                const formattedStartDate = new Date(startDate);
-                const formattedStartDateString = formattedStartDate.toISOString().split('T')[0];
-
-                endDateInput.setAttribute("min", formattedStartDateString);
-
-                const formattedEndDate = new Date(endDateInput.value);
-                if (formattedEndDate < formattedStartDate) {
-                    endDateInput.value = '';
+                if (!endDateInput || !startDate) return;
+                endDateInput.setAttribute("min", startDate);
+                if (endDateInput.value && endDateInput.value < startDate) {
+                    endDateInput.value = "";
                 }
             }
-
-            jQuery('.flatpickr').flatpickr({
-                dateFormat: "yy-mm-dd",
-                onSelect: function() {
-                    jQuery(this).flatpickr('hide');
-                }
-            });
 
         });
     </script>
@@ -1188,25 +1242,25 @@ use Illuminate\Support\Facades\DB;
     <!--V Filter Dashbaord End ---------------------------------------------->
 
     <!--V Current Month Filter Refresh Start -------------------------------->
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-            const filterDropdown = document.getElementById("time-filter");
-            const clearLink = document.getElementById("clear-link");
+    {{-- <script type="text/javascript">
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const filterDropdown = document.getElementById("time-filter");
+        //     const clearLink = document.getElementById("clear-link");
 
-            // Handle dropdown change
-            filterDropdown.addEventListener("change", function() {
-                const selectedValue = filterDropdown.value;
+        //     // Handle dropdown change
+        //     filterDropdown.addEventListener("change", function() {
+        //         const selectedValue = filterDropdown.value;
 
-                if (selectedValue === "current") {
-                    // Redirect to the dashboard route
-                    window.location.href = clearLink.href;
-                } else if (selectedValue === "custom") {
-                    // Call toggleCustomFilter for custom date selection
-                    toggleCustomFilter();
-                }
-            });
-        });
-    </script>
+        //         if (selectedValue === "current") {
+        //             // Redirect to the dashboard route
+        //             window.location.href = clearLink.href;
+        //         } else if (selectedValue === "custom") {
+        //             // Call toggleCustomFilter for custom date selection
+        //             toggleCustomFilter();
+        //         }
+        //     });
+        // });
+    </script> --}}
 
 
     <script>

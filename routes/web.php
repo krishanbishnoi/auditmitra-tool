@@ -20,8 +20,8 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\DashboardController;
-
-
+use App\Http\Controllers\GovernanceDashboard;
+ 
 
 Route::get('/', function () {
     return view('auth.login');
@@ -690,3 +690,8 @@ Route::post('audit/get-closure-artifact-data', 'AuditController@getClosureArtifa
 
 Route::post('/audit/{id}/qc-approve', 'AuditController@qcApprove')
     ->name('audit.qc.approve');
+
+
+    // new Route for governance Dashboard
+
+    Route::get('/governanceDashboard', [GovernanceDashboard::class, 'gDashboard'])->name('governanceDashboard');
