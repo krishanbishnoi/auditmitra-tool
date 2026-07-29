@@ -1,100 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .dashboard-title-wrap {
-        min-width: 150px;
-    }
-
-    .dashboard-title {
-        font-weight: 1.5rem;
-        color: rgb(177, 114, 72);
-        font-weight: 600;
-        line-height: 1.2;
-        white-space: nowrap;
-    }
-
-    @media (max-width: 768px) {
-        .header-actions form {
-            width: 100%;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Governance Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: Arial, sans-serif
         }
 
-        .header-actions select,
-        .header-actions input {
-            flex: 1 1 auto;
+        .header {
+            background: #1f3156;
+            color: #fff;
+            padding: 30px 0
         }
-    }
-</style>
 
-<div class="card dashboard-header-clean shadow-sm border-0 mb-4">
-    <div class="card-body">
+        .card-stat {
+            border-left: 4px solid #1f3156
+        }
 
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        .nav-tabs .nav-link.active {
+            border: none;
+            border-bottom: 3px solid #1f3156;
+            font-weight: bold
+        }
 
-            {{-- Title --}}
-            <div class="dashboard-title-wrap">
-                <h2 class="dashboard-title mb-0">
-                    Governance Dashboard
-                </h2>
+        .table thead {
+            background: #eef2f8
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h2>Mystery Shopping Governance Dashboard</h2>
+            <p class="mb-0">Audit Governance Tracking</p>
+        </div>
+    </div>
+
+    <div class="container py-4">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+
+
+                        <div class="col-lg-2 col-md-4">
+                            <select class="form-select">
+                                <option>Client</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="date" class="form-input"value="{{ today() }}">
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="date" value="{{ today() }}">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button class="btn btn-primary"><i class="bi bi-download"></i> Export</button>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            {{-- Actions --}}
-            <div class="header-actions">
-                <form method="GET" class="d-flex flex-wrap align-items-center gap-2 mb-0">
-
-                    {{-- Client selector --}}
-                    <select id="client-select" name="client" class="form-control form-select" style="min-width: 180px;">
-                        <option value="">Select Client</option>
-                        <option value="1">Client1</option>
-                        <option value="2">Client2</option>
-                        <option value="3">Client3</option>
-                        <option value="4">Client4</option>
-                        <option value="5">Client5</option>
-                        <option value="6">Client6</option>
-                        <option value="7">Client7</option>
-                        <option value="8">Client8</option>
-                    </select>
-
-
-            {{-- Date range --}}
-            <div id="custom-date-range" class="d-flex align-items-center gap-2">
-                <label class="mb-0">Start Date*</label>
-                <input type="text" id="start-date" name="start_date" value="" placeholder="Start Date"
-                    class="form-control flatpickr" style="width: 150px;">
-
-                <label class="mb-0">End Date*</label>
-                <input type="text" id="end-date" name="end_date" value="" placeholder="End Date"
-                    class="form-control flatpickr" style="width: 150px;">
-            </div>
-
-            {{-- Download button --}}
-            <button type="submit" class="btn btn-primary text-nowrap">
-                Download
-            </button>
-            </form>
-
-</div>
-</div>
-
- {{-- Stat cards row --}}
-              <div class="d-flex stat-cards-row gap-20 mb-4">
-            @foreach ([
-                'Audits Scoped(MTD)' => 1125,
-                'Achieved Audits' => 1074,
-                'Achievement' => 89,
-                'Overall Score' => 779,
-                'Action Planning' => 9,
-            ] as $label => $value)
-                <div class="flex-fill" style="min-width: 0;">
-                    <div class="card cardboxInner h-100" style="background-color: rgb(245, 198, 176);">
-                        <div class="card-body text-center">
-                            <div class="mb-1">
-                                <strong style="color:rgb(226, 80, 12) !important;">{{ $label }}</strong>
-                            </div>
-                            <div class="stat-text">
-                                <span class="count2">{{ $value }}</span>
-                            </div>
+        <div class="row g-3 mb-4">
+            @php
+                $cards = [
+                    ['AUDITS SCOPED (MTD)', '1240'],
+                    ['ACHIEVED', '1068'],
+                    ['ACHIEVEMENT', '86%'],
+                    ['OVERALL SCORE', '912'],
+                    ['ACTION PLANNING', '6'],
+                ];
+            @endphp
+            @foreach ($cards as $c)
+                <div class="col-lg col-md-6">
+                    <div class="card shadow-sm card-stat h-100">
+                        <div class="card-body">
+                            <small class="text-muted">{{ $c[0] }}</small>
+                            <h2>{{ $c[1] }}</h2>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-           {{-- end stat cards row --}}
+
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item"><a class="nav-link active" href="#">Client View</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">QC Performance</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Zone View</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Rebuttal Tracker</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Red Flags</a></li>
+        </ul>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Scope vs Achieved</h5>
+                    <div class="btn-group">
+                        <button class="btn btn-dark btn-sm">Weekly</button>
+                        <button class="btn btn-outline-secondary btn-sm">Daily</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>LOB</th>
+                                <th>Touchpoint</th>
+                                <th>WK1</th>
+                                <th>WK2</th>
+                                <th>WK3</th>
+                                <th>WK4</th>
+                                <th>Lag</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fibe</td>
+                                <td>Banking</td>
+                                <td>In-store</td>
+                                <td class="text-success">45/48</td>
+                                <td>49/52</td>
+                                <td>47/50</td>
+                                <td>41/50</td>
+                                <td>9%</td>
+                            </tr>
+                            <tr>
+                                <td>RBL</td>
+                                <td>Telecom</td>
+                                <td>App</td>
+                                <td class="text-danger">30/38</td>
+                                <td>26/37</td>
+                                <td>22/38</td>
+                                <td>20/37</td>
+                                <td class="text-danger">35%</td>
+                            </tr>
+                            <tr>
+                                <td>TATA Capital</td>
+                                <td>Banking</td>
+                                <td>In-store</td>
+                                <td>43/45</td>
+                                <td>42/45</td>
+                                <td>43/45</td>
+                                <td>43/45</td>
+                                <td>5%</td>
+                            </tr>
+                            <tr>
+                                <td>Sunstone</td>
+                                <td>QSR</td>
+                                <td>Delivery</td>
+                                <td class="text-danger">22/30</td>
+                                <td>20/30</td>
+                                <td>17/30</td>
+                                <td>15/30</td>
+                                <td class="text-danger">38%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
