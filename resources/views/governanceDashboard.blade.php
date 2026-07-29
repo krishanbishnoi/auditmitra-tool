@@ -38,13 +38,13 @@
 <body>
     <div class="header">
         <div class="container">
-            <h2>Mystery Shopping Governance Dashboard</h2>
+            <h2>AuditMitr Governance Dashboard</h2>
             <p class="mb-0">Audit Governance Tracking</p>
         </div>
     </div>
 
     <div class="container py-4">
-
+ 
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <div class="row g-3">
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-4">
 
-                        <input type="date" class="form-input"value="{{ today() }}">
+                        <input type="date" class="form-input"+value="{{ today() }}">
                     </div>
                     <div class="col-md-4">
 
@@ -75,9 +75,9 @@
         <div class="row g-3 mb-4">
             @php
                 $cards = [
-                    ['AUDITS SCOPED (MTD)', '1240'],
-                    ['ACHIEVED', '1068'],
-                    ['ACHIEVEMENT', '86%'],
+                    ['AUDITS SCOPED (MTD)', $auditScored],
+                    ['ACHIEVED', $achivedScore],
+                    ['ACHIEVEMENT', "{$achievedPercent}%"],
                     ['OVERALL SCORE', '912'],
                     ['ACTION PLANNING', '6'],
                 ];
@@ -96,12 +96,10 @@
 
         <ul class="nav nav-tabs mb-4">
             <li class="nav-item"><a class="nav-link active" href="#">Client View</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">QC Performance</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Zone View</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Rebuttal Tracker</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Red Flags</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Action Plannig</a></li>
+           
+          
         </ul>
 
         <div class="card shadow-sm">
@@ -118,13 +116,12 @@
                         <thead>
                             <tr>
                                 <th>Client</th>
-                                <th>LOB</th>
-                                <th>Touchpoint</th>
-                                <th>WK1</th>
-                                <th>WK2</th>
-                                <th>WK3</th>
-                                <th>WK4</th>
-                                <th>Lag</th>
+                                <th>Total Allocation</th>
+                                <th>Total Achievement</th>
+                                <th>Achievement %</th>
+                                <th>Overall Score</th>
+                                <th>Overall Score %</th>
+                                <th>Action Planning</th>
                             </tr>
                         </thead>
                         <tbody>
