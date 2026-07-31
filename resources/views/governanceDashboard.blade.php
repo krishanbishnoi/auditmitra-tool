@@ -44,30 +44,38 @@
     </div>
 
     <div class="container py-4">
- 
+
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-md-4">
+                    <form action="{{ route('governanceDashboard')}}" method="get">
+                        @csrf
+                        <div class="col-md-3">
 
 
-                        <div class="col-lg-2 col-md-4">
-                            <select class="form-select">
-                                <option>Client</option>
-                            </select>
+                            <div class="col-lg-2 col-md-4">
+                                <select class="form-select">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->client_id }}">{{ $client->client_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                        <div class="col-md-3">
+                            <input type="date" class="form-input"+value="{{ today() }}">
+                        </div>
+                        <div class="col-md-3">
 
-                        <input type="date" class="form-input"+value="{{ today() }}">
-                    </div>
-                    <div class="col-md-4">
+                            <input type="date" value="{{ today() }}">
+                        </div>
+                        <div class="col-md-3">
 
-                        <input type="date" value="{{ today() }}">
-                    </div>
-                    <div class="col-12 text-end">
-                        <button class="btn btn-primary"><i class="bi bi-download"></i> Export</button>
-                    </div>
+                            <input type="SUBMIT" value="Submit">
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-primary"><i class="bi bi-download"></i> Export</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -75,11 +83,11 @@
         <div class="row g-3 mb-4">
             @php
                 $cards = [
-                    ['AUDITS SCOPED (MTD)', $auditScored],
-                    ['ACHIEVED', $achivedScore],
-                    ['ACHIEVEMENT', "{$achievedPercent}%"],
-                    ['OVERALL SCORE', '912'],
-                    ['ACTION PLANNING', '6'],
+                    ['TOTAL ALLOCATION', $auditScored],
+                    ['TOTAL ACHIEVEMENT', $achivedScore],
+                    ['ACHIEVEMENT %', "{$achievedPercent}%"],
+                    ['OVERALL SCORE', $overall_score],
+                    ['ACTION PLANNING', $actionPlan],
                 ];
             @endphp
             @foreach ($cards as $c)
@@ -96,10 +104,8 @@
 
         <ul class="nav nav-tabs mb-4">
             <li class="nav-item"><a class="nav-link active" href="#">Client View</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Action Plannig</a></li>
-           
-          
         </ul>
 
         <div class="card shadow-sm">
@@ -125,46 +131,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Fibe</td>
-                                <td>Banking</td>
-                                <td>In-store</td>
-                                <td class="text-success">45/48</td>
-                                <td>49/52</td>
-                                <td>47/50</td>
-                                <td>41/50</td>
-                                <td>9%</td>
-                            </tr>
-                            <tr>
-                                <td>RBL</td>
-                                <td>Telecom</td>
-                                <td>App</td>
-                                <td class="text-danger">30/38</td>
-                                <td>26/37</td>
-                                <td>22/38</td>
-                                <td>20/37</td>
-                                <td class="text-danger">35%</td>
-                            </tr>
-                            <tr>
-                                <td>TATA Capital</td>
-                                <td>Banking</td>
-                                <td>In-store</td>
-                                <td>43/45</td>
-                                <td>42/45</td>
-                                <td>43/45</td>
-                                <td>43/45</td>
-                                <td>5%</td>
-                            </tr>
-                            <tr>
-                                <td>Sunstone</td>
-                                <td>QSR</td>
-                                <td>Delivery</td>
-                                <td class="text-danger">22/30</td>
-                                <td>20/30</td>
-                                <td>17/30</td>
-                                <td>15/30</td>
-                                <td class="text-danger">38%</td>
-                            </tr>
+                            @foreach ($clients as $client)
+                                <tr>
+
+                                    <td>{{ $client->client_name }}</td>
+                                    <td>{{ $totalAllocation[$client->client_id] ?? 0 }}</td>
+                                    <td>{{ $totalAchievement[$client->client_id] ?? 0 }}</td>
+                                    <td>{{ $achieveMentPercentage[$client->client_id] ?? 0 }} % </td>
+                                    <td>{{ $overallScore[$client->client_id] ?? 0 }}</td>
+                                    <td>{{ $overallScorePercentage[$client->client_id] ?? 0 }} % </td>
+                                    <td>{{ $actionPlanning[$client->client_id] ?? 0 }}
+
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

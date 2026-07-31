@@ -248,16 +248,14 @@ class DashboardController extends Controller
                     DB::raw('ROUND(AVG(audits.overall_score),2) as average_score'),
                     DB::raw('ROUND(AVG(audits.score_percentage),2) as score_percent')
                 )
-                ->groupBy('audits.audited_by_id')->
-                orderByDesc('audited_by_id')->
-                where('users.client_id', Auth::user()->client_id)                
+                ->groupBy('audits.audited_by_id')->orderByDesc('audited_by_id')->where('users.client_id', Auth::user()->client_id)
                 ->get();
 
             return view('dashboard', compact('totalalert', 'qa', 'qc', 'branch', 'agency', 'totalAllocation', 'totalSubmittedAuditsbyAgency', 'totalSavedAuditsbyAgency', 'auditSendForActionPlan', 'receivedforActionPlanAudits', 'totalClosedAudits', 'auditors'));
             //---------V Audit Agency Dashboard End ------------------------------------>
 
 
-            
+
 
 
         } elseif ($user->hasRole('Client|Client(External)')) {
