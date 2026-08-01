@@ -12,26 +12,48 @@ class GovernanceDashboard extends Controller
 {
     public function gDashboard(Request $request)
     {
-        $activeTab = $request->query('tab', 'clients');
+$month = now()->subMonths(1)->format('m');
 
-        $auditScored = AuditAllocation::whereMonth('created_at', now()->month)
+$clientId = $request->client_id;
+$startDate = $request->start_date;
+$endDate = $request->end_date;
+
+$query = AuditAllocation::query();
+
+if(!empty($clientId) && $clientId != 'all'){
+    $query->where('client_id', $clientId);
+}
+
+if(!empty($startDate) && !empty($endDate)){
+    $query->whereBetween('created_at', [
+          Carbon::parse($startDate)->startOfDay(),
+        Carbon::parse($endDate)->endOfDay(),
+    ]);
+}else{
+    $query->whereMonth('created_at', now()->month)
+          ->whereYear('created_at', now()->year);
+    }
+    $totalAllocation = $query->count();
+// dd($startDate, $endDate); 
+
+        $auditScored = AuditAllocation::whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)
             ->count();
 
         $achivedScore = Audit::where('status', 1)
-            ->whereMonth('created_at', now()->month)
+            ->whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)
             ->count();
 
         $achievedPercent = $auditScored > 0 ? round(($achivedScore / $auditScored) * 100, 2) : 0;
 
         $actionPlan = DB::table('audit_closure_artifacts')
-            ->whereMonth('created_at', now()->month)
+            ->whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)
             ->distinct()
             ->count('audit_id');
 
-        $overall_score = DB::table('audits')->where('status', 1)->whereMonth('created_at', now()->month)
+        $overall_score = DB::table('audits')->where('status', 1)->whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)->sum('overall_score');
 
 
@@ -45,7 +67,7 @@ class GovernanceDashboard extends Controller
         // getting the total allocation based on the client id    
         $totalAllocation = DB::table('audit_allocation')
             ->join('clients', 'clients.client_id', '=', 'audit_allocation.client_id')
-            ->whereMonth('audit_allocation.created_at', now()->month)
+            ->whereMonth('audit_allocation.created_at', $month)
             ->whereYear('audit_allocation.created_at', now()->year)
             ->select(
                 'audit_allocation.client_id',
@@ -61,7 +83,7 @@ class GovernanceDashboard extends Controller
             ->select(
                 'audits.client_id',
                 DB::raw('COUNT(*) as totalAchievement')
-            )->whereMonth('audits.created_at', now()->month)
+            )->whereMonth('audits.created_at', $month)
             ->whereYear('audits.created_at', now()->year)
             ->where('audits.status', 1)
             ->groupBy('audits.client_id')
@@ -81,7 +103,7 @@ class GovernanceDashboard extends Controller
             ->select(
                 'client_id',
                 DB::raw('SUM(overall_score) as overallScore')
-            )->whereMonth('created_at', now()->month)
+            )->whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)
             ->where('status', 1)
             ->groupBy('client_id')
@@ -95,15 +117,24 @@ class GovernanceDashboard extends Controller
                 'client_id',
                 DB::raw('ROUND(AVG(score_percentage), 2) as scorePercentage')
             )
-            ->whereMonth('created_at', now()->month)
+            ->whereMonth('created_at', $month)
             ->whereYear('created_at', now()->year)
             ->where('status', 1)
             ->groupBy('client_id')
             ->pluck('scorePercentage', 'client_id');
 
 
+ $actionPlanning = DB::table('audit_closure_artifacts')
+            ->join('audits', 'audit_closure_artifacts.audit_id', '=', 'audits.id')
+            ->select(
+                'audits.client_id',
+                DB::raw('COUNT(DISTINCT audit_closure_artifacts.audit_id) as actionPlanningCount')
+            )
+            ->whereMonth('audit_closure_artifacts.created_at', $month)
+            ->whereYear('audit_closure_artifacts.created_at', now()->year)
+            ->groupBy('audits.client_id')
+            ->pluck('actionPlanningCount', 'audits.client_id');
 
-
-        return view('governanceDashboard', compact('auditScored', 'activeTab', 'achivedScore', 'achievedPercent', 'actionPlan', 'clients', 'overall_score', 'totalAllocation', 'totalAchievement', 'achieveMentPercentage', 'overallScore', 'overallScorePercentage', 'actionPlanning'));
+        return view('governanceDashboard', compact('auditScored', 'achivedScore', 'achievedPercent', 'actionPlan', 'clients', 'overall_score', 'totalAllocation', 'totalAchievement', 'achieveMentPercentage', 'overallScore', 'overallScorePercentage', 'actionPlanning'));
     }
 }

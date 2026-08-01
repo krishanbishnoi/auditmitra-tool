@@ -51,23 +51,22 @@
                     <form action="{{ route('governanceDashboard')}}" method="get">
                         @csrf
                         <div class="col-md-3">
-
-
                             <div class="col-lg-2 col-md-4">
                                 <select class="form-select">
                                     @foreach ($clients as $client)
+                                    {{-- <option>Select Client</option> --}}
                                         <option value="{{ $client->client_id }}">{{ $client->client_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <input type="date" class="form-input"+value="{{ today() }}">
+                            <input type="date" class="form-control" name="start_date" value="{{ today()->format('y-m-d') }}">
                         </div>
                         <div class="col-md-3">
 
-                            <input type="date" value="{{ today() }}">
-                        </div>
+                            <input type="date" class="form-control" name="end_date" value="{{ today()->format('y-m-d') }}">
+                        </div>  
                         <div class="col-md-3">
 
                             <input type="SUBMIT" value="Submit">
@@ -141,7 +140,6 @@
                                     <td>{{ $overallScore[$client->client_id] ?? 0 }}</td>
                                     <td>{{ $overallScorePercentage[$client->client_id] ?? 0 }} % </td>
                                     <td>{{ $actionPlanning[$client->client_id] ?? 0 }}
-
                                 </tr>
                             @endforeach
                         </tbody>
