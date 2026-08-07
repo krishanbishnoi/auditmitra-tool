@@ -48,31 +48,42 @@
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <div class="row g-3">
-                    <form action="{{ route('governanceDashboard')}}" method="get">
-                        @csrf
-                        <div class="col-md-3">
-                            <div class="col-lg-2 col-md-4">
-                                <select class="form-select">
-                                    @foreach ($clients as $client)
-                                    {{-- <option>Select Client</option> --}}
-                                        <option value="{{ $client->client_id }}">{{ $client->client_name }}</option>
+                    <form action="{{ route('governanceDashboard') }}" method="get">
+                        <div class="row align-items-end g-3">
+                            @csrf
+                            <div class="col-md-3">
+                                <label>Client</label>
+                                <select name="client_id" class="form-select">
+                                    <option value="all" {{ request('client_id') == 'all' ? 'selected' : '' }}>
+                                        All Clients
+                                    </option>
+
+                                    @foreach ($clientList as $client)
+                                        <option value="{{ $client->client_id }}"
+                                            {{ request('client_id') == $client->client_id ? 'selected' : '' }}>
+                                            {{ $client->client_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="date" class="form-control" name="start_date" value="{{ today()->format('y-m-d') }}">
-                        </div>
-                        <div class="col-md-3">
 
-                            <input type="date" class="form-control" name="end_date" value="{{ today()->format('y-m-d') }}">
-                        </div>  
-                        <div class="col-md-3">
+                            <div class="col-md-3">
+                                <label>Start Date</label>
+                                <input type="date" class="form-control" name="start_date"
+                                    value="{{ request('start_date') }}">
+                            </div>
 
-                            <input type="SUBMIT" value="Submit">
-                        </div>
-                        <div class="col-12 text-end">
-                            <button class="btn btn-primary"><i class="bi bi-download"></i> Export</button>
+                            <div class="col-md-3">
+                                <label>End Date</label>
+                                <input type="date" class="form-control" name="end_date"
+                                    value="{{ request('end_date') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                {{-- <a href="{{ route('dashboard.export', request()->all()) }}" class="btn btn-success">
+                                <i class="bi bi-download"></i> Export
+                            </a> --}}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -131,15 +142,21 @@
                         </thead>
                         <tbody>
                             @foreach ($clients as $client)
+                                @php
+                                    $achievementPercentage =
+                                        $client->totalAllocation > 0
+                                            ? round(($client->totalAchievement / $client->totalAllocation) * 100, 2)
+                                            : 0;
+                                @endphp
                                 <tr>
-
                                     <td>{{ $client->client_name }}</td>
-                                    <td>{{ $totalAllocation[$client->client_id] ?? 0 }}</td>
-                                    <td>{{ $totalAchievement[$client->client_id] ?? 0 }}</td>
-                                    <td>{{ $achieveMentPercentage[$client->client_id] ?? 0 }} % </td>
-                                    <td>{{ $overallScore[$client->client_id] ?? 0 }}</td>
-                                    <td>{{ $overallScorePercentage[$client->client_id] ?? 0 }} % </td>
-                                    <td>{{ $actionPlanning[$client->client_id] ?? 0 }}
+                                    <td>{{ $client->totalAllocation }}</td>
+                                    <td>{{ $client->totalAchievement }}</td>
+                                    <td>{{ $achievementPercentage }} % </td>
+                                    <td>{{ $client->overallScore ?? 0 }}</td>
+                                    <td>{{ round($client->overallScorePercentage ?? 0, 2) }} % </td>
+                                    <td>{{ $client->actionPlanning }}</td>
+                                    {{-- {{ $actionPlanning[$client->client_id] ?? 0 }} --}}
                                 </tr>
                             @endforeach
                         </tbody>

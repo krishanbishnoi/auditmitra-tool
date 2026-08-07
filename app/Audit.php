@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Artifact;
 
 class Audit extends Model
 {
@@ -108,12 +109,14 @@ class Audit extends Model
     {
         return $this->hasMany('App\RedAlert', 'audit_id', 'id');
     }
-    public function artifact()
-    {
-        return $this->hasMany('App\Artifact', 'audit_id', 'id');
-    }
+   
     public function getCreatedAtAttribute($value)
     {
         return \Carbon\Carbon::parse($value)->setTimezone('Asia/Kolkata');
+    }
+
+    public function closureArtifacts()
+    {
+        return $this->hasMany( Artifact::class, 'audit_id', 'id');
     }
 }

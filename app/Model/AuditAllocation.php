@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Client;
 
 class AuditAllocation extends Model
 {
@@ -40,5 +40,8 @@ class AuditAllocation extends Model
             'client_id',
         ];
     
-   
+   public function client()
+{
+    return $this->belongsTo(Client::class, 'client_id', 'client_id');
+}
 }
