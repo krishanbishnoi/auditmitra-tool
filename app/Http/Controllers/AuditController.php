@@ -69,7 +69,6 @@ use App\Exports\AuditDumpExportV2;
 
 class AuditController extends Controller
 {
-
     public function sendTestMail($val)
     {
         // $email=array("abhilasha.kenge@qdegrees.com");
@@ -1474,6 +1473,60 @@ class AuditController extends Controller
 
     public function store_audit(Request $request)
     {
+
+        // // VALIDATION
+
+        $closureStatus = $request->input('closure_status', []);
+        $closureRemarks = $request->input('closure_remarks', []);
+        $closureTimeline = $request->input('non_closure_timeline', []);
+
+        $errors = [];
+
+        foreach ($closureStatus as $id => $status) {
+            if ($status === 'open') {
+                if (empty($closureRemarks[$id])) {
+                    $errors["closure_remarks.$id"] = "Closure Remarks is required";
+                }
+            }
+
+            if ($status === 'closed') {
+                if (empty($closureRemarks[$id])) {
+                    $errors['closure_remarks.$id'] = "Closure Remarks is required";
+                }
+
+                if (empty($closureTimeline[$id])) {
+                    $errors['non_closure_timeline.$id'] = "Non Closure Timeline is required";
+                }
+            }
+        }
+
+        //  RETURN VALIDATION ERRORS
+
+        if (!empty($errors)) {
+            return redirect()
+                ->back()
+                ->withErrors($errors)
+                ->withInput();
+        }
+
+        // SAVE CLOSURE DETAILS
+
+foreach($closureStatus as $id => $status){
+    if(empty($status)){
+        continue;
+    }
+
+    $auditResult = AuditResult::where('sub_parameter_id', $id)
+    ->where('audit_id', $request->audit_id)
+    ->first();
+
+    if($auditResult){
+        $auditResult->closure_status = $status;
+        $auditResult->closure_remarks= $closureRemarks[$id] ?? null;
+        $auditResult->non_closure_remarks= $closureTimeline[$id] ?? null;
+        $auditResult->save();
+    }
+    } 
         // dd($request->all());
         $user_role = Auth::user()->roles()->first()->name; // Get the user's role name
         $audit_agency_id = null; // Initialize variable
@@ -2390,6 +2443,11 @@ class AuditController extends Controller
             return response()->json(['status' => 500, 'message' => "Audit saved unsuccessfully.", 'audit_id' => $e->getMessage()], 500);
         }
     }
+
+
+
+
+
 
 
 
@@ -4495,7 +4553,7 @@ class AuditController extends Controller
         $attachmentName = auth()->user()->client_id == 285
             ? 'Assessment_Checksheet.pdf'
             : 'Audit_Checksheet.pdf';
-        Mail::send('audit.agency_otp_mail', ["client_name" => $clientName,"clientId" => $clientId,  "client_color" => $clientColor, "otp" => $otp, "agency_details" => $agency_details, "audit_date" => $audit_date], function ($message) use ($email, $subject, $pdfContent, $client_mail, $bccEmails, $pdfIncludeContent, $attachmentName) {
+        Mail::send('audit.agency_otp_mail', ["client_name" => $clientName, "clientId" => $clientId,  "client_color" => $clientColor, "otp" => $otp, "agency_details" => $agency_details, "audit_date" => $audit_date], function ($message) use ($email, $subject, $pdfContent, $client_mail, $bccEmails, $pdfIncludeContent, $attachmentName) {
             $message->from('auditmitr@qdegrees.com', 'Audit Team')
                 ->to($email)
                 ->subject($subject)

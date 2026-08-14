@@ -11,7 +11,6 @@
         margin-bottom: 15px;
     }
 
-
     .sp-row .row {
         margin-bottom: 15px;
     }
@@ -69,7 +68,6 @@
         justify-content: center;
         align-items: center
     }
-
 
     /* otp css */
 
@@ -518,6 +516,176 @@
         margin-bottom: 4px;
         display: block;
     }
+
+
+    #step2ProgressBox {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+
+    width: 220px;
+    padding: 14px 18px;
+
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    display: none;
+}
+
+#step2ProgressBox .progress-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+#step2ProgressBox #step2ProgressText {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#step2ProgressBox .progress-track {
+    width: 100%;
+    height: 6px;
+
+    margin-top: 8px;
+
+    background: rgba(255, 255, 255, 0.25);
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#step2ProgressBox #step2ProgressBar {
+    width: 0%;
+    height: 6px;
+
+    background: #fff;
+
+    border-radius: 10px;
+
+    transition: width 0.3s ease;
+}
+
+.step-card[data-step="2"] {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.step-card[data-step="2"] .card-body {
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 15px !important;
+}
+
+.step-card[data-step="2"] .tab-content {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.step-card[data-step="2"] .tab-pane {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.step-card[data-step="2"] .parameter-section {
+    height: auto !important;
+    min-height: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.step-card[data-step="2"] .step-navigation {
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+}   
+
+.closure-input-meeting .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.closure-input-meeting .col-md-4 {
+    width: 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* All three fields */
+.closure-input-meeting .closure-field {
+    display: block;
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    padding: 6px 12px !important;
+    box-sizing: border-box !important;
+    line-height: 1.5 !important;
+}
+
+/* Remarks textarea */
+.closure-input-meeting textarea.closure-field {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    resize: none !important;
+    overflow: hidden !important;
+}
+
+/* Select */
+.closure-input-meeting select.closure-field {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+/* Date */
+.closure-input-meeting input.closure-field {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+/* Labels */
+.closure-input-meeting .form-label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.voice-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.voice-controls .lang-select {
+    width: 160px !important;
+    height: 38px !important;
+    margin: 0 !important;
+}
+
+.voice-controls .voice-btn {
+    height: 38px !important;
+    margin: 0 !important;
+    white-space: nowrap;
+    padding: 6px 12px !important;
+}
+
+.closureTitle {
+    color:#5a32a3;
+    font-weight: 700;
+font-size: 22px;
+}
 </style>
 
 @endsection
@@ -539,7 +707,7 @@ Messages
 	$isQualityAuditor = Auth::user()->roles->contains('name', 'Quality Auditor');
 	
 	// echo '<pre>'; print_r($isQualityAuditor); die;
-	
+        
 	?>
 <div class="row">
 	<div class="col-lg-12" style="margin-top:10x">
@@ -772,12 +940,19 @@ Messages
                         aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
                         {{ $item->parameter }}
                     </a>
-                </li>
+                </li> 
             @endforeach
         </ul>
+
+
+
+
 					<div class="tab-content mt-4" id="parameterTabContent">
             @foreach ($data->parameter as $index => $item)
-                @php $total = 0; @endphp
+                @php
+                 $total = 0; 
+                @endphp
+
                 <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="param-{{ $item->id }}"
                     role="tabpanel" aria-labelledby="tab-{{ $item->id }}">
                     <div class="parameter-section mb-5">
@@ -788,176 +963,300 @@ Messages
                             <div class="col-md-3">Action</div>
                         </div>
 
-                        @foreach ($item->qm_sheet_sub_parameter as $value)
-                            <div class="row align-items-start mb-3 border-bottom pb-3">
-                                {{-- Sub Parameter --}}
-                                
-                                <div class="col-md-6">
-                                    {{ $value->sub_parameter }}
-                                    <i title="More info"
+                @foreach ($item->qm_sheet_sub_parameter as $value)               
+                                <div class="row align-items-start mb-3 border-bottom pb-3">
+
+                                    {{-- Sub Parameter --}}
+                                    <div class="col-md-6">
+                                        {{ $value->sub_parameter }}
+                                        <i title="More info" 
                                         class="la la-info-circle kt-font-warning sp-details-top"></i>
-                                </div>
+                                    </div>
 
-                                {{-- Observation --}}
-                                <div class="col-md-3">
-                                    <select class="form-control 0bervation" id="obs{{ $value->id }}"
-                                        data-id="{{ $value->id }}" data-parameterId="{{ $item->id }}"
-                                        data-point="{{ $value->weight }}">
-                                        <option value="0">Choose type</option>
-                                        @if ($value->pass == 1)
-                                            <option value="{{ $value->weight }}">Satisfactory</option>
-                                        @endif
-                                        @if ($value->fail == 1)
-                                            <option value="0">Unsatisfactory</option>
-                                        @endif
-                                        @if ($value->critical == 1)
-                                            <option value="Critical">Critical</option>
-                                        @endif
-                                        @if ($value->na == 1)
-                                            <option value="N/A">N/A</option>
-                                        @endif
-                                        @if ($value->pwd == 1)
-                                            <option value="{{ round(($value->weight) / 2, 2) }}">PWD</option>
-                                        @endif
-                                        @if ($value->per == 1)
-                                            <option value="{{ round($value->weight) }}" data-type="rating">Percentage
-                                            </option>
-                                        @endif
-                                    </select>
-                                     @if(in_array(22, $allocatedmodule) && $value->use_error_count == 1)
+                                    {{-- Observation --}}
+                                    <div class="col-md-3">
+                                        <select class="form-control observation"
+                                            id="obs{{ $value->id }}"
+                                            data-id="{{ $value->id }}"
+                                            data-parameterId="{{ $item->id }}"
+                                            data-point="{{ $value->weight }}">
 
-<label class="error-count-label">Error Count</label>
+                                            <option value="0">Choose type</option>
 
-<select class="form-control error-count-select"
-        id="errorCount{{ $value->id }}"
-        name="error_count[{{ $value->id }}]"
-        data-id="{{ $value->id }}">
+                                            @if ($value->pass == 1)
+                                                <option value="{{ $value->weight }}">Satisfactory</option>
+                                            @endif
 
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3 or more</option>
+                                            @if ($value->fail == 1)
+                                                <option value="unsatisfactory">Unsatisfactory</option>
+                                            @endif
 
-</select>
+                                            @if ($value->critical == 1)
+                                                <option value="Critical">Critical</option>
+                                            @endif
 
-@else
+                                            @if ($value->na == 1)
+                                                <option value="N/A">N/A</option>
+                                            @endif
 
-<input type="hidden"
-       id="errorCount{{ $value->id }}"
-       name="error_count[{{ $value->id }}]"
-       value="0"
-       data-id="{{ $value->id }}">
+                                            @if ($value->pwd == 1)
+                                                <option value="{{ round(($value->weight) / 2, 2) }}">PWD</option>
+                                            @endif
 
-@endif
-                                    <span style="display:none" id="org{{ $value->id }}">{{ $value->weight }}</span>
-                                </div>
+                                            @if ($value->per == 1)
+                                                <option value="{{ round($value->weight) }}" data-type="rating">
+                                                    Percentage
+                                                </option>
+                                            @endif
+                                        </select>
 
-                                {{-- Score --}}
-                                <div class="">
-                                    <select class="form-control ratingSelect" name="ratingSelect"
-                                        id="ratingSelect{{ $value->id }}" style="display:none">
-                                        @for ($counting = 0; $counting <= 100; $counting += 5)
-                                            <option value="{{ $counting }}"
+                                           {{-- Error Count --}}
+                                        @if (in_array(22, $allocatedmodule) && $value->use_error_count == 1)
+                                        
+                                                <label class="error-count-label">Error Count</label>
+
+                                                <select class="form-control error-count-select"
+                                                  id="errorCount{{ $value->id }}"
+                                                  name="error_count[{{ $value->id }}]"
+                                                  data-id="{{ $value->id }}">
+
+                                                    <option value="">Select Error Count</option>
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3 or more</option>
+                                                </select>
+                                            {{-- </div> --}}
+                                            @else
+
+                                               <input type="hidden"
+                                                    id="errorCount{{ $value->id }}"
+                                                      name="error_count[{{ $value->id }}]"
+                                                         value="0"
+                                                         data-id="{{ $value->id }}">
+
+                                            @endif
+                                               <span style="display:none" 
+                                                  id="org{{ $value->id }}">
+                                                    {{ $value->weight }}</span>
+                                                    </div>
+                                
+                                    {{-- Score --}}
+                                    <div class="">
+                                        <select class="form-control ratingSelect" 
+                                            name="ratingSelect"
+                                            id="ratingSelect{{ $value->id }}" 
+                                            style="display:none">
+
+                                            @for ($counting = 0; $counting <= 100; $counting += 5)
+                                                <option value="{{ $counting }}" 
                                                 {{ $counting == 0 ? 'selected' : '' }}>
-                                                {{ $counting }}%
-                                            </option>
-                                        @endfor
-                                    </select>
+                                                {{ $counting }}%</option>
+                                            
+                                            @endfor
+                                        
+                                        </select>   
 
-                                    @if ($isQualityAuditor == 1)
-                                        <input type="text" id="{{ $value->id }}" readonly class="form-control"
-                                            style="display: none;">
-                                    @else
-                                        <input type="text" id="{{ $value->id }}" readonly class="form-control">
-                                    @endif
+                                        @if ($isQualityAuditor == 1)
+                                            <input type="text" 
+                                             id="{{ $value->id }}" 
+                                             readonly 
+                                             class="form-control" 
+                                             style="display: none;">
+                                        @else
+                                            <input type="text" 
+                                            id="{{ $value->id }}" 
+                                            readonly 
+                                            class="form-control">
+                                        @endif
+                                    </div>
+
+                                    {{-- Actions --}}
+                                    <div class="col-md-3">
+                                        <button type="button" 
+                                        class="btn btn-info btn-sm artifactModal mr-1" 
+                                        data-parameterid="{{ $item->id }}" 
+                                        data-id="{{ $value->id }}">
+                                        Artifact</button>
+
+                                        <button type="button" 
+                                           class="btn btn-warning btn-sm closureArtifactBtn ml-1"
+                                           data-subparameterid="{{ $value->id }}"
+                                           style="display:none;">
+                                           Closure Details
+                                        </button>
+
+                                        <input type="checkbox" 
+                                        class="mr-2" 
+                                        id="ackalert{{ $value->id }}" 
+                                        data-id="{{ $value->id }}" 
+                                        data-parameterId="{{ $item->id }}">
+                                     </div>
+
+                                    {{-- Error messages --}}
+                                    <div class="col-md-12 mt-2">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div class="p-3 rounded bg-light text-dark" 
+                                             id="error-msg-primary-{{ $value->id }}" 
+                                             style="flex:1; margin-right:10px;">
+                                            </div>
+
+                                            <div class="p-3 rounded bg-light text-danger"
+                                             id="error-msg-secondary-{{ $value->id }}" 
+                                             style="flex:1;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Remarks --}}
+                                    <div class="col-md-12 mt-2">
+
+                                        <textarea class="form-control" 
+                                         id="remark{{ $value->id }}" 
+                                         placeholder="Enter Remark Here" 
+                                         spellcheck="true"></textarea>
+
+                                        <div id="remarkError{{ $value->id }}" 
+                                            class="text-danger small">
+                                        </div>
+
+                                        @if (in_array(25, $allocatedmodule))
+
+                                            <button type="button" 
+                                              class="btn btn-sm btn-primary mt-2" 
+                                              onclick="rewriteRemark({{ $value->id }})">
+                                                Rewrite Remark
+                                            </button>
+
+                                        @endif
+
+                                    </div>
+
+
+                                    {{-- Voice Preview --}}
+                                     <div class="col-md-12 mt-2">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                              <div class="mr-2">
+                                                  <div class="preview{{ $value->id }}"></div>
+                                                       <div id="ocrResponse{{ $value->id }}"
+                                                          class="alert mt-2"
+                                                          style="display:none;">
+                                                        </div>
+                                                    </div>
+                                                              {{-- <div class="voice-controls"> --}}
+
+                                                               <!-- Language -->
+                                                                   <select id="langSelect{{ $value->id }}"
+                                                                        class="form-control mb-2" style="width:200px;">
+                                                                           <option value="en-IN">English (India)</option>
+                                                                           <option value="hi-IN">Hindi</option>
+                                                                           <option value="ta-IN">Tamil</option>
+                                                                           <option value="te-IN">Telugu</option>
+                                                                            <option value="bn-IN">Bengali</option>
+                                                                            <option value="mr-IN">Marathi</option>
+                                                                            <option value="gu-IN">Gujarati</option>
+                                                                            <option value="pa-IN">Punjabi</option>
+                                                                    </select>
+
+                                                                       <!-- Speak Remark -->
+                                                                          <button type="button"
+                                                                                  class="btn btn-outline-secondary btn-sm voice-btn m-2"
+                                                                                  data-id="{{ $value->id }}">
+                                                                                  🎤 Speak Remark
+                                                                           </button>
+
+                                                               </div>
+                                                          </div>
+       
+                        
+
+                                  {{-- Closure Meeting Input: full width, hidden by default --}}
+                                    <div class="col-md-12">
+
+                                        <div id="closureInputMeeting{{ $value->id }}"
+                                             class="closure-input-meeting mt-3 d-none">
+                                              <div class="card border-danger"> 
+                                                  <div class="card-body"> 
+
+                                                    <h5 class="closureTitle 
+                                                        mb-3">Closure Meeting Input
+                                                    </h5>
+                                                
+                                                     <div class="row g-3">
+
+                                                    <!-- Closure Status -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label ">
+                                                                Closure Status
+                                                            </label>
+                                                            
+                                                            <select 
+                                                              name="closure_status[{{ $value->id }}]" 
+                                                              class="form-control closure-field">
+
+                                                                <option value="">---Select Closure Status---</option>
+                                                                <option value="open">Open</option>
+                                                                <option value="closed">Close</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Closure Remarks -->
+                                                        <div class="col-md-4">
+
+                                                         <label class="form-label">
+                                                            Closure Remarks*
+                                                         </label>
+
+                                                          <textarea
+                                                             name="closure_remarks[{{ $value->id }}]"
+                                                             class="form-control closure-field"
+                                                             rows="1">
+                                                           </textarea>
+                                                        </div>
+
+                                                            <!-- Timeline -->
+                                                            <div class="col-md-4">
+
+                                                              <label class="form-label">
+                                                                Timelines for Non-Closure Points
+                                                               </label>
+
+                                                             <input type="date" 
+                                                                    class="form-control closure-field"
+                                                                    name="non_closure_timeline[{{ $value->id }}]">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                              
+                                                                {{-- TOTAL CALCULATION --}}
+                                                 @php
+                                                    $total += $value->weight;
+                                                 @endphp
                                 </div>
-
-                                {{-- Actions --}}
-                                <div class="col-md-3">
-                                    <button class="btn btn-info btn-sm artifactModal mr-1"
-    data-parameterid="{{ $item->id }}"
-    data-id="{{ $value->id }}">
-    Artifact
-</button>
-
-<button
-    class="btn btn-warning btn-sm closureArtifactBtn ml-1"
-    data-subparameterid="{{ $value->id }}"
-    style="display:none;">
-    Closure Details
-</button>
-                                    <input type="checkbox" id="ackalert{{ $value->id }}"
-                                        data-id="{{ $value->id }}" data-parameterId="{{ $item->id }}" />
-                                </div>
-
-                                {{-- Error messages --}}
-                                <div class="d-flex justify-content-between align-items-start">
-                                <div class="p-3 rounded bg-light text-dark" id="error-msg-primary-{{ $value->id }}" style="flex:1; margin-right:10px;"></div>
-                                <div class="p-3 rounded bg-light text-danger" id="error-msg-secondary-{{ $value->id }}" style="flex:1; margin-right:10px;"></div>
-                                </div>
-
-
-                                {{-- Remarks --}}
-                                <div class="col-md-12 mt-2">
-                                    <textarea class="form-control" id="remark{{ $value->id }}" placeholder="Enter Remark Here"
-                                        spellcheck="true"></textarea>
-                                    <div id="remarkError{{ $value->id }}" class="text-danger small"></div>
-                                    
-                                    @if(in_array(25,  $allocatedmodule))
-                                    <button type="button" 
-                                        class="btn btn-sm btn-primary mt-2"
-                                        onclick="rewriteRemark({{ $value->id }})">
-                                            Rewrite Remark
-                                    </button>
-                                    @endif
-                                </div>
-
-                                {{-- Voice Preview --}}
-                                 <div class="col-md-12 mt-2 d-flex align-items-center justify-content-end">
-    <div><div class="preview{{ $value->id }}"></div><div id="ocrResponse{{ $value->id }}"
-     class="alert mt-2"
-     style="display:none;">
-</div></div>
-    
-    
-
-    <select id="langSelect{{ $value->id }}" 
-            class="form-control mb-2" 
-            style="width:200px;">
-
-        <option value="en-IN">English (India)</option>
-        <option value="hi-IN">Hindi</option>
-        <option value="ta-IN">Tamil</option>
-        <option value="te-IN">Telugu</option>
-        <option value="bn-IN">Bengali</option>
-        <option value="mr-IN">Marathi</option>
-        <option value="gu-IN">Gujarati</option>
-        <option value="pa-IN">Punjabi</option>
-    </select>
-
-    <button type="button"
-            class="btn btn-outline-secondary btn-sm voice-btn m-2"
-            data-id="{{ $value->id }}">
-
-        🎤 Speak Remark
-    </button>
-
+                            @endforeach
+       {{-- Parameter Total --}}
+                        <span style="display:none" 
+                              id="total{{ $item->id }}">
+                              {{ $total }}
+                        </span>
+                        </div>
+                    </div>
+                @endforeach 
+                                                                
 </div>
 
-
-
-                                @php
-                                    $total += $value->weight;
-                                @endphp
-                            </div>
-                        @endforeach
-
-                        <span style="display:none" id="total{{ $item->id }}">{{ $total }}</span>
-                    </div>
-                </div>
-            @endforeach
+        {{-- Navigation --}}
+            <div class="step-navigation mt-4 text-right">
+                <button class="btn btn-secondary prev-step">Previous</button>
+                <button class="btn btn-primary next-step">Next</button>
+            </div>
         </div>
-        <div id="step2ProgressBox" style="
+    </div>
+
+      <div id="step2ProgressBox" style="
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -984,18 +1283,7 @@ Messages
             <div style="width: 100%; background: rgba(255,255,255,0.2); height: 6px; border-radius: 4px; margin-top: 8px;">
                 <div id="step2ProgressBar" style="height: 6px; background: #fff; width: 0%; border-radius: 4px;"></div>
             </div>
-        </div>
-
-
-
-
-        {{-- Navigation --}}
-            <div class="step-navigation mt-4 text-right">
-                <button class="btn btn-secondary prev-step">Previous</button>
-                <button class="btn btn-primary next-step">Next</button>
-            </div>
-        </div>
-    </div>
+        </div> 
 
 					{{-- 
 					<div class="card-footer">
@@ -1549,7 +1837,7 @@ try {
         var observation_rs = true;
         var validRemarks = true; // To check if remarks are filled when needed
 
-        jQuery('.0bervation').each(function () {
+        jQuery('.observation').each(function () {
             
             var id = jQuery(this).val();
             var txt1 = jQuery(this).children("option").filter(":selected").text();
@@ -1588,8 +1876,10 @@ try {
     // Make sure this is outside the document.ready block
     function updateStep2Progress() {
         console.log("Updating step 2 progress...");
-        const $observations = $(".0bervation");
+       const $observations = $('.step-card[data-step="2"] .observation');
         let total = $observations.length;
+
+         console.log("Found observations:", total);
         let completed = 0;
 
         $observations.each(function () {
@@ -1880,7 +2170,7 @@ document.addEventListener("DOMContentLoaded", function () {
         resultFun(finalValue, id, parameterId)
     });
 
-    jQuery('.0bervation').on('change', function () {
+    jQuery('.observation').on('change', function () {
 
     var id = jQuery(this).data('id');
     var parameterId = jQuery(this).data('parameterid');
@@ -1975,7 +2265,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var observation_rs = true;
             var validRemarks = true; // To check if remarks are filled when needed
         
-            jQuery('.0bervation').each(function () {
+            jQuery('.observation').each(function () {
                 var id = jQuery(this).val();
                 var txt1 = jQuery(this).children("option").filter(":selected").text();
                 console.log(id);
@@ -3529,7 +3819,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
 
-    jQuery('.0bervation').on('change', function (e) {
+    jQuery('.observation').on('change', function (e) {
         updateStep2Progress();
         var observationId = jQuery(this).data('id'); // sub_parameter_id
         var parameterId = jQuery(this).data('parameterid'); // parameter_id
@@ -3601,7 +3891,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var agency_id = jQuery("#audit_for").val();
     var cycle = jQuery('#audit_cycle').val();
     var product_id = jQuery("#productSelect").val();
-    var parameter_id = jQuery(`.0bervation[data-id='${subParamId}']`).data('parameterid');
+    var parameter_id = jQuery(`.observation[data-id='${subParamId}']`).data('parameterid');
 
     jQuery.ajax({
         url: "{{ url('save-sub-parameter-issues') }}",
@@ -3743,4 +4033,31 @@ $(document).on('click','.closureArtifactBtn',function(){
     $('#closureArtifactModal').modal('show');
 });}
 </script>
+
+<script>
+   $(document).on('change', '.observation', function () {
+    const selectedValue = String($(this).val()).toLowerCase().trim();
+    const subParameterId = $(this).data('id');
+    const closureBox = $('#closureInputMeeting' + subParameterId);
+
+    console.log('Observation:', selectedValue);
+    console.log('Sub Parameter ID:', subParameterId);
+    console.log('Closure Box:', closureBox.length);
+
+    if (selectedValue === 'unsatisfactory') {
+        console.log('UNSATISFACTORY SELECTED');
+        if (closureBox.length > 0) {
+            closureBox.removeClass('d-none');
+        }
+    } else {
+        // Hide closure box
+        closureBox.addClass('d-none');
+        closureBox.find('select').val(''); 
+        closureBox.find('input').val('');
+        closureBox.find('textarea').val('');
+    }
+});  
+</script>
+
+
 @endsection

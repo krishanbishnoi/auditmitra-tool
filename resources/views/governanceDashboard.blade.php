@@ -115,7 +115,7 @@
         <ul class="nav nav-tabs mb-4">
             <li class="nav-item"><a class="nav-link active" href="#">Client View</a></li>
             <li class="nav-item"><a class="nav-link" href="#">QA Performance</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Action Plannig</a></li>
+            
         </ul>
 
         <div class="card shadow-sm">
