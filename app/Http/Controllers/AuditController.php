@@ -1473,60 +1473,6 @@ class AuditController extends Controller
 
     public function store_audit(Request $request)
     {
-
-        // // VALIDATION
-
-        $closureStatus = $request->input('closure_status', []);
-        $closureRemarks = $request->input('closure_remarks', []);
-        $closureTimeline = $request->input('non_closure_timeline', []);
-
-        $errors = [];
-
-        foreach ($closureStatus as $id => $status) {
-            if ($status === 'open') {
-                if (empty($closureRemarks[$id])) {
-                    $errors["closure_remarks.$id"] = "Closure Remarks is required";
-                }
-            }
-
-            if ($status === 'closed') {
-                if (empty($closureRemarks[$id])) {
-                    $errors['closure_remarks.$id'] = "Closure Remarks is required";
-                }
-
-                if (empty($closureTimeline[$id])) {
-                    $errors['non_closure_timeline.$id'] = "Non Closure Timeline is required";
-                }
-            }
-        }
-
-        //  RETURN VALIDATION ERRORS
-
-        if (!empty($errors)) {
-            return redirect()
-                ->back()
-                ->withErrors($errors)
-                ->withInput();
-        }
-
-        // SAVE CLOSURE DETAILS
-
-foreach($closureStatus as $id => $status){
-    if(empty($status)){
-        continue;
-    }
-
-    $auditResult = AuditResult::where('sub_parameter_id', $id)
-    ->where('audit_id', $request->audit_id)
-    ->first();
-
-    if($auditResult){
-        $auditResult->closure_status = $status;
-        $auditResult->closure_remarks= $closureRemarks[$id] ?? null;
-        $auditResult->non_closure_remarks= $closureTimeline[$id] ?? null;
-        $auditResult->save();
-    }
-    } 
         // dd($request->all());
         $user_role = Auth::user()->roles()->first()->name; // Get the user's role name
         $audit_agency_id = null; // Initialize variable
@@ -1936,6 +1882,11 @@ foreach($closureStatus as $id => $status){
 
                                 $new_arc->is_alert = (array_key_exists('ackalert', $value_sb) && $value_sb['ackalert'] == 1) ? 1 : 0;
 
+                                // new added fields
+                                $new_arc->closure_status =    ($value_sb['closure_status']) ?? null;
+                                $new_arc->closure_remark = ($value_sb['closure_remark']) ?? null;
+                                $new_arc->non_closure_timeline = ($value_sb['non_closure_timeline']) ?? null;
+ 
                                 if ($value_sb['score'] != 'rating') {
 
                                     $new_arc->score = ($value_sb['score'] != 'Critical') ? $value_sb['score'] : 0;

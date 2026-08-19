@@ -619,7 +619,9 @@
 }
 
 /* All three fields */
-.closure-input-meeting .closure-field {
+.closure-input-meeting .closure-remark,
+.closure-input-meeting .closure-status,
+.closure-input-meeting .non-closure-timeline {
     display: block;
     width: 100% !important;
     height: 40px !important;
@@ -631,7 +633,7 @@
 }
 
 /* Remarks textarea */
-.closure-input-meeting textarea.closure-field {
+.closure-input-meeting textarea.closure-remark {
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
@@ -640,14 +642,14 @@
 }
 
 /* Select */
-.closure-input-meeting select.closure-field {
+.closure-input-meeting select.closure-status {
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
 }
 
 /* Date */
-.closure-input-meeting input.closure-field {
+.closure-input-meeting input.non-closure-timeline {
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
@@ -733,7 +735,6 @@ Messages
 					<div class="row">
 						@if($data->type=='branch')
 							
-				
 							<div class="col-md-3 form-group">
 								<label>Branch*</label>
 								<select name="branch" class="form-control branch js-example-basic-single" id="audit_for">
@@ -935,7 +936,7 @@ Messages
                      <ul class="nav nav-tabs" id="parameterTabs" role="tablist">
             @foreach ($data->parameter as $index => $item)
                 <li class="nav-item">
-                    <a class="nav-link {{ $index === 0 ? 'active' : '' }}" id="tab-{{ $item->id }}" data-toggle="tab"
+                    <a class="nav-link {{ $index === 0 ? 'active' : '' }}" id="tab-{{ $item->id }}"  data-tab-toggle="tab"  
                         href="#param-{{ $item->id }}" role="tab" aria-controls="param-{{ $item->id }}"
                         aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
                         {{ $item->parameter }}
@@ -943,73 +944,69 @@ Messages
                 </li> 
             @endforeach
         </ul>
-
-
-
-
 					<div class="tab-content mt-4" id="parameterTabContent">
             @foreach ($data->parameter as $index => $item)
                 @php
                  $total = 0; 
                 @endphp
 
-                <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="param-{{ $item->id }}"
-                    role="tabpanel" aria-labelledby="tab-{{ $item->id }}">
-                    <div class="parameter-section mb-5">
-                        <div class="row font-weight-bold mb-2">
-                            <div class="col-md-6">Sub Parameter</div>
-                            <div class="col-md-3">Observation</div>
-                            {{-- <div class="col-md-3">Scored</div> --}}
-                            <div class="col-md-3">Action</div>
-                        </div>
+                    <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="param-{{ $item->id }}"
+                        role="tabpanel" aria-labelledby="tab-{{ $item->id }}">
+                        <div class="parameter-section mb-5">
+                            <div class="row font-weight-bold mb-2">
+                                <div class="col-md-6">Sub Parameter</div>
+                                <div class="col-md-3">Observation</div>
+                                {{-- <div class="col-md-3">Scored</div> --}}     
+                                <div class="col-md-3">Action</div>
+                            </div>
 
-                @foreach ($item->qm_sheet_sub_parameter as $value)               
-                                <div class="row align-items-start mb-3 border-bottom pb-3">
+                    @foreach ($item->qm_sheet_sub_parameter as $value)               
+                                    <div class="row align-items-start mb-3 border-bottom pb-3">
 
-                                    {{-- Sub Parameter --}}
-                                    <div class="col-md-6">
-                                        {{ $value->sub_parameter }}
-                                        <i title="More info" 
-                                        class="la la-info-circle kt-font-warning sp-details-top"></i>
-                                    </div>
+                                        {{-- Sub Parameter --}}
+                                        <div class="col-md-6">
+                                            {{ $value->sub_parameter }}
+                                            <i title="More info" 
+                                            class="la la-info-circle kt-font-warning sp-details-top"></i>
+                                        </div>
 
-                                    {{-- Observation --}}
-                                    <div class="col-md-3">
-                                        <select class="form-control observation"
-                                            id="obs{{ $value->id }}"
-                                            data-id="{{ $value->id }}"
-                                            data-parameterId="{{ $item->id }}"
-                                            data-point="{{ $value->weight }}">
+                                        {{-- Observation --}}
+                                        <div class="col-md-3">
+                                            <select class="form-control observation"
+                                                id="obs{{ $value->id }}"
+                                                data-id="{{ $value->id }}"
+                                                data-parameterId="{{ $item->id }}"
+                                                data-point="{{ $value->weight }}">
 
-                                            <option value="0">Choose type</option>
+                                                <option value="0">Choose type</option>
 
-                                            @if ($value->pass == 1)
-                                                <option value="{{ $value->weight }}">Satisfactory</option>
-                                            @endif
+                                                @if ($value->pass == 1)
+                                                    <option value="{{ $value->weight }}">Satisfactory</option>
+                                                @endif
 
-                                            @if ($value->fail == 1)
-                                                <option value="unsatisfactory">Unsatisfactory</option>
-                                            @endif
+                                                @if ($value->fail == 1)
+                                                    <option value="unsatisfactory">Unsatisfactory</option>
+                                                @endif
 
-                                            @if ($value->critical == 1)
-                                                <option value="Critical">Critical</option>
-                                            @endif
+                                                @if ($value->critical == 1)
+                                                    <option value="Critical">Critical</option>
+                                                @endif
 
-                                            @if ($value->na == 1)
-                                                <option value="N/A">N/A</option>
-                                            @endif
+                                                @if ($value->na == 1)
+                                                    <option value="N/A">N/A</option>
+                                                @endif
 
-                                            @if ($value->pwd == 1)
-                                                <option value="{{ round(($value->weight) / 2, 2) }}">PWD</option>
-                                            @endif
+                                                @if ($value->pwd == 1)
+                                                    <option value="{{ round(($value->weight) / 2, 2) }}">PWD</option>
+                                                @endif
 
-                                            @if ($value->per == 1)
-                                                <option value="{{ round($value->weight) }}" data-type="rating">
-                                                    Percentage
-                                                </option>
-                                            @endif
-                                        </select>
-
+                                                @if ($value->per == 1)
+                                                    <option value="{{ round($value->weight) }}" data-type="rating">
+                                                        Percentage
+                                                    </option>
+                                                @endif
+                                            </select>
+<div id="observationError{{ $value->id }}" class="text-danger small mt-1"></div>
                                            {{-- Error Count --}}
                                         @if (in_array(22, $allocatedmodule) && $value->use_error_count == 1)
                                         
@@ -1164,13 +1161,11 @@ Messages
                                                                                   data-id="{{ $value->id }}">
                                                                                   🎤 Speak Remark
                                                                            </button>
-
                                                                </div>
                                                           </div>
-       
-                        
 
-                                  {{-- Closure Meeting Input: full width, hidden by default --}}
+{{-- Closure Meeting Input: full width, hidden by default --}}
+
                                     <div class="col-md-12">
 
                                         <div id="closureInputMeeting{{ $value->id }}"
@@ -1181,18 +1176,20 @@ Messages
                                                     <h5 class="closureTitle 
                                                         mb-3">Closure Meeting Input
                                                     </h5>
-                                                
-                                                     <div class="row g-3">
 
+                                                      {{-- <form class="closureForm" method="POST"> --}}
+
+                                                     <div class="row g-3">
+                                                     
                                                     <!-- Closure Status -->
-                                                        <div class="col-md-4">
+                                                        <div class="form-group col-md-4">
                                                             <label class="form-label ">
                                                                 Closure Status
                                                             </label>
                                                             
                                                             <select 
                                                               name="closure_status[{{ $value->id }}]" 
-                                                              class="form-control closure-field">
+                                                              class="form-control closure-status">
 
                                                                 <option value="">---Select Closure Status---</option>
                                                                 <option value="open">Open</option>
@@ -1201,36 +1198,43 @@ Messages
                                                         </div>
 
                                                         <!-- Closure Remarks -->
-                                                        <div class="col-md-4">
+                                                        <div class="form-group col-md-4">
 
                                                          <label class="form-label">
                                                             Closure Remarks*
                                                          </label>
 
                                                           <textarea
+                                                          placeholder="Enter your Closure Remark"
                                                              name="closure_remarks[{{ $value->id }}]"
-                                                             class="form-control closure-field"
-                                                             rows="1">
-                                                           </textarea>
+                                                             class="form-control closure-remark"
+                                                             rows="1"></textarea>
                                                         </div>
 
                                                             <!-- Timeline -->
-                                                            <div class="col-md-4">
+                                                            <div class="form-group col-md-4">
 
                                                               <label class="form-label">
                                                                 Timelines for Non-Closure Points
                                                                </label>
 
                                                              <input type="date" 
-                                                                    class="form-control closure-field"
+                                                                    class="form-control non-closure-timeline"
                                                                     name="non_closure_timeline[{{ $value->id }}]">
                                                             </div>
                                                         </div>
+                                                        <!-- Error at bottom -->
+                                                        <div class="alert alert-danger closure-validation-error"
+                                                              style="display: none;">
+                                                        </div>
+                                        {{-- </form> --}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                               
+                                        
+                                    
                                                                 {{-- TOTAL CALCULATION --}}
                                                  @php
                                                     $total += $value->weight;
@@ -4058,6 +4062,133 @@ $(document).on('click','.closureArtifactBtn',function(){
     }
 });  
 </script>
+<script>
+$(document).ready(function () {
 
+    // ---- Validates one observation select, writes inline message ----
+    function validateObservationField($select) {
+        const $errorDiv = $('#observationError' + $select.data('id'));
+        const selectedText = $select.find('option:selected').text().trim();
+
+        if (!$select.val() || selectedText === 'Choose type') {
+            $select.addClass('is-invalid');
+            $errorDiv.text('Please select an observation.').show();
+            return false;
+        }
+
+        $select.removeClass('is-invalid');
+        $errorDiv.text('').hide();
+        return true;
+    }
+
+    // ---- Validates one closure box, writes inline message ----
+ function validateClosureBox($closureBox) {
+    if ($closureBox.hasClass('d-none') || !$closureBox.is(':visible')) {
+        return true;
+    }
+
+    const $errorDiv = $closureBox.find('.closure-validation-error');
+    const $statusField = $closureBox.find('.closure-status');
+    const $remarkField = $closureBox.find('.closure-remark');
+    const $timelineField = $closureBox.find('.non-closure-timeline');
+
+    const closureStatus = $statusField.val();
+    const closureRemark = $remarkField.val();
+    const timeline = $timelineField.val();
+
+    let missing = [];
+    let isValid = true;
+
+    $statusField.removeClass('is-invalid');
+    $remarkField.removeClass('is-invalid');
+    $timelineField.removeClass('is-invalid');
+
+    // Closure Remarks — required in BOTH open and closed
+    if (!closureRemark || String(closureRemark).trim() === '') {
+        isValid = false;
+        missing.push('Closure Remarks');
+        $remarkField.addClass('is-invalid');
+    }
+
+    // Timeline — required ONLY when status is "closed"
+    if (closureStatus && String(closureStatus).toLowerCase().trim() === 'closed') {
+        if (!timeline || String(timeline).trim() === '') {
+            isValid = false;
+            missing.push('Timeline for Non-Closure');
+            $timelineField.addClass('is-invalid');
+        }
+    }
+
+    if (!isValid) {
+        $errorDiv.html(missing.join(', ') + (missing.length > 1 ? ' are required.' : ' is required.')).show();
+    } else {
+        $errorDiv.hide().html('');
+    }
+
+    return isValid;
+}
+
+    // ===== INLINE, quiet validation — fires on blur/change, no alert =====
+
+    $(document).on('blur change', '.observation', function () {
+        validateObservationField($(this));
+    });
+
+    $(document).on('blur change', '.closure-status, .closure-remark, .non-closure-timeline', function () {
+        const $closureBox = $(this).closest('.closure-input-meeting');
+        validateClosureBox($closureBox);
+    });
+
+    // ===== TAB SWITCH — blocks + shows alert =====
+
+    $(document).on('click', '#parameterTabs a[data-tab-toggle="tab"]', function (e) {
+
+        e.preventDefault();
+
+        const currentTab = $('#parameterTabs .nav-link.active').attr('href');
+        const targetTab = $(this).attr('href');
+        const $targetLink = $(this);
+
+        if (currentTab === targetTab) {
+            return;
+        }
+
+        let isValid = true;
+        let $firstInvalidField = null;
+
+        // Only check fields belonging to the CURRENT (still visible) tab-pane
+        const $activePane = $('#parameterTabContent .tab-pane.active');
+
+        $activePane.find('.observation').each(function () {
+            if (!validateObservationField($(this))) {
+                isValid = false;
+                if (!$firstInvalidField) $firstInvalidField = $(this);
+            }
+        });
+
+        $activePane.find('.closure-input-meeting').each(function () {
+            const $closureBox = $(this);
+            if (!validateClosureBox($closureBox)) {
+                isValid = false;
+                if (!$firstInvalidField) $firstInvalidField = $closureBox.find('.is-invalid').first();
+            }
+        });
+
+        if (!isValid) {
+            alert('Please complete all Closure Input Meeting fields before moving to another tab.');
+
+            if ($firstInvalidField && $firstInvalidField.length) {
+                $firstInvalidField.focus();
+                $('html, body').animate({
+                    scrollTop: $firstInvalidField.offset().top - 150
+                }, 300);
+            }
+            return;
+        }
+
+        $targetLink.tab('show');
+    });
+});
+</script>
 
 @endsection
