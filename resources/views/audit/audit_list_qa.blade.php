@@ -155,6 +155,11 @@
                                                     <a href="{{ url('submitted-audit-data-v2/' . $row->id) }}"
                                                         class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View"><i
                                                             class="fa fa-eye"></i></a>
+                                                    <a href="{{ route('audit.v2.remark-update_view', $row->id) }}"
+                                                        class="btn btn-sm btn-clean btn-icon btn-icon-md"
+                                                        title="Update Remarks">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
                                                     {{-- <a href="{{ url('audit_detail/'.Crypt::encrypt($row->id).'/view') }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View"><i class="fa fa-eye"></i></a> --}}
                                                 @else
                                                     <a href="{{ url('audit_detail/' . Crypt::encrypt($row->id) . '/view') }}"
@@ -166,6 +171,11 @@
                                                 {{-- @if ($user->hasRole(['Admin', 'Quality Control', 'Client']))
                                                 <a href="{{ url('audit_sheet/'.Crypt::encrypt($row->id).'/qcedit') }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="QC Edit"><i class="fa fa-edit"></i></a>
                                             @endif --}}
+                                              <a href="{{ route('audit.v2.remark-qc', $row->id) }}"
+                                                        class="btn btn-sm btn-clean btn-icon btn-icon-md"
+                                                        title="Update Remarks">
+                                                       QC
+                                                    </a>
                                                 <a href="{{ route('audit.downloadArtifactsall', $row->id) }}"
                                                     class="btn btn-sm btn-warning">
                                                     Download Artifacts

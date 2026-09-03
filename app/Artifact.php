@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Artifact extends Model
 {
 
-protected $table = 'audit_closure_artifacts';
-
     protected $fillable=['sheet_id','parameter_id','sub_parameter_id','file','audit_id','client_id', 'parameter_index', 'brand'];
     public function sheet()
     {

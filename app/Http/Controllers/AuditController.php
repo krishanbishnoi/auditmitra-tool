@@ -1886,7 +1886,7 @@ class AuditController extends Controller
                                 $new_arc->closure_status =    ($value_sb['closure_status']) ?? null;
                                 $new_arc->closure_remark = ($value_sb['closure_remark']) ?? null;
                                 $new_arc->non_closure_timeline = ($value_sb['non_closure_timeline']) ?? null;
- 
+
                                 if ($value_sb['score'] != 'rating') {
 
                                     $new_arc->score = ($value_sb['score'] != 'Critical') ? $value_sb['score'] : 0;
@@ -7588,4 +7588,901 @@ class AuditController extends Controller
 
         return back()->with('success', 'Audit QC Approved successfully.');
     }
+
+    public function submittedAuditDataViewV2UpdateView($audit_id)
+    {
+
+
+        $auditDetails = DB::table('audits')
+
+            ->leftJoin(
+                'agencies',
+                'agencies.id',
+                '=',
+                'audits.agency_id'
+            )
+
+            ->select(
+
+                'audits.agency_id',
+
+                'agencies.name as agency_name',
+
+                'audits.audit_date_by_aud',
+
+                'agencies.address',
+
+                'audits.agency_city',
+
+                'audits.agency_location',
+
+                'audits.present_auditor',
+
+                DB::raw("
+                CONCAT(
+                    audits.latitude,
+                    ',',
+                    audits.longitude
+                ) as lat_long
+            ")
+            )
+
+            ->where('audits.id', $audit_id)
+
+            ->first();
+
+
+
+        $results = DB::table('audit_result_v2 as ar')
+
+            ->leftJoin(
+                'qm_sheet_parameters as qp',
+                'qp.id',
+                '=',
+                'ar.parameter_id'
+            )
+
+            ->leftJoin(
+                'qm_sheet_sub_parameters as qsp',
+                'qsp.id',
+                '=',
+                'ar.sub_parameter_id'
+            )
+
+            ->select(
+
+                'ar.id',
+                'ar.location',
+
+                'ar.campus_type',
+
+                'ar.pillar',
+
+                'ar.touch_point',
+
+                'ar.parameter_id',
+
+                'ar.parameter_index',
+
+                'ar.parameter_tag',
+
+                'qp.parameter as parameter_name',
+
+                'ar.sub_parameter_id',
+
+                'qsp.sub_parameter as sub_parameter_name',
+
+                'qsp.pass',
+
+                'qsp.fail',
+
+                'qsp.na',
+
+                'ar.option_selected',
+
+                'ar.remark',
+
+                'ar.score',
+
+                'ar.scorable',
+
+                'ar.compliance_experience'
+
+
+            )
+
+            ->where('ar.audit_id', $audit_id)
+
+            ->orderBy('ar.location')
+
+            ->orderBy('ar.campus_type')
+
+            ->orderBy('ar.parameter_id')
+
+            ->orderBy('ar.parameter_index')
+
+            ->get();
+
+
+
+        $finalData = [];
+
+        foreach ($results as $row) {
+
+            $locationKey =
+                $row->location . '_' .
+                $row->campus_type;
+
+
+
+            if (!isset($finalData[$locationKey])) {
+
+                $finalData[$locationKey] = [
+
+                    'location' => $row->location,
+
+                    'campus_type' => $row->campus_type,
+
+                    'data' => []
+                ];
+            }
+
+
+
+            $parameterKey =
+                $row->parameter_id . '_' .
+                $row->parameter_index;
+
+            if (!isset(
+                $finalData[$locationKey]['data'][$parameterKey]
+            )) {
+
+                $finalData[$locationKey]['data'][$parameterKey] = [
+
+                    'parameter_id' => $row->parameter_id,
+
+                    'parameter_index' => $row->parameter_index,
+
+                    'parameter_name' => $row->parameter_name,
+
+                    'parameter_tag' => $row->parameter_tag,
+
+                    'total_score' => 0,
+
+                    'total_scorable' => 0,
+
+                    'subparameter' => []
+                ];
+            }
+
+
+
+            $finalData[$locationKey]['data'][$parameterKey]['total_score']
+                += $row->score;
+
+            $finalData[$locationKey]['data'][$parameterKey]['total_scorable']
+                += $row->scorable;
+
+
+
+            $artifactQuery = Artifact::where(
+                'audit_id',
+                $audit_id
+            )
+
+                ->where(
+                    'parameter_id',
+                    $row->parameter_id
+                )
+
+                ->where(
+                    'parameter_index',
+                    $row->parameter_index
+                )
+
+                ->where(
+                    'sub_parameter_id',
+                    $row->sub_parameter_id
+                );
+
+            $artifacts = $artifactQuery->get();
+
+
+
+            foreach ($artifacts as $artifact) {
+
+                $artifact->file =
+                    URL::to('/') .
+                    '/storage/app/' .
+                    $artifact->file;
+            }
+
+            $finalData[$locationKey]['data'][$parameterKey]['subparameter'][] = [
+
+                'id' => $row->sub_parameter_id,
+
+                'subparam_name' => $row->sub_parameter_name,
+
+                'pillar' => $row->pillar,
+
+                'touch_point' => $row->touch_point,
+
+                'option_selected' => $row->option_selected,
+
+                'remark' => $row->remark,
+                'que_remark_id' => $row->id,
+
+                'score' => $row->score,
+
+                'scorable' => $row->scorable,
+
+                'compliance_experience' =>
+                $row->compliance_experience,
+
+                'pass' => $row->pass,
+                'fail' => $row->fail,
+                'na' => $row->na,
+
+                'artifacts' => $artifacts
+            ];
+        }
+
+        $submittedAuditData = [];
+
+        foreach ($finalData as $location) {
+
+            $location['data'] =
+                array_values($location['data']);
+
+            $submittedAuditData[] = $location;
+        }
+
+
+        $parameterResults = DB::table('audit_result_v2 as ar')
+
+            ->leftJoin(
+                'qm_sheet_parameters as qp',
+                'qp.id',
+                '=',
+                'ar.parameter_id'
+            )
+
+            ->select(
+
+                'ar.parameter_id',
+
+                'ar.parameter_index',
+
+                'ar.parameter_tag',
+
+                'qp.parameter as parameter_name',
+
+                DB::raw('SUM(ar.score) as total_score'),
+
+                DB::raw('SUM(ar.scorable) as total_scorable'),
+
+                DB::raw('
+                CASE 
+                    WHEN SUM(ar.scorable) > 0 
+                    THEN ROUND(
+                        (SUM(ar.score) / SUM(ar.scorable)) * 100,
+                        2
+                    )
+                    ELSE 0
+                END as percentage
+            ')
+            )
+
+            ->where('ar.audit_id', $audit_id)
+
+            ->groupBy(
+                'ar.parameter_id',
+                'ar.parameter_index',
+                'qp.parameter',
+                'ar.parameter_tag'
+            )
+
+            ->get();
+
+        $weights = DB::table('mapping_master')
+            ->select(
+                'pillar',
+                DB::raw('MAX(pillar_weight) as pillar_weight')
+            )
+            ->groupBy('pillar');
+
+        $pillarData = DB::table('audit_result_v2 as ar')
+            ->leftJoinSub($weights, 'mm', function ($join) {
+                $join->on('ar.pillar', '=', 'mm.pillar');
+            })
+            ->select(
+                'ar.pillar',
+                DB::raw('SUM(ar.score) as total_score'),
+                DB::raw('SUM(ar.scorable) as total_scorable'),
+                DB::raw('COALESCE(mm.pillar_weight, 0) as pillar_weight')
+            )
+            ->where('ar.audit_id', $audit_id)
+            ->groupBy(
+                'ar.pillar',
+                'mm.pillar_weight'
+            )
+            ->get()
+            ->map(function ($pillar) {
+
+                $pillarPercentage = $pillar->total_scorable > 0
+                    ? round(
+                        ($pillar->total_score / $pillar->total_scorable) * 100,
+                        2
+                    )
+                    : 0.00;
+
+                $pillar->percentage = $pillarPercentage;
+
+                $pillar->weighted_score = round(
+                    ($pillarPercentage * $pillar->pillar_weight) / 100,
+                    2
+                );
+
+                return $pillar;
+            });
+
+        $overallPillarResult = [
+
+            'total_weighted_score' => round(
+                $pillarData->sum('weighted_score'),
+                2
+            ),
+
+            'total_pillar_weight' => round(
+                $pillarData->sum('pillar_weight'),
+                2
+            ),
+
+            'final_percentage' => round(
+                $pillarData->sum('weighted_score'),
+                2
+            )
+        ];
+
+        /*
+    |--------------------------------------------------------------------------
+    | Overall Result
+    |--------------------------------------------------------------------------
+    */
+
+        $overallResult = [
+
+            'parameter_wise_result' => $parameterResults,
+
+            'pillar_wise_result' => [
+
+                'pillar_data' => $pillarData,
+
+                'overall_pillar_result' =>
+                $overallPillarResult
+            ]
+        ];
+
+        //    | Return View
+
+        return view(
+            'audit.submitted_audit_data_v2_update',
+            compact(
+                'auditDetails',
+                'submittedAuditData',
+                'overallResult'
+            )
+        );
+    }
+    public function submittedAuditDataViewV2Save(Request $request)
+    {
+        //         dd(
+        //     $request->que_remark_id,
+        //     $request->option_selected
+        // );
+        $request->validate([
+            'que_remark_id' => 'required|array',
+            'remark'        => 'nullable|array',
+            'option_selected' => 'nullable|array',
+        ]);
+
+        foreach ($request->que_remark_id as $id) {
+
+            $optionSelected = $request->option_selected[$id] ?? null;
+
+            // Get current scorable value from DB
+            $currentResult = DB::table('audit_result_v2 as ar')
+                ->leftjoin(
+                    'qm_sheet_sub_parameters as qsp',
+                    'qsp.id',
+                    '=',
+                    'ar.sub_parameter_id'
+                )
+                ->where('ar.id', $id)
+                ->select(
+                    'ar.option_selected as old_option',
+                    'ar.score as old_score',
+                    'ar.scorable as old_scorable',
+                    'qsp.weight'
+                )
+                    ->first();
+
+            if (!$currentResult) {
+                continue;
+            }
+
+            $oldOption = $currentResult->old_option;
+            $oldScore = $currentResult->old_score;
+            $oldScorable = $currentResult->old_scorable;
+            $weight = (float) $currentResult->weight;
+
+
+            if ($optionSelected === 'Satisfactory') {
+                $dbOption = 'Yes';
+                if ($oldOption === 'Yes') {
+                    $score = $oldScore;
+                    $scorable = $oldScorable;
+                } else {
+                    $score = $weight;
+                    $scorable = $weight;
+                }
+            } elseif ($optionSelected === 'Unsatisfactory') {
+                $dbOption = 'No';
+                if ($oldOption === 'No') {
+                    $score = $oldScore;
+                    $scorable = $oldScorable;
+                } elseif ($oldOption === 'Yes') {
+                    $score = 0;
+                    $scorable = $oldScorable;
+                } else {
+                    // NA → Unsatisfactory
+                    $score = 0;
+                    $scorable = $weight;
+                }
+            } elseif ($optionSelected === 'NA') {
+                $dbOption = 'N/A';
+                $score = 0;
+                $scorable = 0;
+            } else {
+                continue;
+            }
+
+            DB::table('audit_result_v2')
+                ->where('id', $id)
+                ->update([
+                    'option_selected' => $dbOption,
+                    'remark' => $request->remark[$id] ?? '',
+                    'score' => $score,
+                    'scorable' => $scorable,
+                ]);
+
+            //                 if ($id == 1964) {
+            //     // dd([
+            //     //     'id' => $id,
+            //     //     'optionSelectedFromFrontend' => $optionSelected,
+            //     //     'dbOption' => $dbOption,
+            //     //     'updatedRows' => $currentResult,
+
+            //     //     'databaseAfterUpdate' => DB::table('audit_result_v2')
+            //     //         ->where('id', $id)
+            //     //         ->value('option_selected'),
+            //     // ]);
+            // }
+        }
+
+        return back()->with('success', 'Remarks & Observation updated successfully.');
+    }
+
+    public function generateAuditPdfWeb($audit_id)
+    {
+        try {
+
+            $auditorId = DB::table('audits')
+                ->where('id', $audit_id)
+                ->value('audited_by_id');
+
+            if (!$auditorId) {
+                return back()->with('error', 'Auditor not found.');
+            }
+
+            $response = Http::post(url('/api/v2/generate-audit-pdf/' . $audit_id), [
+                'user_id' => $auditorId,
+            ]);
+
+            if ($response->successful()) {
+                return back()->with('success', 'PDF generated successfully.');
+            }
+
+            return back()->with('error', $response->json()['message'] ?? 'PDF generation failed.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function submittedAuditDataViewV2Qc($audit_id)
+    {
+        $auditDetails = DB::table('audits')
+
+            ->leftJoin(
+                'agencies',
+                'agencies.id',
+                '=',
+                'audits.agency_id'
+            )
+
+            ->select(
+
+                'audits.agency_id',
+
+                'agencies.name as agency_name',
+
+                'audits.audit_date_by_aud',
+
+                'agencies.address',
+
+                'audits.agency_city',
+
+                'audits.agency_location',
+
+                'audits.present_auditor',
+
+                DB::raw("
+                CONCAT(
+                    audits.latitude,
+                    ',',
+                    audits.longitude
+                ) as lat_long
+            ")
+            )
+
+            ->where('audits.id', $audit_id)
+
+            ->first();
+
+        $results = DB::table('audit_result_v2 as ar')
+
+            ->leftJoin(
+                'qm_sheet_parameters as qp',
+                'qp.id',
+                '=',
+                'ar.parameter_id'
+            )
+
+            ->leftJoin(
+                'qm_sheet_sub_parameters as qsp',
+                'qsp.id',
+                '=',
+                'ar.sub_parameter_id'
+            )
+
+            ->select(
+
+                'ar.id',
+                'ar.location',
+
+                'ar.campus_type',
+
+                'ar.pillar',
+
+                'ar.touch_point',
+
+                'ar.parameter_id',
+
+                'ar.parameter_index',
+
+                'ar.parameter_tag',
+
+                'qp.parameter as parameter_name',
+
+                'ar.sub_parameter_id',
+
+                'qsp.sub_parameter as sub_parameter_name',
+
+                'ar.option_selected',
+
+                'ar.remark',
+
+                'ar.score',
+
+                'ar.scorable',
+
+                'ar.compliance_experience',
+
+                'qsp.pass',
+
+                'qsp.fail',
+
+                'qsp.na',
+            )
+
+            ->where('ar.audit_id', $audit_id)
+
+            ->orderBy('ar.location')
+
+            ->orderBy('ar.campus_type')
+
+            ->orderBy('ar.parameter_id')
+
+            ->orderBy('ar.parameter_index')
+
+            ->get();
+
+        $finalData = [];
+
+        foreach ($results as $row) {
+
+            $availableCategories = [];
+
+            if ((int) $row->pass === 1) {
+                $availableCategories[] = 'Satisfactory';
+            }
+            if ((int) $row->fail === 1) {
+                $availableCategories[] = 'Unsatisfactory';
+            }
+            if ((int) $row->na === 1) {
+                $availableCategories[] = 'NA';
+            }
+            $category = $row->option_selected;
+
+            $locationKey =
+                $row->location . '_' .
+                $row->campus_type;
+
+            if (!isset($finalData[$locationKey])) {
+
+                $finalData[$locationKey] = [
+
+                    'location' => $row->location,
+
+                    'campus_type' => $row->campus_type,
+
+                    'data' => []
+                ];
+            }
+
+            $parameterKey =
+                $row->parameter_id . '_' .
+                $row->parameter_index;
+
+            if (!isset(
+                $finalData[$locationKey]['data'][$parameterKey]
+            )) {
+
+                $finalData[$locationKey]['data'][$parameterKey] = [
+
+                    'parameter_id' => $row->parameter_id,
+
+                    'parameter_index' => $row->parameter_index,
+
+                    'parameter_name' => $row->parameter_name,
+
+                    'parameter_tag' => $row->parameter_tag,
+
+                    'total_score' => 0,
+
+                    'total_scorable' => 0,
+
+                    'subparameter' => []
+                ];
+            }
+
+            $finalData[$locationKey]['data'][$parameterKey]['total_score']
+                += $row->score;
+
+            $finalData[$locationKey]['data'][$parameterKey]['total_scorable']
+                += $row->scorable;
+
+            $artifactQuery = Artifact::where(
+                'audit_id',
+                $audit_id
+            )
+
+                ->where(
+                    'parameter_id',
+                    $row->parameter_id
+                )
+
+                ->where(
+                    'parameter_index',
+                    $row->parameter_index
+                )
+
+                ->where(
+                    'sub_parameter_id',
+                    $row->sub_parameter_id
+                );
+
+            $artifacts = $artifactQuery->get();
+
+            foreach ($artifacts as $artifact) {
+
+                $artifact->file =
+                    URL::to('/') .
+                    '/storage/app/' .
+                    $artifact->file;
+            }
+
+            $finalData[$locationKey]['data'][$parameterKey]['subparameter'][] = [
+
+                'id' => $row->sub_parameter_id,
+
+                'subparam_name' => $row->sub_parameter_name,
+
+                'pillar' => $row->pillar,
+
+                'touch_point' => $row->touch_point,
+
+                'option_selected' => $row->option_selected,
+
+                'remark' => $row->remark,
+                'que_remark_id' => $row->id,
+
+                'score' => $row->score,
+
+                'scorable' => $row->scorable,
+
+                'compliance_experience' =>
+                $row->compliance_experience,
+
+                'artifacts' => $artifacts,
+
+                // Category calculated from qsp
+                'category' => $category,
+                'available_categories' => $availableCategories,
+
+
+                // Keep these for dropdown
+                'pass' => $row->pass,
+                'fail' => $row->fail,
+                'na' => $row->na,
+            ];
+        }
+
+        $submittedAuditData = [];
+
+        foreach ($finalData as $location) {
+
+            $location['data'] =
+                array_values($location['data']);
+
+            $submittedAuditData[] = $location;
+        }
+
+        $parameterResults = DB::table('audit_result_v2 as ar')
+
+            ->leftJoin(
+                'qm_sheet_parameters as qp',
+                'qp.id',
+                '=',
+                'ar.parameter_id'
+            )
+
+            ->select(
+
+                'ar.parameter_id',
+
+                'ar.parameter_index',
+
+                'ar.parameter_tag',
+
+                'qp.parameter as parameter_name',
+
+                DB::raw('SUM(ar.score) as total_score'),
+
+                DB::raw('SUM(ar.scorable) as total_scorable'),
+
+                DB::raw('
+                CASE 
+                    WHEN SUM(ar.scorable) > 0 
+                    THEN ROUND(
+                        (SUM(ar.score) / SUM(ar.scorable)) * 100,
+                        2
+                    )
+                    ELSE 0
+                END as percentage
+            ')
+            )
+
+            ->where('ar.audit_id', $audit_id)
+
+            ->groupBy(
+                'ar.parameter_id',
+                'ar.parameter_index',
+                'qp.parameter',
+                'ar.parameter_tag'
+            )
+
+            ->get();
+
+        $weights = DB::table('mapping_master')
+            ->select(
+                'pillar',
+                DB::raw('MAX(pillar_weight) as pillar_weight')
+            )
+            ->groupBy('pillar');
+
+        $pillarData = DB::table('audit_result_v2 as ar')
+            ->leftJoinSub($weights, 'mm', function ($join) {
+                $join->on('ar.pillar', '=', 'mm.pillar');
+            })
+            ->select(
+                'ar.pillar',
+                DB::raw('SUM(ar.score) as total_score'),
+                DB::raw('SUM(ar.scorable) as total_scorable'),
+                DB::raw('COALESCE(mm.pillar_weight, 0) as pillar_weight')
+            )
+            ->where('ar.audit_id', $audit_id)
+            ->groupBy(
+                'ar.pillar',
+                'mm.pillar_weight'
+            )
+            ->get()
+            ->map(function ($pillar) {
+
+                $pillarPercentage = $pillar->total_scorable > 0
+                    ? round(
+                        ($pillar->total_score / $pillar->total_scorable) * 100,
+                        2
+                    )
+                    : 0.00;
+
+                $pillar->percentage = $pillarPercentage;
+
+                $pillar->weighted_score = round(
+                    ($pillarPercentage * $pillar->pillar_weight) / 100,
+                    2
+                );
+
+                return $pillar;
+            });
+
+        $overallPillarResult = [
+
+            'total_weighted_score' => round(
+                $pillarData->sum('weighted_score'),
+                2
+            ),
+
+            'total_pillar_weight' => round(
+                $pillarData->sum('pillar_weight'),
+                2
+            ),
+
+            'final_percentage' => round(
+                $pillarData->sum('weighted_score'),
+                2
+            )
+        ];
+
+        /*
+    |--------------------------------------------------------------------------
+    | Overall Result
+    |--------------------------------------------------------------------------
+    */
+
+        $overallResult = [
+
+            'parameter_wise_result' => $parameterResults,
+
+            'pillar_wise_result' => [
+
+                'pillar_data' => $pillarData,
+
+                'overall_pillar_result' =>
+                $overallPillarResult
+            ]
+        ];
+
+        //    | Return View
+
+        return view(
+            'audit.submitted_audit_data_v2_update-qc',
+            compact(
+                'auditDetails',
+                'submittedAuditData',
+                'overallResult'
+            )
+        );
+    }
 }
+        

@@ -322,6 +322,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::any('edit-audit-cycle/{id}', 'AuditController@editCycle');
 
 
+    
+Route::get('submitted-audit-data-v2/{audit_id}', 'AuditController@submittedAuditDataViewV2');
+
+Route::get('submitted-audit-data-v2-update/{audit_id}', 'AuditController@submittedAuditDataViewV2UpdateView')->name('audit.v2.remark-update_view');
+Route::post('submitted-audit-data-v2', 'AuditController@submittedAuditDataViewV2Save')->name('audit.v2.remark-update');
+
+Route::get('submitted-audit-data-v2-qc/{audit_id}', 'AuditController@submittedAuditDataViewV2Qc')->name('audit.v2.remark-qc');
+
+
 
     // Audit Allocation Upload Client
     // Route::resource('audit_allocation','AuditAllocationController');
