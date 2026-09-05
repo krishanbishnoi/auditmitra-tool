@@ -624,6 +624,7 @@ class UserController extends Controller
         $defaultPassword = 'Admin@123';
         // Logout current user
         Auth::logout();
+        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

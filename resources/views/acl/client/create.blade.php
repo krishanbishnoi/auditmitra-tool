@@ -176,6 +176,83 @@
 
             </div>
 
+            {{-- New field added for client create  --}}
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Agency Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="agency_name_for_client"
+                        placeholder="Agency Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Agency Repo Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="agency_repo_name_for_client"
+                        placeholder="Agency Repo Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Yard Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="yard_name_for_client"
+                        placeholder="Yard Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Yard Repo Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="yard_repo_name_for_client"
+                        placeholder="Yard Repo Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Branch Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="branch_name_for_client"
+                        placeholder="Branch Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+
+            <div class="row form-group">
+
+                <div class="col col-md-3"><label for="email-input" class=" form-control-label">Branch Repo Name for Client</label>
+                </div>
+
+                <div class="col-12 col-md-9"><input type="text" id="email-input" name="branch_repo_name_for_client"
+                        placeholder="Branch Repo Name for Client" class="form-control">
+
+                </div>
+
+            </div>
+
+               {{-- end --}}
+
             <div class="row form-group">
                 <div class="col col-md-3">
                     <label class="form-control-label">Audit Type</label>
@@ -190,7 +267,7 @@
                         </label>
                     </div>
 
-                    <div class="form-check">
+                        <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="is_compliance" id="is_compliance"
                             value="1" {{ old('is_compliance') ? 'checked' : '' }}>
                         <label class="form-check-label" for="is_compliance">
@@ -199,6 +276,9 @@
                     </div>
                 </div>
             </div>
+
+
+
 
             <div class="row form-group">
 

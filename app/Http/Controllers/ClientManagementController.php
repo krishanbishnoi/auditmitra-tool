@@ -43,7 +43,7 @@ use App\Imports\UsersImport;
 use Illuminate\Support\Str;
 use App\Client;
 use App\Helpers\Helper;
-
+use App\Model\ClientMasterSetting;
 
 class ClientManagementController extends Controller
 {
@@ -89,7 +89,6 @@ class ClientManagementController extends Controller
         return view("acl.client.list", ["data" => $data]);
     }
 
-
     public function create()
     {
         $userRole = auth()->user()->roles->first();
@@ -101,7 +100,6 @@ class ClientManagementController extends Controller
         } else {
             $roles = Role::where('name', '!=', 'Quality Auditor')->where('name', '!=', 'Client')->pluck('name', 'id')->toArray();
         }
-
         return view("acl.client.create", compact("roles"));
     }
 
@@ -166,6 +164,31 @@ class ClientManagementController extends Controller
         $data->client_id = $data->id;
         $data->save();
 
+        // new code  client field name and value added here
+
+        $settings = [
+            'agency_name_for_client' => $request->agency_name_for_client,
+            'agency_repo_name_for_client' => $request->agency_repo_name_for_client,
+            'yard_name_for_client' => $request->yard_name_for_client,
+            'yard_repo_name_for_client' => $request->yard_repo_name_for_Client,
+            'branch_name_for_client' => $request->branch_name_for_client,
+            'branch_repo_name_for_client' => $request->branch_repo_name_for_client,
+        ];
+
+        foreach ($settings as $fieldName => $fieldValue) {
+
+            ClientMasterSetting::create([
+                'field_name' => $fieldName,
+                'field_value' => $fieldValue,
+                'client_id' => $data->id,
+                'created_at' => NOW(),
+                'updated_at' => NOW()
+            ]);
+        }
+
+        //  end
+
+
         $getClientInfo = Client::where('client_id', $data->id)->first();
 
         $cinfodata['client_id'] = $data->id;
@@ -191,7 +214,6 @@ class ClientManagementController extends Controller
 
         return redirect("client")->with("success", "User created successfully.");
     }
-
 
 
 
@@ -230,7 +252,14 @@ class ClientManagementController extends Controller
             ->roles->pluck("id")
             ->toArray();
 
-        return view("acl.client.edit", compact("roles", "data", "rdata"));
+        // new code for edit the clients fields
+
+        $clientSettings = ClientMasterSetting::where('client_id', $data->id)
+            ->pluck('field_value', 'field_name');
+
+        // end
+
+        return view("acl.client.edit", compact("roles", "data", "rdata", "clientSettings"));
     }
 
     public function update(Request $request, $id)
@@ -242,6 +271,12 @@ class ClientManagementController extends Controller
             "role" => "required",
             "color_code" => "nullable|regex:/^#[0-9A-Fa-f]{6}$/",
             "logo" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "agency_name_for_client" => "nullable|string|max:255",
+            "agency_repo_name_for_client" => "nullable|string|max:255",
+            "yard_name_for_client" => "nullable|string|max:255",
+            "yard_repo_name_for_client" => "nullable|string|max:255",
+            "branch_name_for_client" => "nullable|string|max:255",
+            "branch_repo_name_for_client" => "nullable|string|max:255", 
         ]);
 
         if ($validator->fails()) {
@@ -270,6 +305,25 @@ class ClientManagementController extends Controller
             }
 
             $user->save();
+
+            // new updated code for the clients
+
+            $settings = [
+                'agency_name_for_client' => $request->agency_name_for_client,
+                'agency_repo_name_for_client' => $request->agency_repo_name_for_client,
+                'yard_name_for_client' => $request->yard_name_for_client,
+                'yard_repo_name_for_client' => $request->yard_repo_name_for_client,
+                'branch_name_for_client' => $request->branch_name_for_client,
+                'branch_repo_name_for_client' => $request->branch_repo_name_for_client,
+            ];
+
+            foreach ($settings as $fieldName => $fieldValue) {
+                ClientMasterSetting::updateorCreate(
+                    ['client_id' => $user->id, 'field_name' => $fieldName],
+                    ['field_value' => $fieldValue]
+                );
+            }
+            // end
 
             $getClientInfo = Client::where('client_id', $user->id)->first();
 
