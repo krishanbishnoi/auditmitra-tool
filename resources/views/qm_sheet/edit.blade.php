@@ -71,9 +71,9 @@ Edit
             <select name="type" class="form-control" id="sheet-type">
               <option value="">Choose Sheet Type</option>
               <option value="branch" {{ ($data->type == 'branch') ? 'selected' : '' }}>Branch</option>
-              <option value="agency" {{ ($data->type == 'agency') ? 'selected' : '' }}>Agency</option>
+              <option value="agency" {{ ($data->type == 'agency') ? 'selected' : '' }}>{{$agencyLabel}}</option>
               <option value="branch_repo" {{ ($data->type == 'branch_repo') ? 'selected' : '' }}>Branch Repo</option>
-              <option value="agency_repo" {{ ($data->type == 'agency_repo') ? 'selected' : '' }}>Agency Repo</option>
+              <option value="agency_repo" {{ ($data->type == 'agency_repo') ? 'selected' : '' }}>{{$agencyLabel}} Repo</option>
               <option value="repo_yard" {{ ($data->type == 'repo_yard') ? 'selected' : '' }}>Repo and Yard</option>
             </select>
           </div>

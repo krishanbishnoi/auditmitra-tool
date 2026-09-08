@@ -16,11 +16,11 @@ Users
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <strong class="card-title">Agency List</strong>
+                    <strong class="card-title">{{$agencyLabel}} List</strong>
                     <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('excelDownloadAgency')}}" target="_blank">Export Agency</a>
+                        href="{{route('excelDownloadAgency')}}" target="_blank">Export {{$agencyLabel}}</a>
                     <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('agencyExcelUpload')}}" target="_blank">Import Agency</a>
+                        href="{{route('agencyExcelUpload')}}" target="_blank">Import {{$agencyLabel}}</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
@@ -28,16 +28,16 @@ Users
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">
-                                    Agency Name
+                                    {{$agencyLabel}} Name
                                 </th>
                                 <!-- <th scope="col">
 										Branch Name
 									</th> -->
                                 <th scope="col">
-                                    Agency Id
+                                    {{$agencyLabel}} Id
                                 </th>
                                 <th scope="col">
-                                    Agency Manager
+                                    {{$agencyLabel}} Manager
                                 </th>
                                 <th scope="col">
                                     Location

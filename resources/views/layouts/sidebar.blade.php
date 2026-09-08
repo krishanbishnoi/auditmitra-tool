@@ -233,7 +233,7 @@
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="{{ in_array($segment1, ['audit_agency']) ? 'true' : 'false' }}">
-                                <i class="menu-icon fa fa-shield"></i>Audit Agency
+                                <i class="menu-icon fa fa-shield"></i>Audit {{ $agencyLabel }}
                             </a>
                             <ul
                                 class="sub-menu children dropdown-menu {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
@@ -241,14 +241,14 @@
                                     <i class="fa fa-plus"></i>
                                     <a href="{{ route('audit_agency.create') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == 'create' ? 'colors' : '' }}">
-                                        Create Audit Agency
+                                        Create Audit {{ $agencyLabel }}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="fa fa-users"></i>
                                     <a href="{{ route('audit_agency.index') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == '' ? 'colors' : '' }}">
-                                        List of Audit Agency
+                                        List of Audit {{ $agencyLabel }}
                                     </a>
                                 </li>
                             </ul>
@@ -415,19 +415,19 @@
                                 class="menu-item-has-children dropdown {{ in_array($segment1, ['agency']) ? 'show active' : '' }}">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="{{ in_array($segment1, ['agency']) ? 'true' : 'false' }}">
-                                    <i class="menu-icon fa fa-building"></i>Agency
+                                    <i class="menu-icon fa fa-building"></i>{{ $agencyLabel }}
                                 </a>
                                 <ul
                                     class="sub-menu children dropdown-menu {{ in_array($segment1, ['agency']) ? 'show active' : '' }}">
                                     <li>
                                         <i class="fa fa-plus"></i><a
                                             class="{{ $segment1 == 'agency' && $segment2 == 'create' ? 'colors' : '' }}"
-                                            href="{{ route('agency.create') }}">Create Agency</a>
+                                            href="{{ route('agency.create') }}">Create {{ $agencyLabel }}</a>
                                     </li>
                                     <li>
                                         <i class="fa fa-users"></i><a
                                             class="{{ $segment1 == 'agency' && $segment2 == '' ? 'colors' : '' }}"
-                                            href="{{ route('agency.index') }}">Agency List</a>
+                                            href="{{ route('agency.index') }}">{{ $agencyLabel }} List</a>
                                     </li>
                                 </ul>
                             </li>
@@ -435,12 +435,11 @@
                         @if (in_array(16, $allocatedmodule))
                             <li class="menu-item-has-children dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>Agency Repo</a>
+                                    aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>{{ $agencyLabel }} Repo</a>
                                 <ul class="sub-menu children dropdown-menu">
                                     <li><i class="fa fa-plus"></i><a href="{{ route('agencyrepo.create') }}">Create
-                                            Agency
-                                            Repo</a></li>
-                                    <li><i class="fa fa-users"></i><a href="{{ route('agencyrepo.index') }}">Agency Repo
+                                            {{ $agencyLabel }} Repo</a></li>
+                                    <li><i class="fa fa-users"></i><a href="{{ route('agencyrepo.index') }}">{{ $agencyLabel }} Repo
                                             List</a></li>
 
                                 </ul>
@@ -554,8 +553,7 @@
                                 class="sub-menu children dropdown-menu {{ in_array($segment1, ['audit_allocation']) ? 'show active' : '' }}">
                                 <li><i class="fa fa-tasks"></i><a href="{{ route('audit_allocation.index') }}"
                                         class="{{ $segment1 == 'audit_allocation' && $segment2 == '' ? 'colors' : '' }}">Audit
-                                        Allocation
-                                        List</a></li>
+                                        Allocation List</a></li>
                             </ul>
                         </li>
                     @endrole
@@ -571,8 +569,7 @@
 
                                 @hasanyrole('Quality Auditor')
                                     <li><i class="fa fa-users"></i><a href="{{ route('auditor_list') }}"
-                                            class="{{ $segment1 == 'auditor_list' && $segment2 == '' ? 'colors' : '' }}">Audit
-                                            Sheet List</a>
+                                            class="{{ $segment1 == 'auditor_list' && $segment2 == '' ? 'colors' : '' }}">Audit Sheet List</a>
                                     </li>
 
                                 @endrole
@@ -608,8 +605,6 @@
                                 </li>
 
             @endrole -->
-
-
 
                     @hasanyrole('Admin')
                         <li
@@ -650,8 +645,6 @@
 
                     @role('Client|Client(External)')
 
-
-
                         <li
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['audit-reports']) ? 'show active' : '' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -666,18 +659,15 @@
                         </li>
                     @endrole
 
-
                     @role('Super Admin')
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"> <i class="menu-icon fa fa-exclamation-triangle"></i>Alert box</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-plus"></i><a href="{{ route('audit_alert_box.create') }}">Create
-                                        Alert
-                                        Box</a></li>
+                                        Alert Box</a></li>
                                 <li><i class="fa fa-users"></i><a href="{{ route('audit_alert_box.index') }}">Alert Box
                                         List</a></li>
-
                             </ul>
                         </li>
 
@@ -865,7 +855,6 @@
 
                     @endrole
 
-
                     @role('Super Admin')
                         <li
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['cms']) ? 'show active' : '' }}">
@@ -935,7 +924,6 @@
                                 </a>
                             </li>
 
-
                             @unlessrole('Super Admin')
                                 <li>
                                     <i class="fa fa-plus"></i>
@@ -945,7 +933,6 @@
                                     </a>
                                 </li>
                             @endunlessrole
-
 
                             @role('Super Admin')
                                 <li>
@@ -1032,7 +1019,7 @@
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="{{ in_array($segment1, ['audit_agency']) ? 'true' : 'false' }}">
-                                <i class="menu-icon fa fa-shield"></i>Audit Agency
+                                <i class="menu-icon fa fa-shield"></i>Audit {{ $agencyLabel }}
                             </a>
                             <ul
                                 class="sub-menu children dropdown-menu {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
@@ -1040,14 +1027,14 @@
                                     <i class="fa fa-plus"></i>
                                     <a href="{{ route('audit_agency.create') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == 'create' ? 'colors' : '' }}">
-                                        Create Audit Agency
+                                        Create Audit {{ $agencyLabel }}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="fa fa-users"></i>
                                     <a href="{{ route('audit_agency.index') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == '' ? 'colors' : '' }}">
-                                        List of Audit Agency
+                                        List of Audit {{ $agencyLabel }}
                                     </a>
                                 </li>
                             </ul>

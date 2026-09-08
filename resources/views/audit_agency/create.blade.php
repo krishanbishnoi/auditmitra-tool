@@ -15,7 +15,7 @@
 
         <div class="card-header">
 
-            <strong>Create Audit Agency</strong>
+            <strong>Create Audit {{$agencyLabel}}</strong>
 
         </div>
 
@@ -55,7 +55,7 @@
             <div class="row form-group">
                 <div class="col col-md-6">
                     <label for="text-input" class="form-control-label font-weight-bold">Name</label>
-                    <input type="text" id="text-input" name="name" placeholder="Audit Agency Name" class="form-control" value="{{ old('name') }}" required>
+                    <input type="text" id="text-input" name="name" placeholder="Audit {{$agencyLabel}} Name" class="form-control" value="{{ old('name') }}" required>
                 </div>
                 <div class="col col-md-6">
                     <label for="email-input" class="form-control-label font-weight-bold">Email</label>
@@ -70,19 +70,19 @@
                 </div>
                 <div class="col col-md-6">
                     <label for="agency_admin-input" class="form-control-label font-weight-bold">Admin Name</label>
-                    <input type="text" id="agency_admin-input" name="agency_admin" placeholder="Agency Admin Name" class="form-control" value="{{ old('agency_admin') }}">
+                    <input type="text" id="agency_admin-input" name="agency_admin" placeholder="{{$agencyLabel}} Admin Name" class="form-control" value="{{ old('agency_admin') }}">
                 </div>
             </div>
 
             <div class="row form-group">
                 <div class="col col-md-6">
                     <label for="agency_admin_email_one-input" class="form-control-label font-weight-bold">Admin Email - First</label>
-                    <input type="text" id="agency_admin_email_one-input" name="agency_admin_email_one" placeholder="Agency Admin Email - First" class="form-control" value="{{ old('agency_admin_email_one') }}">
+                    <input type="text" id="agency_admin_email_one-input" name="agency_admin_email_one" placeholder="{{$agencyLabel}} Admin Email - First" class="form-control" value="{{ old('agency_admin_email_one') }}">
                 </div>
 
                 <div class="col col-md-6">
                     <label for="agency_admin_email_two-input" class="form-control-label font-weight-bold">Admin Email - Second (If any)</label>
-                    <input type="text" id="agency_admin_email_two-input" name="agency_admin_email_two" placeholder="Agency Admin Email - Second" class="form-control" value="{{ old('agency_admin_email_two') }}">
+                    <input type="text" id="agency_admin_email_two-input" name="agency_admin_email_two" placeholder="{{$agencyLabel}} Admin Email - Second" class="form-control" value="{{ old('agency_admin_email_two') }}">
                 </div>
             </div>
 

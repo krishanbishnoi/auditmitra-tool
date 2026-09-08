@@ -52,7 +52,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Audit Agency</th>
+                                    <th>Audit {{$agencyLabel}}</th>
                                     <th>Role</th>
                                     <th>Email</th>
                                     <th>Phone</th>

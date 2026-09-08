@@ -1026,11 +1026,11 @@
         }
 
         /* .af-calendar td {
-                                                                                                                                            height: 60px;
-                                                                                                                                            width: 14.28%;
-                                                                                                                                            vertical-align: top;
-                                                                                                                                            border: 1px solid #eee;
-                                                                                                                                        } */
+                                                                                                                                                        height: 60px;
+                                                                                                                                                        width: 14.28%;
+                                                                                                                                                        vertical-align: top;
+                                                                                                                                                        border: 1px solid #eee;
+                                                                                                                                                    } */
         .af-calendar {
             table-layout: fixed;
             width: 100%;
@@ -1257,10 +1257,27 @@
 @endsection
 
 @section('content')
-    <script>
+
+    @php
+
+        $agencyLabel = 'Agency';
+
+        if (auth()->user()->client_id == 288) {
+            // Sunstone
+            $agencyLabel = 'Campus';
+        } elseif (auth()->user()->client_id == 298) {
+            // IA Spaces
+            // Replace 75 with the actual IA Spaces client ID
+            $agencyLabel = 'Location';
+        }
+    @endphp
+
+<h4>Current Labelllll: {{ $agencyLabel }}</h4>
+
+<script>
         const downloadRoute = "{{ route('audit.downloadReports', ['audit_id' => '__ID__']) }}";
     </script>
-     @php
+    @php
         $allocatedmodule = App\Helpers\Helper::allocatedmodulelist();
     @endphp
     {{-- <script>
@@ -1299,7 +1316,7 @@
                 @if (auth()->check() && auth()->user()->client_id == 13)
                     <button type="submit" class="btn btn-primary btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(1);">
-                        Audit Agency
+                        Audit {{ $agencyLabel }}
                     </button>
                     <button type="submit" class="btn btn-danger btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(2);">
@@ -1310,7 +1327,7 @@
                 @if (auth()->check() && auth()->user()->client_id == 2)
                     <button type="submit" class="btn btn-primary btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(3);">
-                        Audit Agency
+                        Audit {{ $agencyLabel }}
                     </button>
                     <button type="submit" class="btn btn-danger btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(4);">
@@ -1370,50 +1387,65 @@
                             </div>
                         </div>
                     </div> --}}
+
+
                     @php
                         // Helper to compute percentage change
-                        function getChange($current, $previous)
-                        {
-                            if ($previous == 0) {
-                                return 0;
+                        if (!function_exists('getChange')) {
+                            function getChange($current, $previous)
+                            {
+                                if ($previous == 0) {
+                                    return 0;
+                                }
+
+                                return (($current - $previous) / $previous) * 100;
                             }
-                            return (($current - $previous) / $previous) * 100;
                         }
 
                         // Format badge class and arrow
-                        function getBadge($change)
-                        {
-                            if ($change > 0) {
-                                return [
-                                    'class' => 'badge-up',
-                                    'arrow' => '▲',
-                                    'formatted' => '+' . number_format($change, 1) . '%',
-                                ];
-                            } elseif ($change < 0) {
-                                return [
-                                    'class' => 'badge-down',
-                                    'arrow' => '▼',
-                                    'formatted' => number_format($change, 1) . '%',
-                                ];
-                            } else {
-                                return [
-                                    'class' => 'badge-stable',
-                                    'arrow' => '→',
-                                    'formatted' => '0%',
-                                ];
+                        if (!function_exists('getBadge')) {
+                            function getBadge($change)
+                            {
+                                if ($change > 0) {
+                                    return [
+                                        'class' => 'badge-up',
+                                        'arrow' => '▲',
+                                        'formatted' => '+' . number_format($change, 1) . '%',
+                                    ];
+                                } elseif ($change < 0) {
+                                    return [
+                                        'class' => 'badge-down',
+                                        'arrow' => '▼',
+                                        'formatted' => number_format($change, 1) . '%',
+                                    ];
+                                } else {
+                                    return [
+                                        'class' => 'badge-stable',
+                                        'arrow' => '→',
+                                        'formatted' => '0%',
+                                    ];
+                                }
                             }
                         }
 
+                        // ==========================================
                         // Audit Allocation
+                        // ==========================================
+
                         $allocCurrent = $auditData['allocation_data']['currentCycleCount'] ?? 0;
                         $allocPrev = $auditData['allocation_data']['previousCycleCount'] ?? 0;
+
                         $allocChange = getChange($allocCurrent, $allocPrev);
                         $allocBadge = getBadge($allocChange);
 
+                        // ==========================================
                         // Audit Submitted
+                        // ==========================================
+
                         if (auth()->user()->client_id == 74 && isset($auditData['tabs'])) {
                             $pPrev = $auditData['tabs']['physical']['previous']['audit_count'] ?? 0;
                             $pCurr = $auditData['tabs']['physical']['current']['audit_count'] ?? 0;
+
                             $vPrev = $auditData['tabs']['virtual']['previous']['audit_count'] ?? 0;
                             $vCurr = $auditData['tabs']['virtual']['current']['audit_count'] ?? 0;
 
@@ -1427,18 +1459,34 @@
                         $submittedChange = getChange($submittedCurrent, $submittedPrev);
                         $submittedBadge = getBadge($submittedChange);
 
-                        // Avg Audit Score
+                        // ==========================================
+                        // Average Audit Score
+                        // ==========================================
+
                         $scorePrev = round($auditData['previous_cycle_score'] ?? 0);
                         $scoreCurrent = round($auditData['current_cycle_score'] ?? 0);
+
                         $scoreChange = getChange($scoreCurrent, $scorePrev);
                         $scoreBadge = getBadge($scoreChange);
 
+                        // ==========================================
                         // Action Planning
+                        // ==========================================
+
                         $actionPrev = $auditData['getActionPlanningData']['previous_cycle']['approved'] ?? 0;
+
                         $actionCurrent = $auditData['getActionPlanningData']['current_cycle']['approved'] ?? 0;
+
                         $actionChange = getChange($actionCurrent, $actionPrev);
                         $actionBadge = getBadge($actionChange);
+
+                        // ==========================================
+                        // Agency Label
+                        // ==========================================
+
                     @endphp
+
+
 
                     <div class="row px-md-1">
 
@@ -1822,7 +1870,7 @@
                                                     <option value="6">City</option>
                                                     <option value="7">Parameters</option>
                                                     <option value="8">Sub Parameters</option>
-                                                    <option value="9">List of Agencies/Branch/Yard/Repos</option>
+                                                    <option value="9">List of {{$agencyLabel}}es/Branch/Yard/Repos</option>
                                                     <option value="10">Regulatory Parameter</option>
                                                 </select>
                                             </div>
@@ -1831,10 +1879,10 @@
                                                 <label for="match_field_other" class="form-label">Audit Type</label>
                                                 <select id="match_field_other" class="form-select">
                                                     <option value="0">All</option>
-                                                    <option value="agency">Agency</option>
+                                                    <option value="agency">{{ $agencyLabel }}</option>
                                                     <option value="branch">Branch</option>
                                                     <option value="yard">Yard</option>
-                                                    <option value="agency_repo">Agency Repo</option>
+                                                    <option value="agency_repo">{{ $agencyLabel }} Repo</option>
                                                     <option value="branch_repo">Branch Repo</option>
                                                     <option value="yard_repo">Yard Repo</option>
                                                 </select>
@@ -2055,13 +2103,13 @@
                             </div>
                         </div>
                     </div>
-                    @if(!(auth()->user()->client_id == 288 || auth()->user()->client_id == 288))
-                    <div class="mb-3" id="param_geographical_view">
-                        <div class="mb-3">
-                            <div class="row px-md-1" id="param_compliance_data">
+                    @if (!(auth()->user()->client_id == 288 || auth()->user()->client_id == 288))
+                        <div class="mb-3" id="param_geographical_view">
+                            <div class="mb-3">
+                                <div class="row px-md-1" id="param_compliance_data">
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                     {{-- <div class="row px-lg-1">
                         <div class="col-lg-8 mb-3 px-lg-2">
@@ -2170,8 +2218,7 @@
                                     <div class="audit-user"
                                         style="
                            padding:14px 0;
-                           border-bottom:{{ !$loop->last ? '1px solid #eef2f7' : '0' }};
-                       ">
+                           border-bottom:{{ !$loop->last ? '1px solid #eef2f7' : '0' }};">
 
                                         <div class="audit-user-left">
 
@@ -2234,7 +2281,7 @@
                                             </div>
 
                                             <div class="audit-label mt-1">
-                                                Avg. Score
+                                                Avg. Score:
 
                                                 <span class="audit-badge {{ $badgeClass }}" style="margin-left:6px;">
                                                     {{ $status }}
@@ -2372,7 +2419,7 @@
                                             </div>
 
                                             <div class="audit-label mt-1">
-                                                Avg. Score
+                                                Avg. Score:
 
                                                 <span class="audit-badge {{ $badgeClass }}" style="margin-left:6px;">
                                                     {{ $status }}
@@ -2431,15 +2478,15 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            🏆 Top Performing Agencies
+                                            🏆 Top Performing {{ $agencyLabel }}es
                                         </h2>
                                         <small class="text-muted">
-                                            Highest scoring agencies across all audits
+                                            Highest scoring {{ $agencyLabel }}es across all audits
                                         </small>
                                     </div>
 
                                     <span class="badge bg-light text-dark px-3 py-2">
-                                        {{ count($agencies) }} Agencies
+                                        {{ count($agencies) }} {{ $agencyLabel }}
                                     </span>
                                 </div>
 
@@ -2518,7 +2565,7 @@
 
                                                 <div class="audit-role">
                                                     <i class="fa-solid fa-building me-1 text-primary"></i>
-                                                    Agency Performance Ranking
+                                                    {{ $agencyLabel }} Performance Ranking
                                                 </div>
                                             </div>
 
@@ -2537,7 +2584,7 @@
                                             </div>
 
                                             <div class="audit-label mt-1">
-                                                Compliance Score
+                                                Compliance Score:
 
                                                 <span class="audit-badge {{ $badgeClass }}" style="margin-left:6px;">
                                                     {{ $status }}
@@ -2553,7 +2600,7 @@
                                     <div class="text-center py-5">
                                         <i class="fa-solid fa-building fs-1 text-muted mb-3"></i>
                                         <div class="text-muted">
-                                            No agency performance data available
+                                            No {{ $agencyLabel }} performance data available
                                         </div>
                                     </div>
                                 @endforelse
@@ -2571,15 +2618,15 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            ⚠️ Bottom Performing Agencies
+                                            ⚠️ Bottom Performing {{ $agencyLabel }}es
                                         </h2>
                                         <small class="text-muted">
-                                            Agencies requiring immediate attention
+                                            {{ $agencyLabel }}es requiring immediate attention
                                         </small>
                                     </div>
 
                                     <span class="badge bg-light text-dark px-3 py-2">
-                                        {{ count($agencies) }} Agencies
+                                        {{ count($agencies) }} {{ $agencyLabel }}
                                     </span>
                                 </div>
 
@@ -2680,7 +2727,7 @@
                                             </div>
 
                                             <div class="audit-label mt-1">
-                                                Compliance Score
+                                                Compliance Score:
 
                                                 <span class="audit-badge {{ $badgeClass }}" style="margin-left:6px;">
                                                     {{ $status }}
@@ -2696,7 +2743,7 @@
                                     <div class="text-center py-5">
                                         <i class="fa-solid fa-triangle-exclamation fs-1 text-muted mb-3"></i>
                                         <div class="text-muted">
-                                            No agency performance data available
+                                            No {{ $agencyLabel }} performance data available
                                         </div>
                                     </div>
                                 @endforelse
@@ -2852,7 +2899,7 @@
                                 <div class="auditSearch">
                                     <i class="fa fa-search text-muted"></i>
                                     <input type="text" id="issueSearch" class="w-100"
-                                        placeholder="Search agency ID or agency name">
+                                        placeholder="Search {{ $agencyLabel }} ID or {{ $agencyLabel }} name">
                                 </div>
 
                                 <button class="auditExportBtn text-nowrap" type="button" data-bs-toggle="modal"
@@ -2869,8 +2916,8 @@
                                     <tr>
                                         <th class="text-nowrap">S.NO</th>
                                         <th>Audit ID</th>
-                                        <th>Agency ID</th>
-                                        <th>Agency Name</th>
+                                        <th>{{ $agencyLabel }} ID</th>
+                                        <th>{{ $agencyLabel }} Name</th>
                                         <th>Issue Description</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
@@ -2954,7 +3001,7 @@
                     data-bs-target="#ScheduleAuditExport">
                     Schedule Audits
                 </button>
-                @if (!(in_array(23, $allocatedmodule)))
+                @if (!in_array(23, $allocatedmodule))
                     <button type="button" class="btn btn-outline-success btn-sm dashboardExportBtn"
                         data-bs-toggle="modal" data-bs-target="#openPointersModal">
                         Open Pointers Dump
@@ -2979,8 +3026,8 @@
                     <label for="audit_cycle" style="font-size: 13px !important">Audit Cycle</label>
                     <select class="form-select" name="audit_type">
                         <option value="all" selected>All</option>
-                        <option value="agency">Agency</option>
-                        <option value="agency_repo">Agency Repo</option>
+                        <option value="agency">{{ $agencyLabel }}</option>
+                        <option value="agency_repo">{{ $agencyLabel }} Repo</option>
                         <option value="branch">Branch</option>
                         <option value="branch_repo">Branch Repo</option>
                         <option value="yard">Yard</option>
@@ -3753,7 +3800,7 @@
             <div class="row w-100">
 
                 <div class="col-md-4">
-                    <strong>Agency</strong><br>
+                    <strong>{{ $agencyLabel }}</strong><br>
                     ${a.final_agency_name ?? '-'}
                 </div>
 
@@ -3784,7 +3831,7 @@
                  <div class="audit-card submitted-card d-flex justify-content-between align-items-center">
             
             <div class="audit-info">
-                <div><strong>Agency:</strong> ${a.agency_name ?? '-'}</div>
+                <div><strong>{{ $agencyLabel }}:</strong> ${a.agency_name ?? '-'}</div>
                 <div><strong>Score:</strong> 
                     <span class="badge ">${a.overall_score ?? '-'}</span>
                 </div>

@@ -64,7 +64,7 @@ Users
 
 								<th scope="col">
 
-									Audit Agency
+									Audit {{$agencyLabel}}
 
 								</th>
 

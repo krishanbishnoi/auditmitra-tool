@@ -59,9 +59,9 @@ Create New
         {!! Form::select('type', [
             '' => 'Choose Sheet Type',
             'branch' => 'Branch',
-            'agency' => 'Agency',         
+            'agency' => $agencyLabel ,        
             'branch_repo' => 'Branch Repo',                                               
-            'agency_repo' => 'Agency Repo',
+            'agency_repo' => $agencyLabel . ' Repo',
             'yard' => 'Yard',
             'yard_repo' => 'Yard Repo'
           ], null, ['class' => 'form-control' ,'required' => 'required']) !!}
