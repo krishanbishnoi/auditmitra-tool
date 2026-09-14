@@ -1870,7 +1870,7 @@
                                                     <option value="6">City</option>
                                                     <option value="7">Parameters</option>
                                                     <option value="8">Sub Parameters</option>
-                                                    <option value="9">List of {{$agencyLabel}}es/Branch/Yard/Repos</option>
+                                                    <option value="9">List of {{$agencyLabel}}/Branch/Yard/Repos</option>
                                                     <option value="10">Regulatory Parameter</option>
                                                 </select>
                                             </div>
@@ -2478,10 +2478,10 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            🏆 Top Performing {{ $agencyLabel }}es
+                                            🏆 Top Performing {{ $agencyLabel }}
                                         </h2>
                                         <small class="text-muted">
-                                            Highest scoring {{ $agencyLabel }}es across all audits
+                                            Highest scoring {{ $agencyLabel }} across all audits
                                         </small>
                                     </div>
 
@@ -2618,10 +2618,10 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            ⚠️ Bottom Performing {{ $agencyLabel }}es
+                                            ⚠️ Bottom Performing {{ $agencyLabel }}
                                         </h2>
                                         <small class="text-muted">
-                                            {{ $agencyLabel }}es requiring immediate attention
+                                            {{ $agencyLabel }} requiring immediate attention
                                         </small>
                                     </div>
 

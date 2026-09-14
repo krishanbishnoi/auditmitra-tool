@@ -160,6 +160,7 @@ class AuditController extends Controller
 
     public function render_audit_sheet($qm_sheet_id)
     {
+        // dd("hi");
         //echo 'hello';die();
         $users = User::with('roles')
             ->where('users.active_status', 0)
@@ -318,10 +319,10 @@ class AuditController extends Controller
 
         // work on client id 
         if (auth()->user()->client_id == 226 || auth()->user()->client_id == 285) {
-
+// dd("hello");
             return view('audit.render_sheet_error_scoring', compact('qm_sheet_id', 'data', 'branch', 'agency', 'yard', 'branchRepo', 'agencyRepo', 'cycle', 'formattedUsers', 'Level_5', 'Products'));
         }
-
+// dd("hello22");
         return view('audit.render_sheet', compact('qm_sheet_id', 'data', 'branch', 'agency', 'yard', 'branchRepo', 'agencyRepo', 'cycle', 'formattedUsers', 'Level_5', 'Products'));
 
         // return view('audit.render_sheet',compact('qm_sheet_id','data','branch'));

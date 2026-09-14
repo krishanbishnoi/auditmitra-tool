@@ -477,7 +477,7 @@
         <div class="card-body">
             <div class="meta-grid">
                 <div class="meta-item">
-                    <span class="lbl">Agency</span>
+                    <span class="lbl">{{$agencyLabel}}</span>
                     <span class="val">{{ $auditDetails->agency_name ?? '—' }}</span>
                 </div>
                 <div class="meta-item">

@@ -18,24 +18,24 @@
                 <form method="GET" class="kt-form">
                     <div class="card">
                         <div class="card-header" style="background-image: linear-gradient(to right, rgb(132, 94, 194), rgb(144, 109, 198), rgb(156, 125, 201), rgb(168, 140, 205), rgb(179, 156, 208)); color: #fff">
-                            <strong class="card-title">Collection | Agency Details</strong>
+                            <strong class="card-title">Collection | {{$agencyLabel}} Details</strong>
                         </div>   
                         <div class="row mt-4">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="final_agency_name" class="form-control-label font-weight-bold">Agency Name</label>
+                                    <label for="final_agency_name" class="form-control-label font-weight-bold">{{$agencyLabel}} Name</label>
                                     <input type="text" id="final_agency_name" name="final_agency_name" class="form-control" value="{{ $data->final_agency_name }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="agency_code" class="form-control-label font-weight-bold">Agency Code</label>
+                                    <label for="agency_code" class="form-control-label font-weight-bold">{{$agencyLabel}} Code</label>
                                     <input type="text" id="agency_code" name="agency_code" class="form-control" value="{{ $data->agency_code }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="type_of_agency" class="form-control-label font-weight-bold">Type of Agency</label>
+                                    <label for="type_of_agency" class="form-control-label font-weight-bold">Type of {{$agencyLabel}}</label>
                                     <input type="text" id="type_of_agency" name="type_of_agency" class="form-control" value="{{ $data->type_of_agency }}" readonly>
                                 </div>
                             </div>
@@ -80,13 +80,13 @@
                     <div class="row mt-4">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="process_review_agency" class="form-control-label font-weight-bold">Process Review Agency</label>
+                                <label for="process_review_agency" class="form-control-label font-weight-bold">Process Review {{$agencyLabel}}</label>
                                 <input type="text" id="process_review_agency" name="process_review_agency" class="form-control" value="{{ $data->process_review_agency }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="process_review_agency_id" class="form-control-label font-weight-bold">Process Review Agency Email</label>
+                                <label for="process_review_agency_id" class="form-control-label font-weight-bold">Process Review {{$agencyLabel}} Email</label>
                                 <input type="text" id="process_review_agency_id" name="process_review_agency_email" class="form-control" value="{{ $data->process_review_agency_email }}" readonly>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="agency_address" class="form-control-label font-weight-bold">Agency Address</label>
+                                <label for="agency_address" class="form-control-label font-weight-bold">{{$agencyLabel}} Address</label>
                                 <input type="text" id="agency_address" name="agency_address" class="form-control" value="{{ $data->agency_address }}" readonly>
                             </div>
                         </div>
@@ -110,13 +110,13 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <div class="form-group ml-1">
-                                <label for="contact" class="form-control-label font-weight-bold">Agency Contact</label>
+                                <label for="contact" class="form-control-label font-weight-bold">{{$agencyLabel}} Contact</label>
                                 <textarea id="contact" name="contact" class="form-control" rows="3" readonly>{{ $data->contact }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="agency_email" class="form-control-label font-weight-bold">Agency Email</label>
+                                <label for="agency_email" class="form-control-label font-weight-bold">{{$agencyLabel}} Email</label>
                                 <textarea id="agency_email" name="agency_email" class="form-control" rows="3" readonly>{{ $data->agency_email }}</textarea>
                             </div>
                         </div>    

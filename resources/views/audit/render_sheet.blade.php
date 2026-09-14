@@ -724,10 +724,10 @@ Messages
 			<div class="card step-card" data-step="1">
 				<div class="card-header"
 					style="background-image: linear-gradient(to right, rgb(132, 94, 194), rgb(144, 109, 198), rgb(156, 125, 201), rgb(168, 140, 205), rgb(179, 156, 208));color:#fff">
-					<strong
-						class="card-title">{{($data->lob == 'commercial_vehicle') ? 'Commercial Vehicle' : ucfirst($data->lob)}}
-					| {{ucfirst(str_replace('_', ' ', $data->type))}}</strong>
+					<strong class="card-title"> Sunstone | {{$agencyLabel}} </strong>
 				</div>
+
+                
 				<div class="card-body">
 					<div id="loader" style="display:none;">
 						<p>Loading...</p>
@@ -747,9 +747,9 @@ Messages
 						@elseif($data->type=='agency')
 						
 							<div class="col-md-3 form-group">
-								<label>Agency*</label>
+								<label>{{$agencyLabel}}*</label>
 								<select name="agency" class="form-control agency js-example-basic-single" id="audit_for">
-								<option value="">Choose Agency</option>
+								<option value="">Choose {{$agencyLabel}}</option>
 								@foreach ($agency as $item)  
 									<option value="{{$item->id}}">{{$item->name}}</option>
 								@endforeach
@@ -788,9 +788,9 @@ Messages
 							@elseif($data->type=='agency_repo')
 							
 							<div class="col-md-3 form-group">
-								<label>Agency Repo*</label>
+								<label>{{$agencyLabel}} Repo*</label>
 								<select name="agency_repo" class="form-control agency_repo js-example-basic-single" id="audit_for">
-								<option value="">Choose Agency Repo</option>
+								<option value="">Choose {{$agencyLabel}} Repo</option>
 								@foreach ($agencyRepo as $item)  
 									<option value="{{$item->id}}">{{$item->name}}</option>
 								@endforeach

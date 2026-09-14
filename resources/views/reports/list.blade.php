@@ -30,8 +30,8 @@
                                     <th>#</th>
                                     <th>Audit ID</th>
                                     <th>Process Review Period</th>
-                                    <th>Agency Name</th>
-                                    <th>Agency Code</th>
+                                    <th>{{$agencyLabel}} Name</th>
+                                    <th>{{$agencyLabel}} Code</th>
                                     <th>Location</th>
                                     <th>Audit Date</th>
                                     <th>Closure Status</th>

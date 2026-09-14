@@ -38,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
                     $agencyLabel = match ($client->client_name) {
                         'Sunstone' => 'Campus',
                         'IA Spaces' => 'Location',
-                        'Tester' => 'Agency',
                         'default' => 'Agency',
                     };
                 }
