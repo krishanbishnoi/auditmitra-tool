@@ -75,12 +75,12 @@
                                     <th>Month</th>
                                     <th>Audit Date</th>
                                     <th>Lob</th>
-                                    <th>{{$agencyLabel}} Location</th>
+                                    <th>{{$masterLableAgency}} Location</th>
                                     <th>State</th>
                                     <th>Product</th>
                                     <th>Sheet Type</th>
-                                    <th>{{$agencyLabel}} Name</th>
-                                    <th>{{$agencyLabel}} Code</th>
+                                    <th>{{$masterLableAgency}} Name</th>
+                                    <th>{{$masterLableAgency}} Code</th>
                                     <th>Collection Manager</th>
                                     <th>Collection Manager Email</th>
                                     <th>Auditor Name</th>

@@ -11,7 +11,7 @@ Create New
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong>Create {{$agencyLabel}} Form</strong> 
+                <strong>Create {{$masterLableAgency}} Form</strong> 
             </div>
 
             <div class="card-body card-block">
@@ -19,8 +19,8 @@ Create New
                 <div class="row">
                     <div class="col-md-6">
                         <div class=" form-group">
-                            <label for="text-input" class=" form-control-label">{{$agencyLabel}} Name</label>
-                            <input type="text" id="text-input" name="name" placeholder="{{$agencyLabel}} Name"
+                            <label for="text-input" class=" form-control-label">{{$masterLableAgency}} Name</label>
+                            <input type="text" id="text-input" name="name" placeholder="{{$masterLableAgency}} Name"
                                 class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                             @error('name')
                                 <small class="text-danger">{{ $message }}</small>
@@ -40,8 +40,8 @@ Create New
 
                     <div class="col-md-6">
                         <div class=" form-group">
-                            <label for="agency_id" class=" form-control-label">{{$agencyLabel}} ID</label>
-                            <input type="text" id="agency_id" name="agency_id" placeholder="{{$agencyLabel}} ID"
+                            <label for="agency_id" class=" form-control-label">{{$masterLableAgency}} ID</label>
+                            <input type="text" id="agency_id" name="agency_id" placeholder="{{$masterLableAgency}} ID"
                                 class="form-control @error('agency_id') is-invalid @enderror" value="{{ old('agency_id') }}">
                             @error('agency_id')
                                 <small class="text-danger">{{ $message }}</small>
@@ -79,9 +79,9 @@ Create New
 
                     <div class="col-md-6">
                         <div class=" form-group">
-                            <label for="agency_manager" class=" form-control-label">{{$agencyLabel}} Manager</label>
+                            <label for="agency_manager" class=" form-control-label">{{$masterLableAgency}} Manager</label>
                             <select name="agency_manager" class="standardSelect form-control" tabindex="3">
-                                <option value="">Choose {{$agencyLabel}} Manager</option>
+                                <option value="">Choose {{$masterLableAgency}} Manager</option>
                                 @foreach($user as $item)
                                     <option value="{{ $item->id }}" {{ old('agency_manager') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                 @endforeach

@@ -9,7 +9,7 @@
 
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong class="card-title">Audit {{$agencyLabel}} List</strong>
+                    <strong class="card-title">Audit {{$masterLableAgency}} List</strong>
 
                     {{-- Filter by Client - Right aligned --}}
                     @hasrole('Super Admin')

@@ -44,6 +44,7 @@ use Illuminate\Support\Str;
 use App\Client;
 use App\Helpers\Helper;
 use App\Model\ClientMasterSetting;
+use App\Exports\ExportClient;
 
 class ClientManagementController extends Controller
 {
@@ -561,18 +562,20 @@ class ClientManagementController extends Controller
             );
     }
 
-    public function excelDownloadUser()
+// new code for import and export the clioent list
+
+    public function clientExcelDownload()
     {
         ini_set("memory_limit", "-1");
 
         ini_set("max_execution_time", 3000);
 
-        return Excel::download(new clientExport(), "client.xlsx");
+        return Excel::download(new ExportClient(), "client.xlsx");
 
         // return Excel::download(new QcAndQaChangesExport, 'client.xlsx');
     }
 
-    public function userImport(Request $request)
+    public function clientImport(Request $request)
     {
         // Validate the request to ensure the file is present
         $validator = Validator::make($request->all(), [

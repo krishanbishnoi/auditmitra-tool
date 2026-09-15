@@ -81,8 +81,8 @@ Users
 
 							<th title="Field #7">Audit Type</th>
 
-							<th title="Field #8">{{$agencyLabel}} Name</th>
-							<th title="Field #8">{{$agencyLabel}} Code</th>
+							<th title="Field #8">{{$masterLableAgency}} Name</th>
+							<th title="Field #8">{{$masterLableAgency}} Code</th>
 							<th title="Field #9">Collection Manager</th>
 
 							<th title="Field #10">Collection Manager Email</th>

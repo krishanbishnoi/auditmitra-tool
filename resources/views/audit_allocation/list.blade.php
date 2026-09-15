@@ -31,12 +31,12 @@
                             <tr>
                                 <th><input type="checkbox" id="select_all" /></th>
                                 <th>Sr.No.</th>
-                                <th class="font-weight-bold">Final {{$agencyLabel}} Name</th>
-                                <th>{{$agencyLabel}} Code</th>
+                                <th class="font-weight-bold">Final {{$masterLableAgency}} Name</th>
+                                <th>{{$masterLableAgency}} Code</th>
                                 <th>Type</th>
                                 <th>Product</th>
                                 <th>Location</th>
-                                <th>Process Review {{$agencyLabel}}</th>
+                                <th>Process Review {{$masterLableAgency}}</th>
                                 <th>Process Review Period</th>
                                 <th>Created Date</th>
                                 <th>Actions</th>

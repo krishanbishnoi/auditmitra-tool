@@ -11,7 +11,7 @@ Edit Agency
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong>Edit {{$agencyLabel}} Form</strong> 
+                <strong>Edit {{$masterLableAgency}} Form</strong> 
             </div>
             <div class="card-body card-block">
                 @if(!$data)
@@ -30,7 +30,7 @@ Edit Agency
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="text-input" class="form-control-label">Name</label>
-                            <input type="text" id="text-input" name="name" placeholder="{{$agencyLabel}} Name" class="form-control"
+                            <input type="text" id="text-input" name="name" placeholder="{{$masterLableAgency}} Name" class="form-control"
                                 value="{{ $data->name }}">
                         </div>
                     </div>
@@ -42,8 +42,8 @@ Edit Agency
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="agency_id" class="form-control-label">{{$agencyLabel}} ID</label>
-                            <input type="text" id="agency_id" name="agency_id" placeholder="{{$agencyLabel}} ID"
+                            <label for="agency_id" class="form-control-label">{{$masterLableAgency}} ID</label>
+                            <input type="text" id="agency_id" name="agency_id" placeholder="{{$masterLableAgency}} ID"
                                 class="form-control" value="{{ $data->agency_id }}">
                         </div>
                     </div>
@@ -86,8 +86,8 @@ Edit Agency
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="agency_manager" class="form-control-label">{{$agencyLabel}} Manager</label>
-                            <select name="agency_manager" data-placeholder="Choose an {{$agencyLabel}} Manager..."
+                            <label for="agency_manager" class="form-control-label">{{$masterLableAgency}} Manager</label>
+                            <select name="agency_manager" data-placeholder="Choose an {{$masterLableAgency}} Manager..."
                                 class="form-control" tabindex="3">
                                 <!-- <option value="" label="Agency Manager"></option> -->
                                 @foreach($user as $k=>$item)

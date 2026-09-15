@@ -169,13 +169,13 @@
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label>Agency Name for Client</label>
-                        <input type="text" name="agency_name_for_client" class="form-control" required 
+                        <input type="text" name="agency_name_for_client" class="form-control" 
                            value="{{ old('agency_name_for_client', $clientSettings['agency_name_for_client'] ?? '') }}">
                     </div>
 
                     <div class="col-lg-6">
                         <label>Agency Repo Name for Client</label>
-                        <input type="text" name="agency_repo_name_for_client" class="form-control" required
+                        <input type="text" name="agency_repo_name_for_client" class="form-control"
                             value="{{ old('agency_repo_name_for_client', $clientSettings['agency_repo_name_for_client'] ?? '') }}">
                     </div>
                 </div>
@@ -183,13 +183,13 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Yard Name for Client</label>
-                    <input type="text" name="yard_name_for_client" class="form-control" required 
+                    <input type="text" name="yard_name_for_client" class="form-control" 
                     value="{{ old('yard_name_for_client', $clientSettings['yard_name_for_client'] ?? '') }}">
                 </div>
 
                 <div class="col-lg-6">
                     <label>Yard Repo Name for Client</label>
-                    <input type="text" name="yard_repo_name_for_client" class="form-control" required 
+                    <input type="text" name="yard_repo_name_for_client" class="form-control"  
                     value="{{ old('yard_repo_name_for_client', $clientSettings['yard_repo_name_for_client'] ?? '') }}">
                 </div>
             </div>
@@ -198,13 +198,13 @@
 
                 <div class="col-lg-6">
                     <label>Branch Name for Client</label>
-                    <input type="text" name="branch_name_for_client" class="form-control" required
+                    <input type="text" name="branch_name_for_client" class="form-control" 
                         value="{{ old('branch_name_for_Client', $clientSettings['branch_name_for_client'] ?? '') }}">
                 </div>
 
                 <div class="col-lg-6">
                     <label>Branch Repo Name for Client</label>
-                    <input type="text" name="branch_repo_name_for_client" class="form-control" required 
+                    <input type="text" name="branch_repo_name_for_client" class="form-control"  
                     value="{{ old('branch_repo_name_for_client', $clientSettings['branch_repo_name_for_client'] ?? '') }}">
                 </div>
             </div>

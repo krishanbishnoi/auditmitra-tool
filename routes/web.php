@@ -10,6 +10,7 @@
 |
 */
 
+use App\Http\Controllers\ClientManagementController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Artisan;
 // use App\Http\Controllers\SupportTicketController;
@@ -106,6 +107,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/change-password', [App\Http\Controllers\UserController::class, 'changePassword'])->name('password.makechange');
     // Route::group(['middleware' => ['role:zonal']], function () {
     Route::get('dowmload-user-excel', 'UserController@ExcelDownloadUser')->name('excelDownloadUser');
+
+// new route for download the lists 
+
+Route::get('download-client-sheet', 'ClientManagementController@clientExcelDownload')->name('clientExcelDownload');
+
+
 
     Route::get('dowmload-branch-excel', 'BranchController@excelDownloadBranch')->name('excelDownloadBranch');
 

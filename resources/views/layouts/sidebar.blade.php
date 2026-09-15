@@ -233,7 +233,7 @@
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="{{ in_array($segment1, ['audit_agency']) ? 'true' : 'false' }}">
-                                <i class="menu-icon fa fa-shield"></i>Audit {{ $agencyLabel }}
+                                <i class="menu-icon fa fa-shield"></i>Audit {{ $masterLableAgency }}
                             </a>
                             <ul
                                 class="sub-menu children dropdown-menu {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
@@ -241,14 +241,14 @@
                                     <i class="fa fa-plus"></i>
                                     <a href="{{ route('audit_agency.create') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == 'create' ? 'colors' : '' }}">
-                                        Create Audit {{ $agencyLabel }}
+                                        Create Audit {{ $masterLableAgency }}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="fa fa-users"></i>
                                     <a href="{{ route('audit_agency.index') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == '' ? 'colors' : '' }}">
-                                        List of Audit {{ $agencyLabel }}
+                                        List of Audit {{ $masterLableAgency }}
                                     </a>
                                 </li>
                             </ul>
@@ -415,19 +415,19 @@
                                 class="menu-item-has-children dropdown {{ in_array($segment1, ['agency']) ? 'show active' : '' }}">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="{{ in_array($segment1, ['agency']) ? 'true' : 'false' }}">
-                                    <i class="menu-icon fa fa-building"></i>{{ $agencyLabel }}
+                                    <i class="menu-icon fa fa-building"></i>{{ $masterLableAgency }}
                                 </a>
                                 <ul
                                     class="sub-menu children dropdown-menu {{ in_array($segment1, ['agency']) ? 'show active' : '' }}">
                                     <li>
                                         <i class="fa fa-plus"></i><a
                                             class="{{ $segment1 == 'agency' && $segment2 == 'create' ? 'colors' : '' }}"
-                                            href="{{ route('agency.create') }}">Create {{ $agencyLabel }}</a>
+                                            href="{{ route('agency.create') }}">Create {{ $masterLableAgency }}</a>
                                     </li>
                                     <li>
                                         <i class="fa fa-users"></i><a
                                             class="{{ $segment1 == 'agency' && $segment2 == '' ? 'colors' : '' }}"
-                                            href="{{ route('agency.index') }}">{{ $agencyLabel }} List</a>
+                                            href="{{ route('agency.index') }}">{{ $masterLableAgency }} List</a>
                                     </li>
                                 </ul>
                             </li>
@@ -435,11 +435,11 @@
                         @if (in_array(16, $allocatedmodule))
                             <li class="menu-item-has-children dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>{{ $agencyLabel }} Repo</a>
+                                    aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>{{ $masterLableAgency }} Repo</a>
                                 <ul class="sub-menu children dropdown-menu">
                                     <li><i class="fa fa-plus"></i><a href="{{ route('agencyrepo.create') }}">Create
-                                            {{ $agencyLabel }} Repo</a></li>
-                                    <li><i class="fa fa-users"></i><a href="{{ route('agencyrepo.index') }}">{{ $agencyLabel }} Repo
+                                            {{ $masterLableAgency }} Repo</a></li>
+                                    <li><i class="fa fa-users"></i><a href="{{ route('agencyrepo.index') }}">{{ $masterLableAgency }} Repo
                                             List</a></li>
 
                                 </ul>
@@ -1019,7 +1019,7 @@
                             class="menu-item-has-children dropdown {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="{{ in_array($segment1, ['audit_agency']) ? 'true' : 'false' }}">
-                                <i class="menu-icon fa fa-shield"></i>Audit {{ $agencyLabel }}
+                                <i class="menu-icon fa fa-shield"></i>Audit {{ $masterLableAgency }}
                             </a>
                             <ul
                                 class="sub-menu children dropdown-menu {{ in_array($segment1, ['audit_agency']) ? 'show active' : '' }}">
@@ -1027,14 +1027,14 @@
                                     <i class="fa fa-plus"></i>
                                     <a href="{{ route('audit_agency.create') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == 'create' ? 'colors' : '' }}">
-                                        Create Audit {{ $agencyLabel }}
+                                        Create Audit {{ $masterLableAgency }}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="fa fa-users"></i>
                                     <a href="{{ route('audit_agency.index') }}"
                                         class="{{ $segment1 == 'audit_agency' && $segment2 == '' ? 'colors' : '' }}">
-                                        List of Audit {{ $agencyLabel }}
+                                        List of Audit {{ $masterLableAgency }}
                                     </a>
                                 </li>
                             </ul>

@@ -1258,21 +1258,7 @@
 
 @section('content')
 
-    @php
 
-        $agencyLabel = 'Agency';
-
-        if (auth()->user()->client_id == 288) {
-            // Sunstone
-            $agencyLabel = 'Campus';
-        } elseif (auth()->user()->client_id == 298) {
-            // IA Spaces
-            // Replace 75 with the actual IA Spaces client ID
-            $agencyLabel = 'Location';
-        }
-    @endphp
-
-<h4>Current Labelllll: {{ $agencyLabel }}</h4>
 
 <script>
         const downloadRoute = "{{ route('audit.downloadReports', ['audit_id' => '__ID__']) }}";
@@ -1316,7 +1302,7 @@
                 @if (auth()->check() && auth()->user()->client_id == 13)
                     <button type="submit" class="btn btn-primary btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(1);">
-                        Audit {{ $agencyLabel }}
+                        Audit {{ $masterLableAgency }}
                     </button>
                     <button type="submit" class="btn btn-danger btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(2);">
@@ -1327,7 +1313,7 @@
                 @if (auth()->check() && auth()->user()->client_id == 2)
                     <button type="submit" class="btn btn-primary btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(3);">
-                        Audit {{ $agencyLabel }}
+                        Audit {{ $masterLableAgency }}
                     </button>
                     <button type="submit" class="btn btn-danger btn-sm"
                         style="padding-top: 7px;padding-bottom: 7px;line-height:normal;" onclick="switchUser(4);">
@@ -1870,7 +1856,7 @@
                                                     <option value="6">City</option>
                                                     <option value="7">Parameters</option>
                                                     <option value="8">Sub Parameters</option>
-                                                    <option value="9">List of {{$agencyLabel}}/Branch/Yard/Repos</option>
+                                                    <option value="9">List of {{$masterLableAgency}}/Branch/Yard/Repos</option>
                                                     <option value="10">Regulatory Parameter</option>
                                                 </select>
                                             </div>
@@ -1879,10 +1865,10 @@
                                                 <label for="match_field_other" class="form-label">Audit Type</label>
                                                 <select id="match_field_other" class="form-select">
                                                     <option value="0">All</option>
-                                                    <option value="agency">{{ $agencyLabel }}</option>
+                                                    <option value="agency">{{ $masterLableAgency }}</option>
                                                     <option value="branch">Branch</option>
                                                     <option value="yard">Yard</option>
-                                                    <option value="agency_repo">{{ $agencyLabel }} Repo</option>
+                                                    <option value="agency_repo">{{ $masterLableAgency }} Repo</option>
                                                     <option value="branch_repo">Branch Repo</option>
                                                     <option value="yard_repo">Yard Repo</option>
                                                 </select>
@@ -2478,15 +2464,15 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            🏆 Top Performing {{ $agencyLabel }}
+                                            🏆 Top Performing {{ $masterLableAgency }}
                                         </h2>
                                         <small class="text-muted">
-                                            Highest scoring {{ $agencyLabel }} across all audits
+                                            Highest scoring {{ $masterLableAgency }} across all audits
                                         </small>
                                     </div>
 
                                     <span class="badge bg-light text-dark px-3 py-2">
-                                        {{ count($agencies) }} {{ $agencyLabel }}
+                                        {{ count($agencies) }} {{ $masterLableAgency }}
                                     </span>
                                 </div>
 
@@ -2565,7 +2551,7 @@
 
                                                 <div class="audit-role">
                                                     <i class="fa-solid fa-building me-1 text-primary"></i>
-                                                    {{ $agencyLabel }} Performance Ranking
+                                                    {{ $masterLableAgency }} Performance Ranking
                                                 </div>
                                             </div>
 
@@ -2600,7 +2586,7 @@
                                     <div class="text-center py-5">
                                         <i class="fa-solid fa-building fs-1 text-muted mb-3"></i>
                                         <div class="text-muted">
-                                            No {{ $agencyLabel }} performance data available
+                                            No {{ $masterLableAgency }} performance data available
                                         </div>
                                     </div>
                                 @endforelse
@@ -2618,15 +2604,15 @@
                                 <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
                                         <h2 class="card-title fw-semibold mb-0">
-                                            ⚠️ Bottom Performing {{ $agencyLabel }}
+                                            ⚠️ Bottom Performing {{ $masterLableAgency }}
                                         </h2>
                                         <small class="text-muted">
-                                            {{ $agencyLabel }} requiring immediate attention
+                                            {{ $masterLableAgency }} requiring immediate attention
                                         </small>
                                     </div>
 
                                     <span class="badge bg-light text-dark px-3 py-2">
-                                        {{ count($agencies) }} {{ $agencyLabel }}
+                                        {{ count($agencies) }} {{ $masterLableAgency }}
                                     </span>
                                 </div>
 
@@ -2743,7 +2729,7 @@
                                     <div class="text-center py-5">
                                         <i class="fa-solid fa-triangle-exclamation fs-1 text-muted mb-3"></i>
                                         <div class="text-muted">
-                                            No {{ $agencyLabel }} performance data available
+                                            No {{ $masterLableAgency }} performance data available
                                         </div>
                                     </div>
                                 @endforelse
@@ -2899,7 +2885,7 @@
                                 <div class="auditSearch">
                                     <i class="fa fa-search text-muted"></i>
                                     <input type="text" id="issueSearch" class="w-100"
-                                        placeholder="Search {{ $agencyLabel }} ID or {{ $agencyLabel }} name">
+                                        placeholder="Search {{ $masterLableAgency }} ID or {{ $masterLableAgency }} name">
                                 </div>
 
                                 <button class="auditExportBtn text-nowrap" type="button" data-bs-toggle="modal"
@@ -2916,8 +2902,8 @@
                                     <tr>
                                         <th class="text-nowrap">S.NO</th>
                                         <th>Audit ID</th>
-                                        <th>{{ $agencyLabel }} ID</th>
-                                        <th>{{ $agencyLabel }} Name</th>
+                                        <th>{{ $masterLableAgency }} ID</th>
+                                        <th>{{ $masterLableAgency }} Name</th>
                                         <th>Issue Description</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
@@ -3026,8 +3012,8 @@
                     <label for="audit_cycle" style="font-size: 13px !important">Audit Cycle</label>
                     <select class="form-select" name="audit_type">
                         <option value="all" selected>All</option>
-                        <option value="agency">{{ $agencyLabel }}</option>
-                        <option value="agency_repo">{{ $agencyLabel }} Repo</option>
+                        <option value="agency">{{ $masterLableAgency }}</option>
+                        <option value="agency_repo">{{ $masterLableAgency }} Repo</option>
                         <option value="branch">Branch</option>
                         <option value="branch_repo">Branch Repo</option>
                         <option value="yard">Yard</option>
@@ -3800,7 +3786,7 @@
             <div class="row w-100">
 
                 <div class="col-md-4">
-                    <strong>{{ $agencyLabel }}</strong><br>
+                    <strong>{{ $masterLableAgency }}</strong><br>
                     ${a.final_agency_name ?? '-'}
                 </div>
 
@@ -3831,7 +3817,7 @@
                  <div class="audit-card submitted-card d-flex justify-content-between align-items-center">
             
             <div class="audit-info">
-                <div><strong>{{ $agencyLabel }}:</strong> ${a.agency_name ?? '-'}</div>
+                <div><strong>{{ $masterLableAgency }}:</strong> ${a.agency_name ?? '-'}</div>
                 <div><strong>Score:</strong> 
                     <span class="badge ">${a.overall_score ?? '-'}</span>
                 </div>
