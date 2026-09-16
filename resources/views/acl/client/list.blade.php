@@ -47,12 +47,12 @@ Users
 
                 {{-- New Code For addding buttons import and export excel --}}
 
-                 <div class="card-header">
+                 <div class="card-header mb-3">
                     <strong class="card-title">Client List</strong>
                     <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
                         href="{{route('clientExcelDownload')}}" target="_blank">Export Clients List</a>
                     <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('clientExcelDownload')}}" target="_blank">Import Clients List</a>
+                        href="{{route('clientImport')}}" target="_blank">Import Clients List</a>
                 </div>
 
                 <div class="card-body">

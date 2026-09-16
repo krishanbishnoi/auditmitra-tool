@@ -45,6 +45,9 @@ use App\Client;
 use App\Helpers\Helper;
 use App\Model\ClientMasterSetting;
 use App\Exports\ExportClient;
+use App\Exports\ExportClientSample;
+use App\Imports\ImportClientSheet;
+use App\Exports\ExportMasterQAList;
 
 class ClientManagementController extends Controller
 {
@@ -277,7 +280,7 @@ class ClientManagementController extends Controller
             "yard_name_for_client" => "nullable|string|max:255",
             "yard_repo_name_for_client" => "nullable|string|max:255",
             "branch_name_for_client" => "nullable|string|max:255",
-            "branch_repo_name_for_client" => "nullable|string|max:255", 
+            "branch_repo_name_for_client" => "nullable|string|max:255",
         ]);
 
         if ($validator->fails()) {
@@ -562,7 +565,7 @@ class ClientManagementController extends Controller
             );
     }
 
-// new code for import and export the clioent list
+    // new code for import and export the clioent list
 
     public function clientExcelDownload()
     {
@@ -575,34 +578,58 @@ class ClientManagementController extends Controller
         // return Excel::download(new QcAndQaChangesExport, 'client.xlsx');
     }
 
-    public function clientImport(Request $request)
+    public function clientSheetImport(Request $request)
     {
-        // Validate the request to ensure the file is present
-        $validator = Validator::make($request->all(), [
-            'user_excel' => 'required|file|mimes:xlsx,xls',
-        ]);
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:xlsx,xls,csv',
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+            $file = $request->file('file');
 
-        if ($request->hasFile('user_excel')) {
-            $path1 = $request->file('user_excel')->store('temp');
-            $dacpath = storage_path('app/' . $path1);
-
-            // Create an instance of clientImport without the role
-            $exampleImport = new clientImport();
-
-            try {
-                Excel::import($exampleImport, $dacpath);
-            } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-                $failures = $e->failures();
-                return redirect()->back()->withErrors($failures)->withInput();
+            // Check if file is actually received
+            if (!$file) {
+                return redirect()->back()->with('error', 'No file was uploaded.');
             }
-        }
 
-        return redirect('user');
+
+            Excel::import(new ImportClientSheet, request()->file('file'));
+            return redirect()->back()->with('success', 'Excel file imported successfully.');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
+
+    // upload the client list page
+    public function uploadClientSheet()
+    {
+        return view('acl.client.uploadsheet');
+    }
+
+
+// Download the client sample data
+
+
+public function downloadClientSample()
+{
+return Excel::download(new ExportClientSample, 'client_sample.xlsx');
+}
+
+
+// export the master qa list 
+
+public function exportMasterQAList()
+{
+   ini_set("memory_limit", "-1");
+   
+   ini_set("max_execaution_time", 3000);
+
+   return Excel::download(new ExportMasterQAList, "masterQAList.xlsx");
+}
+
+
+
+
 
 
     public function auditor_status($user_id, Request $request)

@@ -108,10 +108,6 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::group(['middleware' => ['role:zonal']], function () {
     Route::get('dowmload-user-excel', 'UserController@ExcelDownloadUser')->name('excelDownloadUser');
 
-// new route for download the lists 
-
-Route::get('download-client-sheet', 'ClientManagementController@clientExcelDownload')->name('clientExcelDownload');
-
 
 
     Route::get('dowmload-branch-excel', 'BranchController@excelDownloadBranch')->name('excelDownloadBranch');
@@ -147,7 +143,19 @@ Route::get('download-client-sheet', 'ClientManagementController@clientExcelDownl
 
     Route::resource('masters', MasterController::class);
 
+// new route for import and export the Excel 
 
+ // 1 for Clients
+    Route::get('download-client-sheet', 'ClientManagementController@clientExcelDownload')->name('clientExcelDownload');
+    Route::get('import-client-sheet', 'ClientManagementController@uploadClientSheet')->name('clientImport');
+    Route::post('clientsheetimport', 'ClientManagementController@clientSheetImport')->name('clientsheetimport');
+    Route::get('download-client-sample', 'ClientManagementController@downloadClientSample')->name('downloadSample');
+
+ // 2 for master QA 
+    
+ Route::get('export-master-qa-list', 'ClientManagementController@exportMasterQAList')->name('exportMasterQAList');
+
+ // end here 
     Route::get('user/status/{user_id}/{status}', 'UserController@change_user_status');
     Route::resource('yard', 'YardController');
     Route::get('yard-excel-import', 'YardController@showYardImport')->name('yardExcelUpload');

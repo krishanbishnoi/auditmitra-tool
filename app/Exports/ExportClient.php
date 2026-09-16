@@ -15,25 +15,21 @@ class ExportClient implements FromArray, WithHeadings, WithStyles
      */
     public function array(): array
     {
-        $data = Client::query()
-            ->orderBy('client_name')
+        $record = Client::query()
+            ->orderBy('client_id')
             ->get();
 
         $final = [];
 
-        foreach ($data as $client) {
+        foreach ($record as $client) {
             $final[] = [
                 'Client ID' => $client->client_id,
                 'Client Code' => $client->client_code,
                 'Client Name' => $client->client_name,
                 'Client Email' => $client->client_email,
-                'Action Plan TAT' => $client->action_plan_tat,
-                'Sidebar Color Code' => $client->sidebar_color_code,
-                'Negative Score Range' => $client->negative_score_range,
-                'Created At' => optional($client->created_at)->format('Y-m-d H:i:s'),
+                'Created At' => ($client->created_at)->format('Y-m-d H:i:s'),
             ];
         }
-
         return $final;
     }
 
@@ -44,9 +40,6 @@ class ExportClient implements FromArray, WithHeadings, WithStyles
             'Client Code',
             'Client Name',
             'Client Email',
-            'Action Plan TAT',
-            'Sidebar Color Code',
-            'Negative Score Range',
             'Created At'
         ];
     }

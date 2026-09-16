@@ -13,116 +13,128 @@
 
 <!-- @section('sh-detail')
 
-Users
+        Users
 
 @endsection -->
 
 
 
 @section('content')
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-<div class="row">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <div class="row">
 
-    <div class="col-lg-12" style="margin-top:10x">
+        <div class="col-lg-12" style="margin-top:10x">
+
+        </div>
 
     </div>
 
-</div>
+    <div class="animated fadeIn">
 
-<div class="animated fadeIn">
+        <div class="row">
 
-    <div class="row">
+            <div class="col-lg-12">
 
-        <div class="col-lg-12">
+                <div class="card">
 
-            <div class="card">
+                    {{-- new code for adding the buttons to import and export the list] --}}
 
+                    <div class="card-header mb-3">
+                        <strong class="card-title">Master QA List</strong>
+                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
+                            href="{{ route('exportMasterQAList') }}" target="_blank">Export QA List</a>
+                        <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
+                            href="{{ route('clientImport') }}" target="_blank">Import QA List</a>
+                    </div>
 
-                <div class="card-body">
+                    <div class="card-body">
 
-                    <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
+                        <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
 
-                        <thead>
+                            <thead>
 
-                            <tr>
+                                <tr>
 
-                                <th scope="col">#</th>
+                                    <th scope="col">#</th>
 
-                                <th scope="col">
+                                    <th scope="col">
 
-                                    Name
+                                        Name
 
-                                </th>
-
-
-
-                                <th scope="col">
-
-                                    Email
-
-                                </th>
-
-                                <th scope="col">
-
-                                    Phone
-
-                                </th>
+                                    </th>
 
 
 
+                                    <th scope="col">
 
-                                <th scope="col">
+                                        Email
 
-                                    Actions
+                                    </th>
 
-                                </th>
+                                    <th scope="col">
 
+                                        Phone
 
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-                            @foreach($data as $row)
-                            @if(($row->roles->isNotEmpty() && $row->roles->first()->name != 'Quality Auditor') || $row->is_approved == 1)
-                            <tr scope="row">
-                                <td>{{$loop->iteration}}</td>
-
-                                <td>{{$row->name}}</td>
+                                    </th>
 
 
 
 
+                                    <th scope="col">
+
+                                        Actions
+
+                                    </th>
 
 
-                                <td>{{$row->email}}</td>
+                                </tr>
 
-                                <td>{{$row->mobile}}</td>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($data as $row)
+                                    @if (($row->roles->isNotEmpty() && $row->roles->first()->name != 'Quality Auditor') || $row->is_approved == 1)
+                                        <tr scope="row">
+                                            <td>{{ $loop->iteration }}</td>
+
+                                            <td>{{ $row->name }}</td>
 
 
-                                <td nowrap>
-                                    
-                                    <a href="{{ route('masterqa.client_list', $row->id) }}" class="btn btn-sm btn-secondary" title="Auditor Assign">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                </td>
 
 
-                                
-                            </tr>
-                            @endif
-                            @endforeach
-                        </tbody>
 
-                    </table>
+
+                                            <td>{{ $row->email }}</td>
+
+                                            <td>{{ $row->mobile }}</td>
+
+
+                                            <td nowrap>
+
+                                                <a href="{{ route('masterqa.client_list', $row->id) }}"
+                                                    class="btn btn-sm btn-secondary" title="Auditor Assign">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
+
+
+
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
@@ -132,27 +144,25 @@ Users
 
     </div>
 
-</div>
-
 @endsection
 
 @section('css')
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 
 @endsection
 
 @section('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
-<script>
-    jQuery(document).on('ready', function() {
+    <script>
+        jQuery(document).on('ready', function() {
 
-        jQuery('#kt_table_1').DataTable();
+            jQuery('#kt_table_1').DataTable();
 
-    })
-</script>
+        })
+    </script>
 
 @endsection
