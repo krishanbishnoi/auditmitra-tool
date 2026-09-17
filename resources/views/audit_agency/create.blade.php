@@ -51,7 +51,6 @@
 
 @endif
 
-
             <div class="row form-group">
                 <div class="col col-md-6">
                     <label for="text-input" class="form-control-label font-weight-bold">Name</label>

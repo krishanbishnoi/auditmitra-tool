@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ExportMasterQAList implements WithHeadings, WithStyles
+class ExportAuditAgencySample implements WithHeadings, WithStyles
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -19,12 +19,15 @@ class ExportMasterQAList implements WithHeadings, WithStyles
             [
                 'Name',
                 'Email',
-                'Phone'
+                'Phone',
+                'Audit Agency Name'
             ];
     }
 
-    public function styles(Worksheet $style)
+    public function styles(Worksheet $sheet)
     {
-        return [1 => ['font' => ['bold' => 'true']],];
+        return [
+            1 => ['font' => ['bold' => true]],
+        ];
     }
 }

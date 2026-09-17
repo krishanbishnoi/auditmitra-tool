@@ -11,8 +11,10 @@ use DB, Response;
 use App\Model\Branch;
 
 use Validator;
-use App\Imports\AgencyImport;
-use App\Exports\AgencyExport;
+use App\Imports\ImportAuditAgencySheet;
+use App\Exports\ExportAuditAgencySheet;
+use App\Exports\ExportAuditAgencySample;
+
 
 use Spatie\Permission\Models\Role;
 use App\UsersMaster;
@@ -273,40 +275,35 @@ class AuditAgencyController extends Controller
     }
 
 
-    public function excelDownloadAgency()
+    public function excelDownloadAuditAgency()
     {
 
         ini_set('memory_limit', '-1');
 
         ini_set('max_execution_time', 3000);
 
-        return Excel::download(new AgencyExport, 'Agency.xlsx');
+        return Excel::download(new ExportAuditAgencySheet, 'Audit_Agency.xlsx');
     }
 
 
     //V Upload Page Show
-    public function showAgencyImport()
+    public function showAuditAgencyImport()
     {
-        return view('agency.upload');
+        return view('audit_agency.importauditagency');
     }
 
 
     //V Upload Excel Data
-    public function agencyImport()
+    public function auditAgencyImport()
     {
         //  echo 'dfdsf'; die;AgencyImport
-        Excel::import(new AgencyImport, request()->file('file'));
+        Excel::import(new ImportAuditAgencySheet, request()->file('file'));
 
         return redirect()->back()->with('success', 'Excel file imported successfully.');
     }
 
-    public function downloadAgencySample()
+    public function downloadAuditAgencySample()
     {
-        //  echo "jh"; die;
-        $file = public_path() . "/download/agency_import.xlsx";
-        $headers = array(
-            'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        );
-        return Response::download($file, 'agency_import.xlsx', $headers);
+        return Excel::download(new ExportAuditAgencySample, 'audit_agency-sample.xlsx');   
     }
 }

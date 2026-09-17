@@ -665,8 +665,10 @@ public function exportMasterQAList()
 
     public function masterqa_list()
     {
+
         $data = User::where('active_status', 0)
-            ->whereHas('roles', function ($query) {
+        
+        ->whereHas('roles', function ($query) {
                 $query->where('name', 'Master QA');
             })
             ->with('roles')

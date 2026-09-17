@@ -1,24 +1,24 @@
-    <?php
+<?php
 
-    namespace App\Imports;
+namespace App\Imports;
 
-    use Illuminate\Support\Collection;
-    use Maatwebsite\Excel\Concerns\ToCollection;
-    use Maatwebsite\Excel\Concerns\ToModel;
-    use Maatwebsite\Excel\Concerns\WithHeadingRow;
-    use App\Client;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Client;
 
-    class ImportClientSheet implements ToModel, WithHeadingRow
+class ImportClientSheet implements ToModel, WithHeadingRow
+{
+    /**
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+
+    public function model(array $row)
     {
-        /**
-         * @param array $row
-         *
-         * @return \Illuminate\Database\Eloquent\Model|null
-         */
-
-        public function model(array $row)
-        {
-            try{
+        try {
             if (!isset($row['client_name']) || empty($row['client_name'])) {
                 return null;
             }
@@ -31,9 +31,8 @@
                 'created_at' => $row['created_at'] ?? now(),
             ]);
             return $client;
-            }catch (\Exception $e) {
-                dd($e->getMessage());
-            }
-            
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
     }
+}

@@ -10,6 +10,16 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <strong class="card-title">Audit {{$masterLableAgency}} List</strong>
+                    
+                    {{-- button added here only --}}
+                      <div class="d-flex align-items-center">
+                           <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
+                        href="{{route('importAuditAgency')}}" target="_blank">Import Audit_{{$masterLableAgency}} List</a>
+
+                      <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
+                        href="{{route('excelDownloadAuditAgency')}}" target="_blank">Export Audit_{{$masterLableAgency}} List</a>
+                   
+                        {{-- end --}}
 
                     {{-- Filter by Client - Right aligned --}}
                     @hasrole('Super Admin')
@@ -23,7 +33,7 @@
                     </div>
                     @endhasrole
                 </div>
-
+ </div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-hover table-checkable" id="kt_table_1">
                         <thead>

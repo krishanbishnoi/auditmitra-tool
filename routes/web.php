@@ -10,6 +10,7 @@
 |
 */
 
+use App\Http\Controllers\AuditAgencyController;
 use App\Http\Controllers\ClientManagementController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Artisan;
@@ -155,6 +156,16 @@ Route::group(['middleware' => ['auth']], function () {
     
  Route::get('export-master-qa-list', 'ClientManagementController@exportMasterQAList')->name('exportMasterQAList');
 
+
+// AuditAgencyController route for import and export the excel 
+
+ Route::get('export-audit_agency-sheet', 'AuditAgencyController@excelDownloadAuditAgency')->name('excelDownloadAuditAgency');
+ Route::get('export-audit_agency-sample', 'AuditAgencyController@downloadAuditAgencySample')->name('auditAgencySample');
+ Route::post('importAuditAgencySheet', 'AuditAgencyController@auditAgencyImport')->name('importAuditAgencySheet');
+Route::get('import-audit_agency-sheet', 'AuditAgencyController@showAuditAgencyImport')->name('importAuditAgency');
+
+
+
  // end here 
     Route::get('user/status/{user_id}/{status}', 'UserController@change_user_status');
     Route::resource('yard', 'YardController');
@@ -191,6 +202,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user-import', 'UserController@userImport')->name('userImport');
     Route::post('user-hierarchy-import', 'UserController@userHierarchyImport')->name('userHierarchyImport');
     Route::resource('audit_agency', 'AuditAgencyController');
+
 
 
     Route::post('bulk_user_deactivate', 'UploadController@bulk_user_deactivate')->name('bulk_user_deactivate');
