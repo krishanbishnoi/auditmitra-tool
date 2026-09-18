@@ -19,6 +19,11 @@ use App\Helpers\Helper;
 use App\MappingMaster;
 use DB;
 
+use App\Exports\ExportQmCheckSheet;
+use App\Exports\ExportQmCheckSheetSample;
+use App\Imports\ImportQmCheckSheet;
+use Maatwebsite\Excel\Facades\Excel;
+
 class QmSheetController extends Controller
 {
     /**
@@ -653,4 +658,33 @@ class QmSheetController extends Controller
         $all_sheet = QmSheet::where('client_id', $request->client_id)->where('process_id', $request->process_id)->orderBy('id', 'desc')->get();
         return response()->json(['status' => 200, 'message' => "Success", 'data' => $all_sheet], 200);
     }
+
+// Qm Shhet import and export Methods starts
+
+public function exportQmSheet()
+{
+     ini_set('memory_limit', '-1');
+
+     ini_set('max_execaution_time', '3000');
+
+     return Excel::download(new ExportQmCheckSheet, 'qm-checkSheet.xlsx');
+}
+
+public function exportQmSample()
+{
+ return Excel::download(new ExportQmCheckSheetSample, 'qm-checksheet-sample.xlsx');
+}
+
+public function uploadQmSheet()
+{
+return view('qm_sheet.importqmsheet');
+}
+
+public function qmSheetImport()
+{
+Excel::import(new ImportQmCheckSheet, request()->file('file'));
+
+return redirect()->back()->with('success', 'Qm CheckSheet import Successfully');
+}
+
 }

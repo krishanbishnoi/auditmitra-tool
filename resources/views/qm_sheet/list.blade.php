@@ -19,6 +19,11 @@
                 <div class="card">
                     <div class="card-header">
                         <strong class="card-title">Sheet List</strong>
+                       <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
+                        href="{{route('exportQmSheet')}}" target="_blank">Export Audit_CheckSheet List</a>
+                    <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
+                        href="{{route('importQmSheet')}}" target="_blank">Import Audit_CheckSheet List</a>
+
                     </div>
                     <div id="successAlert" class="alert alert-success"
                         style="display:none; position:fixed; top:20px; right:20px; z-index:9999; min-width:300px;">

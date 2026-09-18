@@ -23,7 +23,8 @@ use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GovernanceDashboard;
- 
+use App\Http\Controllers\QmSheetController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -141,32 +142,40 @@ Route::group(['middleware' => ['auth']], function () {
     //sumeet
     // });
     Route::resource('roles', 'RoleController');
+    // import and export routes of roles
+
+    Route::get('export-roles-sheet', 'RoleController@exportRolesSheet')->name('exportRolesSheet');
+    Route::get('export-roles-sample', 'RoleController@exportRolesSample')->name('exportRolesSample');
+    Route::get('import-roles-sheet', 'RoleController@uploadRolesSheet')->name('rolesSheetImport');
+    Route::post('importRolesSheet', 'RoleController@rolesImport')->name('importRolesSheet');
+
+
 
     Route::resource('masters', MasterController::class);
 
-// new route for import and export the Excel 
+    // new route for import and export the Excel 
 
- // 1 for Clients
+    // 1 for Clients
     Route::get('download-client-sheet', 'ClientManagementController@clientExcelDownload')->name('clientExcelDownload');
     Route::get('import-client-sheet', 'ClientManagementController@uploadClientSheet')->name('clientImport');
     Route::post('clientsheetimport', 'ClientManagementController@clientSheetImport')->name('clientsheetimport');
     Route::get('download-client-sample', 'ClientManagementController@downloadClientSample')->name('downloadSample');
 
- // 2 for master QA 
-    
- Route::get('export-master-qa-list', 'ClientManagementController@exportMasterQAList')->name('exportMasterQAList');
+    // 2 for master QA 
+
+    Route::get('export-master-qa-list', 'ClientManagementController@exportMasterQAList')->name('exportMasterQAList');
 
 
-// AuditAgencyController route for import and export the excel 
+    // AuditAgencyController route for import and export the excel 
 
- Route::get('export-audit_agency-sheet', 'AuditAgencyController@excelDownloadAuditAgency')->name('excelDownloadAuditAgency');
- Route::get('export-audit_agency-sample', 'AuditAgencyController@downloadAuditAgencySample')->name('auditAgencySample');
- Route::post('importAuditAgencySheet', 'AuditAgencyController@auditAgencyImport')->name('importAuditAgencySheet');
-Route::get('import-audit_agency-sheet', 'AuditAgencyController@showAuditAgencyImport')->name('importAuditAgency');
+    Route::get('export-audit_agency-sheet', 'AuditAgencyController@excelDownloadAuditAgency')->name('excelDownloadAuditAgency');
+    Route::get('export-audit_agency-sample', 'AuditAgencyController@downloadAuditAgencySample')->name('auditAgencySample');
+    Route::post('importAuditAgencySheet', 'AuditAgencyController@auditAgencyImport')->name('importAuditAgencySheet');
+    Route::get('import-audit_agency-sheet', 'AuditAgencyController@showAuditAgencyImport')->name('importAuditAgency');
 
 
 
- // end here 
+    // end here 
     Route::get('user/status/{user_id}/{status}', 'UserController@change_user_status');
     Route::resource('yard', 'YardController');
     Route::get('yard-excel-import', 'YardController@showYardImport')->name('yardExcelUpload');
@@ -246,6 +255,14 @@ Route::get('import-audit_agency-sheet', 'AuditAgencyController@showAuditAgencyIm
     Route::post('audit-allocation-bulk-delete', 'AuditAllocationController@bulkDelete')->name('auditallocation.bulkDelete');
 
     Route::resource('allocation', 'AllocationController');
+
+    // import and export route for QM sheet 
+
+    Route::get('export-audit_checksheet-sheet', 'QmSheetController@exportQmSheet')->name('exportQmSheet');
+    Route::get('export-audit_checksheet-sample', 'QmSheetController@exportQmSample')->name('exportQmSample');
+    Route::get('import-qm_checksheet', 'QmSheetController@uploadQmSheet')->name('importQmSheet');
+    Route::post('importQmCheckSheet', 'QmSheetController@qmSheetImport')->name('importQmCheckSheet');
+
 
 
     // qm sheet controller
@@ -349,13 +366,13 @@ Route::get('import-audit_agency-sheet', 'AuditAgencyController@showAuditAgencyIm
     Route::any('edit-audit-cycle/{id}', 'AuditController@editCycle');
 
 
-    
-Route::get('submitted-audit-data-v2/{audit_id}', 'AuditController@submittedAuditDataViewV2');
 
-Route::get('submitted-audit-data-v2-update/{audit_id}', 'AuditController@submittedAuditDataViewV2UpdateView')->name('audit.v2.remark-update_view');
-Route::post('submitted-audit-data-v2', 'AuditController@submittedAuditDataViewV2Save')->name('audit.v2.remark-update');
+    Route::get('submitted-audit-data-v2/{audit_id}', 'AuditController@submittedAuditDataViewV2');
 
-Route::get('submitted-audit-data-v2-qc/{audit_id}', 'AuditController@submittedAuditDataViewV2Qc')->name('audit.v2.remark-qc');
+    Route::get('submitted-audit-data-v2-update/{audit_id}', 'AuditController@submittedAuditDataViewV2UpdateView')->name('audit.v2.remark-update_view');
+    Route::post('submitted-audit-data-v2', 'AuditController@submittedAuditDataViewV2Save')->name('audit.v2.remark-update');
+
+    Route::get('submitted-audit-data-v2-qc/{audit_id}', 'AuditController@submittedAuditDataViewV2Qc')->name('audit.v2.remark-qc');
 
 
 
@@ -402,6 +419,15 @@ Route::get('submitted-audit-data-v2-qc/{audit_id}', 'AuditController@submittedAu
     Route::get('repeat_issues', 'ParetoChartController@repeat_issues')->name('repeat_issues');
 
     Route::resource('support_tickets', SupportTicketController::class);
+
+// import and Export excel route for the support Tickets
+
+Route::get('export-support_ticket-sheet', 'SupportTicketController@exportSupportTicketSheet')->name('exportSupportTicketSheet');
+Route::get('export-support_ticket-sample', 'SupportTicketController@exportSupportTicketSample')->name('exportSupportTicketSample');
+Route::get('import-support_ticket-sheet', 'SupportTicketController@uploadSupportTicketSheet')->name('importS_TicketSheet');
+Route::post('importsupportTicketSheet', 'SupportTicketController@supportTicketsImport')->name('importsupportTicketSheet');
+
+
 
     Route::get('support_tickets/{id}/close', [SupportTicketController::class, 'showCloseForm'])
         ->name('support_tickets.showCloseForm');
@@ -728,6 +754,6 @@ Route::post('/audit/{id}/qc-approve', 'AuditController@qcApprove')
     ->name('audit.qc.approve');
 
 
-    // new Route for governance Dashboard
+// new Route for governance Dashboard
 
-    Route::get('/governanceDashboard', [GovernanceDashboard::class, 'gDashboard'])->name('governanceDashboard');
+Route::get('/governanceDashboard', [GovernanceDashboard::class, 'gDashboard'])->name('governanceDashboard');

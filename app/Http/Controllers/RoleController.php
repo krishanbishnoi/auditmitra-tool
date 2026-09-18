@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportRolesSample;
+use App\Exports\ExportRolesSheet;
+use App\Imports\ImportRolesSheet;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -9,13 +12,16 @@ use Auth;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Maatwebsite\Excel\Facades\Excel;
 
-use Session,Validator;
+use Session, Validator;
 
-class RoleController extends Controller {
+class RoleController extends Controller
+{
 
-    public function __construct() {
-       // $this->middleware(['auth', 'isAdmin']);//isAdmin middleware lets only users with a //specific permission permission to access these resources
+    public function __construct()
+    {
+        // $this->middleware(['auth', 'isAdmin']);//isAdmin middleware lets only users with a //specific permission permission to access these resources
     }
 
     /**
@@ -23,8 +29,9 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $roles = Role::all();//Get all roles
+    public function index()
+    {
+        $roles = Role::all(); //Get all roles
 
         return view('acl.role.list')->with('roles', $roles);
     }
@@ -34,10 +41,11 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        $permissions = Permission::all();//Get all permissions
+    public function create()
+    {
+        $permissions = Permission::all(); //Get all permissions
 
-        return view('acl.role.create', ['permissions'=>$permissions]);
+        return view('acl.role.create', ['permissions' => $permissions]);
     }
 
     /**
@@ -46,11 +54,12 @@ class RoleController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //Validate name and permission fields
         $validator = Validator::make($request->all(), [
-            'name'=>'required|unique:roles|max:255',
-            'permissions' =>'required',
+            'name' => 'required|unique:roles|max:255',
+            'permissions' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -73,8 +82,10 @@ class RoleController extends Controller {
         }
 
         return redirect()->route('roles.index')
-            ->with('success',
-                'Role'. $role->name.' added!');
+            ->with(
+                'success',
+                'Role' . $role->name . ' added!'
+            );
     }
 
     /**
@@ -83,7 +94,8 @@ class RoleController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         return redirect('roles');
     }
 
@@ -93,7 +105,8 @@ class RoleController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $role = Role::findOrFail(Crypt::decrypt($id));
         $permissions = Permission::all();
 
@@ -156,8 +169,37 @@ class RoleController extends Controller {
         $role->delete();
 
         return redirect()->route('roles.index')
-            ->with('success',
-                'Role deleted!');
+            ->with(
+                'success',
+                'Role deleted!'
+            );
+    }
 
+    // methods for import and export the  
+
+    public function exportRolesSheet()
+    {
+        ini_set('memory_limit', '-1');
+
+        ini_set('max_execaution_time', '3000');
+
+        return Excel::download(new ExportRolesSheet, 'roles_sheet.xlsx');
+    }
+
+    public function exportRolesSample()
+    {
+        return Excel::download(new ExportRolesSample, 'roles_sample.xlsx');
+    }
+
+    public function rolesImport()
+    {
+        Excel::import(new ImportRolesSheet, request()->file('file'));
+
+        return redirect()->back()->with('success', 'Roles Sheet Import Successfully');
+    }
+
+    public function uploadRolesSheet()
+    {
+        return view('acl.role.rolessheetimport');
     }
 }

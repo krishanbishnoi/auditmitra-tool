@@ -4,49 +4,73 @@
 
 @section('content')
 
-	<div class="card">
-		<div class="card-header">
-		<strong>
-			Roles</strong>
+    <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
 
-			<a href="{{ route('user.index') }}" class="btn btn-default pull-right">Users</a>
-			<a href="{{ route('permissions.index') }}" class="btn btn-default pull-right">Permissions</a></h1>
-		</div>
-		<div class="card-body card-block table-responsive">
-			<table class="table table-bordered table-striped">
-				<thead>
-				<tr>
-					<th>Role</th>
-					<th>Permissions</th>
-					<th>Operation</th>
-				</tr>
-				</thead>
+    <strong class="card-title">Roles List</strong>
 
-				<tbody>
-				@foreach ($roles as $role)
-					<tr>
+    <div class="d-flex align-items-center">
+        <a href="{{ route('exportRolesSheet') }}"
+           class="btn btn-primary btn-sm mr-2"
+           target="_blank">
+            Export Roles List
+        </a>
 
-						<td>{{ $role->name }}</td>
+        <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a>
 
-						<td>{{ str_replace(array('[',']','"'),'', $role->permissions()->pluck('name')) }}</td>{{-- Retrieve array of permissions associated to a role and convert to string --}}
-						<td>
-							<a href="{{url('roles/'.Crypt::encrypt($role->id).'/edit')}}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+        <a href="{{ route('user.index') }}"
+           class="btn btn-default btn-sm mr-2">
+            Users
+        </a>
 
-							{{--{!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id] ]) !!}
+        <a href="{{ route('permissions.index') }}"
+           class="btn btn-default btn-sm">
+            Permissions
+        </a>
+    </div>
+
+</div>
+        <div class="card-body card-block table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Permissions</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($roles as $role)
+                        <tr>
+
+                            <td>{{ $role->name }}</td>
+
+                            <td>{{ str_replace(['[', ']', '"'], '', $role->permissions()->pluck('name')) }}</td>
+                            {{-- Retrieve array of permissions associated to a role and convert to string --}}
+                            <td>
+                                <a href="{{ url('roles/' . Crypt::encrypt($role->id) . '/edit') }}"
+                                    class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+
+                                {{-- {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id] ]) !!}
 							{!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-							{!! Form::close() !!}--}}
+							{!! Form::close() !!} --}}
 
-						</td>
-					</tr>
-				@endforeach
-				</tbody>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
 
-			</table>
-			<a href="{{ URL::to('roles/create') }}" class="btn btn-success">Add Role</a>
-		</div>
+            </table>
+            <a href="{{ URL::to('roles/create') }}" class="btn btn-success">Add Role</a>
+        </div>
 
 
 
-	</div>
+    </div>
 
 @endsection

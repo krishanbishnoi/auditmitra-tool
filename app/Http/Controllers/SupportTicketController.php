@@ -145,9 +145,26 @@ public function close(Request $request, $id)
     return redirect()->route('support_tickets.index')->with('success', 'Ticket closed successfully.');
 }
 
+// methods for import and export the excel 
 
+public function exportSupportTicketSheet()
+{
 
+}
 
+public function exportSupportTicketSample()
+{
 
+}
+
+public function uploadSupportTicketSheet()
+{
+
+}
+
+public function supportTicketsImport() 
+{
+     
+}
 
 }
