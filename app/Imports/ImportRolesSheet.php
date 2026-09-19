@@ -2,16 +2,31 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Model\Role;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportRolesSheet implements ToCollection
+class ImportRolesSheet implements ToModel, WithHeadingRow
 {
     /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection)
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+
+    public function model(array $row)
     {
-        //
+            // dd($row);
+
+        if (empty($row['roles'])) {
+            return null;
+        }
+
+        $roles = Role::create([
+            'id' => $row['id'], 
+            'name' => $row['roles'] ?? null,
+            'guard_name' => $row['guard_name'] ?? null,
+        ]);
+        return $roles;
     }
 }

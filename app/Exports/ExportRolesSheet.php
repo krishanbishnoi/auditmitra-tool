@@ -26,6 +26,7 @@ class ExportRolesSheet implements WithStyles, WithHeadings, FromArray
             $final[] = [
                 'Id' => $roles->id,
                 'Roles' => $roles->name,
+                'Guard Name' => $roles->guard_name,
                 'Created At' => $roles->created_at->format('Y-m-d H:i:s'),
             ];
         }
@@ -35,8 +36,9 @@ class ExportRolesSheet implements WithStyles, WithHeadings, FromArray
     public function headings(): array
     {
         return [
-            'Roles Id',
+           'Id',
             'Roles',
+            'Guard Name',
             'Created At'
         ];
     }

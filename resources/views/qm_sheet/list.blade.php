@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Sheet List</strong>
+                        <strong class="card-title">QM Sheet List</strong>
                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
                         href="{{route('exportQmSheet')}}" target="_blank">Export Audit_CheckSheet List</a>
                     <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"

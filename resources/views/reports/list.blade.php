@@ -15,12 +15,23 @@
                         <h3>Reports</h3>
                     </div> --}}
                     <div class="card-header d-flex justify-content-between align-items-center">
-    <h6 class="card-title mb-0">
-        <strong>Report List</strong>
-    </h6>
-    <a href="{{ route('bulkDownloadForm') }}" class="btn btn-xs btn-outline-primary py-0 px-2">
-        <i class="fa fa-download mr-1"></i> Bulk Download
-    </a>
+
+                        <strong class="card-title">Audit Report List</strong>
+
+                        <div class="d-flex align-items-center">
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ route('exportAuditReportSheet') }}" target="_blank">
+                                Export Audit Report List
+                            </a>
+
+                            <a class="btn btn-info btn-sm mr-2" href="{{ route('importA_ReportSheet') }}" target="_blank">
+                                Import Audit Report List
+                            </a>
+
+                            <a href="{{ route('bulkDownloadForm') }}" class="btn btn-xs btn-outline-primary py-0 px-2">
+                                <i class="fa fa-download mr-1"></i> Bulk Download
+                            </a>
+                        </div>
+
                     </div>
 
                     <div class="card-body">
@@ -30,8 +41,8 @@
                                     <th>#</th>
                                     <th>Audit ID</th>
                                     <th>Process Review Period</th>
-                                    <th>{{$masterLableAgency}} Name</th>
-                                    <th>{{$masterLableAgency}} Code</th>
+                                    <th>{{ $masterLableAgency }} Name</th>
+                                    <th>{{ $masterLableAgency }} Code</th>
                                     <th>Location</th>
                                     <th>Audit Date</th>
                                     <th>Closure Status</th>
@@ -56,8 +67,8 @@
                                             @endphp
 
                                             @if ($closure_status == 0)
-                                                @if(\Carbon\Carbon::parse($reports->created_at)->lt(\Carbon\Carbon::now()->subDays($tat)))
-                                                    <strong class="text-danger" >No Response</strong>
+                                                @if (\Carbon\Carbon::parse($reports->created_at)->lt(\Carbon\Carbon::now()->subDays($tat)))
+                                                    <strong class="text-danger">No Response</strong>
                                                 @else
                                                     <strong class="text-warning">Pending</strong>
                                                 @endif

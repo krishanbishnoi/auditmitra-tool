@@ -17,7 +17,9 @@ class ExportRolesSample implements WithHeadings, WithStyles, FromArray
     {
         return
             [
+                'ID',
                 'Roles',
+                'Guard Name',
                 'Created At'
             ];
     }
@@ -27,7 +29,9 @@ class ExportRolesSample implements WithHeadings, WithStyles, FromArray
         return 
         [
            [
+            '570',
             'Admin',
+            'web',
            '2019-12-03 16:18:25'
            ],
         ];

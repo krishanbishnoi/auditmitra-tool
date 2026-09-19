@@ -23,7 +23,7 @@ class ExportClient implements FromArray, WithHeadings, WithStyles
 
         foreach ($record as $client) {
             $final[] = [
-                'Client ID' => $client->client_id,
+                'Client ID' =>   $client->client_id,
                 'Client Code' => $client->client_code,
                 'Client Name' => $client->client_name,
                 'Client Email' => $client->client_email,

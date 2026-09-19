@@ -20,7 +20,7 @@ class ExportAuditAgencySheet implements WithHeadings, WithStyles
                    'Name',
                    'Email',
                    'Phone',
-                   'Audit_Agency Name'
+                   'Audit Agency Name'
         ];
     }
 

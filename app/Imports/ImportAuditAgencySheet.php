@@ -29,7 +29,7 @@ class ImportAuditAgencySheet implements ToModel, WithHeadingRow
                     'client_name' => $row['client_name'] ?? null,
                     'client_email' => $row['client_email'] ?? null,
                     'created_at' => $row['created_at'] ?? now(),
-                ]);
+                ]); 
                 return $client;
             } catch (\Exception $e) {
                 dd($e->getMessage());

@@ -100,7 +100,7 @@ class UserController extends Controller
         $user = auth()->user();
         $userRole = $user->roles->first();
 
-        if ($userRole->name == 'Admin') {
+         if ($userRole->name == 'Admin') {
             $roles = Role::where('name', 'Quality Auditor')->pluck('name', 'id')->toArray();
         } else {
             $roles = Role::where('name', '!=', 'Quality Auditor')

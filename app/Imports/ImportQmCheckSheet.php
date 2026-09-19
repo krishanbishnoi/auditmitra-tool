@@ -2,16 +2,36 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportQmCheckSheet implements ToCollection
+use  App\QmSheet;
+
+class ImportQmCheckSheet implements ToModel, WithHeadingRow
 {
     /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection)
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+
+    public function model(array $row)
     {
-        //
+        if (empty($row['name'])) {
+            return null;
+        }
+
+        $qmSheet = QmSheet::create([
+            'id' => $row['id'],
+            'name' => $row['name'] ?? null,
+            'code' => $row['code'] ?? null,
+            'details' => $row['details'] ?? null,
+            'type' => $row['type'] ?? null,
+            'lob' => $row['lob'] ?? null,
+            'client_id' => $row['client_id'],
+            'created_at' => $row['created_at']
+        ]);
+
+        return $qmSheet;
     }
 }

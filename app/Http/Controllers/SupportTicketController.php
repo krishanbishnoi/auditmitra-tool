@@ -1,76 +1,81 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\HelpTopic;
 use App\IssueType;
 use App\SupportTicket;
 use Auth;
 use Illuminate\Http\Request;
+use App\Exports\ExportSupportTicketSheet;
+use App\Exports\ExportSupportTicketSample;
+use App\Imports\ImportSupportTicketSheet;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupportTicketController extends Controller
 {
     // Display a listing of the tickets
     public function index()
-{
-    if (Auth::user()->hasRole('Super Admin')) {
-        // Super Admin can view all support tickets
-        $tickets = SupportTicket::all();
-    } else {
-        // Other users see only their own tickets
-        $tickets = SupportTicket::where('support_id', Auth::id())->get();
-    }
+    {
+        if (Auth::user()->hasRole('Super Admin')) {
+            // Super Admin can view all support tickets
+            $tickets = SupportTicket::all();
+        } else {
+            // Other users see only their own tickets
+            $tickets = SupportTicket::where('support_id', Auth::id())->get();
+        }
 
-    return view('support_tickets.index', compact('tickets'));
-}
+        return view('support_tickets.index', compact('tickets'));
+    }
 
 
     // Show the form for creating a new ticket
     public function create()
-{
-    // Fetch all Help Topics from the database
-    $helpTopics = HelpTopic::all();
+    {
+        // Fetch all Help Topics from the database
+        $helpTopics = HelpTopic::all();
 
-    // Pass Help Topics to the view
-    return view('support_tickets.create', compact('helpTopics'));
-}
+        // Pass Help Topics to the view
+        return view('support_tickets.create', compact('helpTopics'));
+    }
 
 
     // Store a newly created ticket
-   public function store(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'help_topic' => 'required|exists:help_topics,id',  // Ensure help topic exists
-        'issue_type' => 'required|exists:issue_types,id',  // Ensure issue type exists
-        'subject' => 'required|string',
-        'priority' => 'required|string',
-        'description' => 'required|string',
-    ]);
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'help_topic' => 'required|exists:help_topics,id',  // Ensure help topic exists
+            'issue_type' => 'required|exists:issue_types,id',  // Ensure issue type exists
+            'subject' => 'required|string',
+            'priority' => 'required|string',
+            'description' => 'required|string',
+        ]);
 
-    // Fetch the Help Topic and Issue Type names
-    $helpTopic = HelpTopic::find($request->help_topic);
-    $issueType = IssueType::find($request->issue_type);
+        // Fetch the Help Topic and Issue Type names
+        $helpTopic = HelpTopic::find($request->help_topic);
+        $issueType = IssueType::find($request->issue_type);
 
-    // Store the data
-    $supportTicket = new SupportTicket();
-    $supportTicket->help_topic = $helpTopic->name;  // Store the name instead of the ID
-    $supportTicket->issue_type = $issueType->name;  // Store the name instead of the ID
-    $supportTicket->subject = $request->subject;
-    $supportTicket->priority = $request->priority;
-    $supportTicket->description = $request->description;
-    
-    // Set the default status to 'Open'
-    $supportTicket->status = 'Open';
+        // Store the data
+        $supportTicket = new SupportTicket();
+        $supportTicket->help_topic = $helpTopic->name;  // Store the name instead of the ID
+        $supportTicket->issue_type = $issueType->name;  // Store the name instead of the ID
+        $supportTicket->subject = $request->subject;
+        $supportTicket->priority = $request->priority;
+        $supportTicket->description = $request->description;
 
-    // Set the authenticated user as the support ID
-    $supportTicket->support_id = Auth::id();
+        // Set the default status to 'Open'
+        $supportTicket->status = 'Open';
 
-    // Save the ticket to the database
-    $supportTicket->save();
+        // Set the authenticated user as the support ID
+        $supportTicket->support_id = Auth::id();
 
-    // Redirect back with a success message
-    return redirect()->route('support_tickets.create')->with('success', 'Support Ticket Created Successfully!');
-}
+        // Save the ticket to the database
+        $supportTicket->save();
+
+        // Redirect back with a success message
+        return redirect()->route('support_tickets.create')->with('success', 'Support Ticket Created Successfully!');
+    }
 
 
     // Display the specified ticket
@@ -102,17 +107,17 @@ class SupportTicketController extends Controller
     }
 
     public function getIssueTypes(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'help_topic_id' => 'required|exists:help_topics,id',
-    ]);
+    {
+        // Validate the incoming request
+        $request->validate([
+            'help_topic_id' => 'required|exists:help_topics,id',
+        ]);
 
-    // Fetch the issue types based on the selected help topic
-    $issueTypes = IssueType::where('help_topic_id', $request->help_topic_id)->get();
+        // Fetch the issue types based on the selected help topic
+        $issueTypes = IssueType::where('help_topic_id', $request->help_topic_id)->get();
 
-    return response()->json(['issue_types' => $issueTypes]);
-}
+        return response()->json(['issue_types' => $issueTypes]);
+    }
 
 
 
@@ -124,47 +129,53 @@ class SupportTicketController extends Controller
         return redirect()->route('support_tickets.index');
     }
 
-    
- public function showCloseForm($id)
-{
-    $ticket = SupportTicket::findOrFail($id);  
-    return view('support_tickets.close', compact('ticket'));
-}
 
-public function close(Request $request, $id)
-{
-    $ticket = SupportTicket::findOrFail($id);
-    $ticket->status = 'Closed';
-
-    if ($request->filled('feedback')) {
-        $ticket->closure_feedback = $request->input('feedback');
+    public function showCloseForm($id)
+    {
+        $ticket = SupportTicket::findOrFail($id);
+        return view('support_tickets.close', compact('ticket'));
     }
 
-    $ticket->save();
+    public function close(Request $request, $id)
+    {
+        $ticket = SupportTicket::findOrFail($id);
+        $ticket->status = 'Closed';
 
-    return redirect()->route('support_tickets.index')->with('success', 'Ticket closed successfully.');
-}
+        if ($request->filled('feedback')) {
+            $ticket->closure_feedback = $request->input('feedback');
+        }
 
-// methods for import and export the excel 
+        $ticket->save();
 
-public function exportSupportTicketSheet()
-{
+        return redirect()->route('support_tickets.index')->with('success', 'Ticket closed successfully.');
+    }
 
-}
+    // methods for import and export the excel 
 
-public function exportSupportTicketSample()
-{
+    public function exportSupportTicketSheet()
+    {
+        ini_set('memory_limit', '-1');
 
-}
+        ini_set('max_execution_time', 3000);
 
-public function uploadSupportTicketSheet()
-{
 
-}
+        return Excel::download(new ExportSupportTicketSheet, 'support_tickets-sheet.xlsx');
+    }
 
-public function supportTicketsImport() 
-{
-     
-}
+    public function exportSupportTicketSample()
+    {
+        return Excel::download(new ExportSupportTicketSample, 'support_tickets-sample.xlsx');
+    }
 
+    public function uploadSupportTicketSheet()
+    {
+        return view('support_tickets.uploadsupportticket');
+    }
+
+    public function supportTicketsImport()
+    {
+        Excel::import(new ImportSupportTicketSheet, request()->file('file'));
+
+        return redirect()->back()->with('success', 'Suppport Ticket Import Successfully');
+    }
 }

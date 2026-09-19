@@ -9,6 +9,6 @@ class SupportTicket extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'help_topic', 'issue_type', 'subject', 'priority', 'description'
+        'support_id','help_topic', 'issue_type', 'subject', 'priority', 'description','status','closure_feedback'
     ];
 }

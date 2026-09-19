@@ -24,6 +24,7 @@ use App\Http\Controllers\MasterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GovernanceDashboard;
 use App\Http\Controllers\QmSheetController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
@@ -401,6 +402,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('artifact/reject/{id}', 'ClosureController@rejectArtifact')->name('artifact.reject');
     Route::post('audit/resend-closure/{auditId}', 'ClosureController@resendAuditClosure')->name('audit.resend_closure');
 
+// import and export excel the route
+Route::get('export-audit_report-sheet', 'ReportController@exportAuditReportSheet')->name('exportAuditReportSheet');
+Route::get('export-audit_report-sample', 'ReportController@exportAuditReportSample')->name('exportAuditReportSample');
+Route::get('import-audit_report-sheet', 'ReportController@uploadAuditReportSheet')->name('importA_ReportSheet');
+Route::post('importAuditReportSheet', 'ReportController@importReportSheet')->name('importAuditReportSheet');
+
+
+
+
+
 
     Route::get('audit-reports', 'ReportController@reportList')->name('audit.reportList');
     Route::get('audit-reports/download/{audit_id}', 'ReportController@downloadReports')->name('audit.downloadReports');
@@ -408,6 +419,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/bulkDownloadForm', 'ReportController@bulkDownloadForm')->name('bulkDownloadForm');
     Route::get('audit-bulk-reports/download', 'ReportController@downloadBulkReports')->name('audit.downloadBulkReports');
     Route::get('audit-artifacts/download/{closure_id}', 'ClosureController@downloadArtifacts')->name('audit.downloadArtifacts');
+
+
+
+
 
     //V Collection Agency Trend Detail Page...
     Route::get('collection_agency_trend_list', 'CollectionAgencyTrendController@index')->name('collectiongencytrend');
