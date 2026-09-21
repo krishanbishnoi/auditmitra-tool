@@ -43,58 +43,9 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $authUser = auth()->user();
-        $userRole = $authUser->roles->first();
-        $authUserEmail = $authUser->email;
+    
 
-        // Fetch clients (users with "Client" role) for the dropdown
-        $clients = [];
-        if ($userRole->name == 'Super Admin') {
-            $clients = User::whereHas('roles', function ($query) {
-                $query->where('name', 'Client');
-            })->get(['id', 'name']);
-        }
-
-        // Base query
-        $query = User::with('roles')
-            // ->where('active_status', 0)
-            ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', 'Client');
-            });
-
-        // Restrict data if not Super Admin
-        if ($userRole->name != 'Super Admin') {
-            $query->where('client_id', $authUser->client_id);
-
-            if ($userRole->name == 'Admin') {
-                $query->where('created_by', $authUserEmail);
-            }
-        }
-
-        // Handle Quality Auditor approval logic
-        $query->where(function ($subQuery) {
-            $subQuery->whereDoesntHave('roles', function ($roleQuery) {
-                $roleQuery->where('name', 'Quality Auditor')->where('is_approved', 0);
-            })->orWhereHas('roles', function ($roleQuery) {
-                $roleQuery->where('name', 'Quality Auditor')->where('is_approved', 1);
-            });
-        });
-
-        $data = $query->get();
-
-        return view("acl.users.list", [
-            "data" => $data,
-            "clients" => $clients
-        ]);
-    }
-
-
-
-
-
-    public function create()
+     public function create()
     {
 
         $user = auth()->user();

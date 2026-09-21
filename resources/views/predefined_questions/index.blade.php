@@ -10,13 +10,26 @@ List of Predefined Questions
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header">
-                <strong>Predefined Questions</strong>
+             <div class="card-header d-flex justify-content-between align-items-center">
+                <strong class="card-title">Predefined Questions</strong>
+ <div class="d-flex align-items-center">
+        <a href="{{ route('exportPreQuestion') }}"
+           class="btn btn-primary btn-sm mr-2"
+           target="_blank">
+            Export Pre_Question List
+        </a>
+
+        {{-- <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a> --}}
+
                 <a href="{{ route('predefined_questions.create') }}" class="btn btn-primary btn-sm float-right">
                     <i class="fa fa-plus"></i> Add New Question
                 </a>
             </div>
-
+ </div>
             <div class="card-body table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead>

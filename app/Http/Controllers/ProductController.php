@@ -1,10 +1,6 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
-
-
 
 use Illuminate\Http\Request;
 use App\Model\Products;
@@ -17,6 +13,7 @@ use Validator;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use App\Exports\ProductHierarchyExport;
+use App\Exports\ExportProductSheet;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth;
 
@@ -496,12 +493,21 @@ class ProductController extends Controller
 
     // }
 
-    public function excelDownloadProduct(){
-        ini_set('memory_limit', '-1');
-        ini_set('max_execution_time', 3000);
-        return Excel::download(new ProductHierarchyExport, 'ProductHierarchy.xlsx');
-        // return Excel::download(new QcAndQaChangesExport, 'users.xlsx');
-    }
+    // public function excelDownloadProduct(){
+    //     ini_set('memory_limit', '-1');
+    //     ini_set('max_execution_time', 3000);
+    //     return Excel::download(new ProductHierarchyExport, 'ProductHierarchy.xlsx');
+    //     // return Excel::download(new QcAndQaChangesExport, 'users.xlsx');
+    // }
+
+   public function exportProductSheet()
+   {
+ini_set('memory_limit', '-1');
+
+ini_set('max_execution_time', 3000);
+
+return Excel::download(new ExportProductSheet, 'products-sheet.xlsx');
+   }
 
 }
 

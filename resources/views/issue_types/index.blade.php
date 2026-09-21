@@ -4,9 +4,24 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            <strong>Issue Types</strong>
+       <div class="card-header d-flex justify-content-between align-items-center">
+            <strong class="card-title">Issue Types</strong>
+           
+  <div class="d-flex align-items-center">
+        <a href="{{ route('exportIssueTypeSheet') }}"
+           class="btn btn-primary btn-sm mr-2"
+           target="_blank">
+            Export Roles List
+        </a>
+
+        {{-- <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a> --}}
+
             <a href="{{ route('issue_types.create') }}" class="btn btn-primary btn-sm float-right">Create Issue Type</a>
+        </div>
         </div>
         <div class="card-body">
             <table class="table">

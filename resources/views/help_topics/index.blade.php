@@ -4,10 +4,23 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            <strong>Help Topics</strong>
+         <div class="card-header d-flex justify-content-between align-items-center">
+            <strong class="card-title">Help Topics</strong>
+            <div class="d-flex align-items-center">
+                   <a href="{{ route('exportHelpTopicSheet') }}"
+           class="btn btn-primary btn-sm mr-2"
+           target="_blank">
+            Export Help Topic List
+        </a>
+
+        {{-- <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a> --}}
             <a href="{{ route('help_topics.create') }}" class="btn btn-primary btn-sm float-right">Create Help Topic</a>
         </div>
+         </div>
         <div class="card-body">
             <table class="table">
                 <thead>

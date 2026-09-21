@@ -12,6 +12,7 @@
 
 use App\Http\Controllers\AuditAgencyController;
 use App\Http\Controllers\ClientManagementController;
+use App\Http\Controllers\CmsPageController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Artisan;
 // use App\Http\Controllers\SupportTicketController;
@@ -23,6 +24,8 @@ use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GovernanceDashboard;
+use App\Http\Controllers\IssueTypeController;
+use App\Http\Controllers\ProductattributeController;
 use App\Http\Controllers\QmSheetController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -140,6 +143,11 @@ Route::group(['middleware' => ['auth']], function () {
     // PermissionController
     Route::resource('permissions', 'PermissionController');
 
+// Route for export the permission Sheet
+
+Route::get('export-permission-sheet', 'PermissionController@exportPermissionSheet')->name('exportPermissionSheet');
+
+
     //sumeet
     // });
     Route::resource('roles', 'RoleController');
@@ -231,9 +239,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('product', 'ProductController');
 
 
+    // route for export the product excel
+    
+    Route::get('export-product-sheet', 'ProductController@exportProductSheet')->name('exportProductSheet');
+
+
+
     // ProductattributeController
     Route::resource('productattribute', 'ProductattributeController');
     // Route::delete('/productattribute/{id}', 'ProductattributeController@destroy')->name('productattribute.destroy');
+
+Route::get('export-product_attribute-sheet', 'ProductattributeController@exportProductAttribute')->name('exportProductAttribute');
+
 
     Route::get('/get-regions', 'BranchController@getRegions');
     Route::get('/getStates/{id}', 'BranchController@getStates');
@@ -455,6 +472,11 @@ Route::post('importsupportTicketSheet', 'SupportTicketController@supportTicketsI
     Route::get('/get-issue-types', 'SupportTicketController@getIssueTypes')
         ->name('get.issue_types');
 
+// Export excel for issue Controller
+
+Route::get('export-issue_type-sheet', 'IssueTypeController@exportIssueTypeSheet')->name('exportIssueTypeSheet');
+Route::get('export-help_topics-sheet', 'HelpTopicController@exportHelpTopicSheet')->name('exportHelpTopicSheet');
+
 
     Route::prefix('legal')->name('legal.')->group(function () {
         Route::get('dashboard', 'Legal\DashboardController@getClientDashboard')->name('dashboard');
@@ -591,6 +613,11 @@ Route::get('back-to-masterqa', 'ClientManagementController@backToMasterQa')->nam
 
 
 Route::resource('module_permissions', 'ModulePermissionController');
+//  route for export the module permission sheet
+
+Route::get('export-module_permission-sheet', 'ModulePermissionController@exportModulePermissionSheet')->name('exportModulePermissionSheet');
+
+
 Route::get('/module-allocation-view/{id}', 'ClientModuleAllocationController@module_allocation_view')->name('client_module_allocation.module_allocation_view');
 
 Route::post('/module-allocation-update', 'ClientModuleAllocationController@module_allocation_update')->name('client_module_allocation.module_allocation_update');
@@ -608,6 +635,10 @@ Route::put('location/city/update/{id}', [LocationController::class, 'updateCity'
 
 Route::resource('cms', CmsPageController::class);
 
+// route for download the cms excel
+
+
+Route::get('export-cmsPages-sheet', 'CmsPageController@exportCmsPagesSheet')->name('exportCmsPagesSheet');
 
 // Route::resource('support_tickets', SupportTicketController::class);
 
@@ -634,6 +665,12 @@ Route::get('predefined-questions/{id}/edit', [PredefinedQuestionController::clas
 // Route::put('predefined-questions/{id}', [PredefinedQuestionController::class, 'update'])->name('predefined_questions.update');
 Route::delete('predefined-questions/{id}', [PredefinedQuestionController::class, 'destroy'])->name('predefined_questions.destroy');
 Route::put('predefined-question/{id}', [PredefinedQuestionController::class, 'update'])->name('predefined_question.update');
+
+
+// route for export the predefined-questions excel
+
+Route::get('export-predefined-questions-sheet', 'PredefinedQuestionController@exportPreQuestion')->name('exportPreQuestion');
+
 
 
 // HelpChatController

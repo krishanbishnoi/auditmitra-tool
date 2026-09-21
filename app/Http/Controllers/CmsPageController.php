@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Model\CmsPage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Exports\ExportCmsPageSheet;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CmsPageController extends Controller
 {
@@ -105,5 +107,15 @@ class CmsPageController extends Controller
         $page->delete();
 
         return redirect()->route('cms.index')->with('success', 'CMS page deleted successfully.');
+    }
+
+
+    public function exportCmsPagesSheet()
+    {
+        ini_set('memory_limit', '-1');
+
+        ini_set('max_execution_time', 3000);
+
+        return Excel::download(new ExportCmsPageSheet, 'cms_pages-sheet.xlsx');
     }
 }

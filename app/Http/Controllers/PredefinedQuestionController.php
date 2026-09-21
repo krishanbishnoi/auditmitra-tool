@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PredefinedQuestion;
 use App\Model\Role;
+use App\Exports\ExportPredefinedQuesSheet;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PredefinedQuestionController extends Controller
 {
@@ -74,5 +76,14 @@ class PredefinedQuestionController extends Controller
         return redirect()->route('predefined_questions.index')->with('success', 'Predefined question deleted successfully.');
     }
 
+
+public function exportPreQuestion()
+{
+    ini_set('memory_limit', '-1');
+
+    ini_set('memory_execution_time', 3000);
+
+    return Excel::download(new ExportPredefinedQuesSheet, 'predefined_ques-sheet.xlsx');
+}
     
 }

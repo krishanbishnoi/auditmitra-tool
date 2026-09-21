@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\HelpTopic;  
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use  App\Exports\ExportHelpTopicSheet;
 
 class HelpTopicController extends Controller
 {
@@ -54,4 +56,14 @@ class HelpTopicController extends Controller
 
         return redirect()->route('help_topics.index')->with('success', 'Help Topic deleted successfully');
     }
+
+public function exportHelpTopicSheet()
+{
+    ini_set('memory_limit', '-1');
+
+    ini_set('max_execution_time', 3000);
+
+    return Excel::download(new ExportHelpTopicSheet, 'help_topic-sheet.xlsx');
+}
+
 }

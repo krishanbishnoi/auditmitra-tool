@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\ModulePermission;
 use Illuminate\Http\Request;
+use App\Exports\ExportModulePermissionSheet;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ModulePermissionController extends Controller
 {
@@ -79,5 +81,14 @@ class ModulePermissionController extends Controller
 
         return redirect()->route('module_permissions.index')
                          ->with('success', 'Module permission deleted successfully.');
+    }
+
+    public function exportModulePermissionSheet()
+    {
+        ini_set('memory_limit', '-1');
+
+        ini_set('max_execution_time', 3000);
+
+        return Excel::download(new ExportModulePermissionSheet, 'module_permission.xlsx');
     }
 }

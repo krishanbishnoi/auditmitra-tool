@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\HelpTopic;
 use App\IssueType;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportIssueTypeSheet;
 
 class IssueTypeController extends Controller
 {
@@ -61,5 +63,14 @@ class IssueTypeController extends Controller
         $issueType->delete();
 
         return redirect()->route('issue_types.index')->with('success', 'Issue Type deleted successfully');
+    }
+
+    public function exportIssueTypeSheet()
+    {
+        ini_set('memory_limit', '-1');
+
+        ini_set('max_execution_time', 3000);
+
+        return Excel::download(new ExportIssueTypeSheet, 'issue_type-sheet.xlsx');
     }
 }

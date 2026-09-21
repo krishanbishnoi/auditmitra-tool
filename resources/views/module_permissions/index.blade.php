@@ -12,10 +12,21 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title">Modules List</strong>
-                    </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('exportModulePermissionSheet') }}" class="btn btn-primary btn-sm mr-2"
+                                target="_blank">
+                                Export Module Permission List
+                            </a>
 
+                            {{-- <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a> --}}
+                        </div>
+                    </div>
                     <div class="card-body">
                         <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
                             <thead>
@@ -34,17 +45,19 @@
                                         <td>{{ $permission->module_name }}</td>
                                         <td nowrap>
                                             <a href="{{ route('module_permissions.edit', $permission->id) }}"
-                                               class="btn btn-sm btn-info" title="Edit">
+                                                class="btn btn-sm btn-info" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('module_permissions.show', $permission->id) }}"
-                                               class="btn btn-sm btn-secondary" title="View">
+                                                class="btn btn-sm btn-secondary" title="View">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <form action="{{ route('module_permissions.destroy', $permission->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('module_permissions.destroy', $permission->id) }}"
+                                                method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Are you sure?')">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
@@ -61,18 +74,18 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script>
-    jQuery(document).ready(function () {
-        jQuery('#kt_table_1').DataTable({
-            paging: false,
-            searching: false,
-            info: false
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('#kt_table_1').DataTable({
+                paging: false,
+                searching: false,
+                info: false
+            });
         });
-    });
-</script>
+    </script>
 @endsection

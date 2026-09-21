@@ -16,6 +16,7 @@ use DB;
 use App\Exports\ProductHierarchyExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth; 
+use App\Exports\ExportProductAttribute;
 
 class ProductattributeController extends Controller
 {
@@ -128,6 +129,15 @@ class ProductattributeController extends Controller
         return redirect()->back()->with('success', 'Product Attributes deleted successfully.');
     } 
 
+
+public function exportProductAttribute()
+{
+    ini_set('memory_limit', '-1');
+
+    ini_set('max_execution_time', 3000);
+
+    return Excel::download(new ExportProductAttribute, 'product_attribute-sheet.xlsx');
+}
 
 }
 

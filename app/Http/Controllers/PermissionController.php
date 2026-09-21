@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Auth;
 
 //Importing laravel-permission models
+use App\Exports\ExportPermissionSheet;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Session, Validator;
 
@@ -157,4 +159,13 @@ class PermissionController extends Controller
                 'Permission deleted!');
 
     }
+
+public function exportPermissionSheet()
+{
+    ini_set('memory_limit', '-1');
+
+    ini_set('max_execution_time', 3000);
+
+    return Excel::download(new ExportPermissionSheet, 'permission-sheet.xlsx');
+}
 }
