@@ -121,7 +121,6 @@ use ZipArchive;
 class ReportController extends Controller
 {
 
-
     public function reportList()
     {
         $audit_reports = DB::table('audit_reports')->where('audit_reports.client_id', auth()->user()->client_id)->where('audit_reports.audit_id', '!=', null)
@@ -304,20 +303,20 @@ class ReportController extends Controller
         return Excel::download(new ExportAuditReportSheet, 'audit_report.xlsx');
     }
 
-    public function exportAuditReportSample()
-    {
-        return Excel::download(new ExportAuditReportSample, 'audit_report-sammple.xlsx');
-    }
+    // public function exportAuditReportSample()
+    // {
+    //     return Excel::download(new ExportAuditReportSample, 'audit_report-sammple.xlsx');
+    // }
 
-    public function uploadAuditReportSheet()
-    {
-        return view('reports.importauditreport');
-    }
+    // public function uploadAuditReportSheet()
+    // {
+    //     return view('reports.importauditreport');
+    // }
 
-    public function importReportSheet()
-    {
-        Excel::import(new ImportAuditReportSheet, request()->file('file'));
+    // public function importReportSheet()
+    // {
+    //     Excel::import(new ImportAuditReportSheet, request()->file('file'));
 
-        return redirect()->back()->with('success', 'Audit Report Sheet Import Successfully');
-    }
+    //     return redirect()->back()->with('success', 'Audit Report Sheet Import Successfully');
+    // }
 }

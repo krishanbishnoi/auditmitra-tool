@@ -51,6 +51,8 @@ use ZipArchive;
 use URL;
 use App\Helpers\Helper;
 use Illuminate\Support\Str;
+use App\Exports\ExportAuditCycleSheet;
+
 // use App\Helpers\ImageHelper;
 
 ini_set('memory_limit', '-1');
@@ -3809,6 +3811,22 @@ class AuditController extends Controller
 
         return view('audit.audit_cycle_list', compact('data'));
     }
+
+// method for download excel
+
+public function exportAuditCycleSheet()
+{
+    ini_set('memory_limit','-1');
+
+    ini_set('max_execution_time', 3000);
+
+    return Excel::download(new ExportAuditCycleSheet, 'audit-cycle-sheet.xlsx');
+}
+
+
+
+
+
 
 
     public function editCycle(Request $request, $id)

@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\QmSheet;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -16,21 +16,33 @@ class ExportQmCheckSheet implements WithStyles, WithHeadings, FromArray
      */
     public function array(): array
     {
-        $data = QmSheet::query()
-            ->orderBy('id')
-            ->get();
+        $user = Auth::user();
 
+        if ($user->hasRole('Super Admin')) {
+
+            // Super Admin: Export all sheets
+            $data = QmSheet::query()
+                ->orderBy('id')
+                ->get();
+        } else {
+
+            // Client: Export only their own sheets
+            $data = QmSheet::query()
+                ->where('client_id', $user->id)
+                ->orderBy('id')
+                ->get();
+        }
         $final = [];
 
         foreach ($data as $qmSheet) {
             $final[] = [
-                'ID' => $qmSheet->id,
+
                 'Name' => $qmSheet->name,
                 'Code' => $qmSheet->code,
                 'Details' => $qmSheet->details,
                 'Type' => $qmSheet->type,
                 'Lob' => $qmSheet->lob,
-                'Client ID' => $qmSheet->client_id,
+
                 'Created At' => $qmSheet->created_at->format('Y-m-d H:i:s'),
             ];
         }
@@ -41,13 +53,13 @@ class ExportQmCheckSheet implements WithStyles, WithHeadings, FromArray
     {
         return
             [
-                'Id',
+
                 'Name',
                 'Code',
                 'Details',
                 'Type',
                 'Lob',
-                'Client Id',
+
                 'Created At'
             ];
     }

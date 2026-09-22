@@ -205,6 +205,11 @@ Route::get('export-permission-sheet', 'PermissionController@exportPermissionShee
     Route::get('list-audit-cycle', 'AuditController@listCycle')->name('listCycle');
     Route::post('/toggle-status', 'AuditController@toggleStatus')->name('toggle.status');
 
+// Route for export the excel of Audit Cycle
+
+Route::get('export-audit_cycle-sheet', 'AuditController@exportAuditCycleSheet')->name('exportAuditCycleSheet');
+
+
     Route::get('get-agencies-upload/{branch}', 'UploadController@getAgencies')->name('get-upload-agency');
     Route::get('get-branch-upload/{lob}', 'UploadController@getBranch')->name('get-upload-branch');
     Route::get('upload/gap-view', 'UploadController@gapView');

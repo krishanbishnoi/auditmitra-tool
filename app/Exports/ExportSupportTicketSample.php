@@ -17,7 +17,6 @@ public function headings(): array
     {
         return
             [
-                'Id',
                 'Help Topic',
                 'Issue Type',
                 'Subject',
@@ -35,7 +34,6 @@ public function array(): array
     return 
     [
         [
-            '1',
             'how to audit',
             'audit',
             'OTP based issue',

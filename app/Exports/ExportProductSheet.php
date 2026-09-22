@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Model\Products;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -28,6 +29,8 @@ class ExportProductSheet implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $data = Products::query()
+         ->where('status', 0)
+            ->where('client_id', Auth::user()->id)
             ->orderBy('id')
             ->get();
 

@@ -14,10 +14,10 @@
                     {{-- button added here only --}}
                       <div class="d-flex align-items-center">
                            <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('importAuditAgency')}}" target="_blank">Import Audit_{{$masterLableAgency}} List</a>
+                        href="{{route('importAuditAgency')}}" target="_blank">Import Audit {{$masterLableAgency}} List</a>
 
                       <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('excelDownloadAuditAgency')}}" target="_blank">Export Audit_{{$masterLableAgency}} List</a>
+                        href="{{route('excelDownloadAuditAgency')}}" target="_blank">Export Audit {{$masterLableAgency}} List</a>
                    
                         {{-- end --}}
 

@@ -43,7 +43,22 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    
+  public function index()
+{
+    $authUser = Auth::user();
+
+    if ($authUser->hasRole('Super Admin')) {
+        // Super Admin: show all users
+        $data = User::with('roles')->get();
+    } else {
+        // Other users: show users of their client
+        $data = User::with('roles')
+            ->where('client_id', $authUser->client_id)
+            ->get();
+    }
+
+    return view('acl.users.list', compact('data'));
+}
 
      public function create()
     {

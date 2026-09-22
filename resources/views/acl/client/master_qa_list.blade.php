@@ -51,8 +51,8 @@
                         <strong class="card-title">Master QA List</strong>
                         <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
                             href="{{ route('exportMasterQAList') }}" target="_blank">Export QA List</a>
-                        <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
-                            href="{{ route('clientImport') }}" target="_blank">Import QA List</a>
+                        {{-- <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
+                            href="{{ route('clientImport') }}" target="_blank">Import QA List</a> --}}
                     </div>
 
                     <div class="card-body">

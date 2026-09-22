@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Model\Productattribute;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -27,10 +28,18 @@ class ExportProductAttribute implements FromArray, WithHeadings, WithStyles
 
     public function array(): array
     {
-        $data = Productattribute::query()
-            ->orderBy('id')
+          $data = Productattribute::with('productName')
+            ->join(
+                'products',
+                'productattributes.product_id',
+                '=',
+                'products.id'
+            )
+            ->where('products.client_id', Auth::user()->id)
+            ->orderBy('products.name', 'ASC')
+            ->select('productattributes.*')
             ->get();
-
+            
         $final = [];
 
         foreach ($data as $productAttribute) {

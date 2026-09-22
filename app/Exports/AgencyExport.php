@@ -2,37 +2,49 @@
 
 namespace App\Exports;
 
+
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Helpers\ExportHelper;
 use App\Agency;
-class AgencyExport implements FromArray,WithHeadings
+
+class AgencyExport implements FromArray, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
+
+
+
+
     public function array(): array
     {
         //
         // $data=Agency::with(['branch.branchable'=>function($q){
         //     $q->with('product')->where('type','Collection_Manager');
         // },'branch.city.state.region'])->get();
-        $data=Agency::with('User')->where('client_id' ,  auth()->user()->client_id)->where('status',0)->get();
+
+        $query = Agency::with('User')->where('status', 0);
+
+        $query = ExportHelper::getExportQuery($query);
+
+        $data = $query->get();
 
         // dd($data->first());
-        $final=[];
-        foreach($data as $item){
+        $final = [];
+        foreach ($data as $item) {
             //foreach($item->branch->branchable as $val){
-                $final[]=[
-                    'LOB'=>$item->lob ?? '',
-                    'Zone'=>$item->region ?? '',
-                    'Agency_Code'=>$item->agency_id,
-                    'Agency_Name'=>$item->name,
-                    'Agency_Location'=>$item->location,
-                    'Agency_Address'=>$item->address,
-                    'Collection_manager_name'=>$item->user->name ?? '', 
-                ];
-           // }
+            $final[] = [
+                'LOB' => $item->lob ?? '',
+                'Zone' => $item->region ?? '',
+                'Agency_Code' => $item->agency_id,
+                'Agency_Name' => $item->name,
+                'Agency_Location' => $item->location,
+                'Agency_Address' => $item->address,
+                'Collection_manager_name' => $item->user->name ?? '',
+            ];
+            // }
         }
         return $final;
     }

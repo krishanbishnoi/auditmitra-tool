@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\SupportTicket;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -18,6 +17,7 @@ class ExportSupportTicketSheet implements WithHeadings, WithStyles, FromArray
     public function array(): array
     {
         $data = SupportTicket::query()
+        ->where('support_id', auth()->id())
             ->orderBy('id')
             ->get();
 
@@ -25,7 +25,6 @@ class ExportSupportTicketSheet implements WithHeadings, WithStyles, FromArray
 
         foreach ($data as $supTickets) {
             $final[] = [
-                'ID' => $supTickets->id,
                 'Help Topic' => $supTickets->help_topic,
                 'Issue Type' => $supTickets->issue_type,
                 'Subject' => $supTickets->subject,
@@ -35,7 +34,6 @@ class ExportSupportTicketSheet implements WithHeadings, WithStyles, FromArray
                 'Closure Feedback' => $supTickets->closure_feedback,
                 'Support Id' => $supTickets->support_id,
                 'Created AT' => $supTickets->created_at
-
             ];
         }
 
@@ -46,7 +44,6 @@ class ExportSupportTicketSheet implements WithHeadings, WithStyles, FromArray
     {
         return
             [
-                'Id',
                 'Help Topic',
                 'Issue Type',
                 'Subject',

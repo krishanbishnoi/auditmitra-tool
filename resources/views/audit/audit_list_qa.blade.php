@@ -22,12 +22,23 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         @if ($segment1 == 'submit_audited_list')
                             <strong class="card-title">Submitted Audited List</strong>
                         @else
                             <strong class="card-title">Saved Audited List</strong>
                         @endif
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('excelDownloadAllocation') }}" class="btn btn-primary btn-sm mr-2" target="_blank">
+                                Export Audited List
+                            </a>
+
+                            {{-- <a href="{{ route('rolesSheetImport') }}"
+           class="btn btn-info btn-sm mr-2"
+           target="_blank">
+            Import Roles List
+        </a> --}}
+                        </div>
                     </div>
                     <div class="card-body">
 
@@ -75,12 +86,12 @@
                                     <th>Month</th>
                                     <th>Audit Date</th>
                                     <th>Lob</th>
-                                    <th>{{$masterLableAgency}} Location</th>
+                                    <th>{{ $masterLableAgency }} Location</th>
                                     <th>State</th>
                                     <th>Product</th>
                                     <th>Sheet Type</th>
-                                    <th>{{$masterLableAgency}} Name</th>
-                                    <th>{{$masterLableAgency}} Code</th>
+                                    <th>{{ $masterLableAgency }} Name</th>
+                                    <th>{{ $masterLableAgency }} Code</th>
                                     <th>Collection Manager</th>
                                     <th>Collection Manager Email</th>
                                     <th>Auditor Name</th>
@@ -171,11 +182,11 @@
                                                 {{-- @if ($user->hasRole(['Admin', 'Quality Control', 'Client']))
                                                 <a href="{{ url('audit_sheet/'.Crypt::encrypt($row->id).'/qcedit') }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="QC Edit"><i class="fa fa-edit"></i></a>
                                             @endif --}}
-                                              <a href="{{ route('audit.v2.remark-qc', $row->id) }}"
-                                                        class="btn btn-sm btn-clean btn-icon btn-icon-md"
-                                                        title="Update Remarks">
-                                                       QC
-                                                    </a>
+                                                <a href="{{ route('audit.v2.remark-qc', $row->id) }}"
+                                                    class="btn btn-sm btn-clean btn-icon btn-icon-md"
+                                                    title="Update Remarks">
+                                                    QC
+                                                </a>
                                                 <a href="{{ route('audit.downloadArtifactsall', $row->id) }}"
                                                     class="btn btn-sm btn-warning">
                                                     Download Artifacts
