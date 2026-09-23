@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Validator;
 use Auth;
 use Crypt;
+use App\Exports\ExportAuditAlert;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AuditAlertBoxController extends Controller
 {
@@ -28,6 +30,7 @@ class AuditAlertBoxController extends Controller
      */
     public function create()
     {
+        
         return view('audit_alert_box.create');
     }
 
@@ -39,8 +42,10 @@ class AuditAlertBoxController extends Controller
      */
     public function store(Request $request)
     {
+
+    // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'company_id' => 'required',
+             'client_id' => 'required', 
             'name' => 'required',
             'details' => 'required'
         ]);
@@ -123,4 +128,16 @@ class AuditAlertBoxController extends Controller
         AuditAlertBox::find(Crypt::decrypt($id))->delete();
         return redirect('audit_alert_box')->with('success', 'Alert box deleted successfully.');    
     }
+
+
+public function exportAuditAlertBox()
+{
+    ini_set('memory_limit', '-1');
+
+    ini_set('max_execution_time', 3000);
+
+    return Excel::download(new ExportAuditAlert, 'audit-alert-sheet.xlsx');
+}
+
+
 }

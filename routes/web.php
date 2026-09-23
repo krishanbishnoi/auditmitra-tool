@@ -264,6 +264,14 @@ Route::get('export-product_attribute-sheet', 'ProductattributeController@exportP
     Route::get('/getAgencyManager/{id}', 'YardController@getAgencyManager');
     Route::resource('audit_alert_box', 'AuditAlertBoxController');
     Route::resource('beat_plan', 'BeatPlanController');
+
+// route for export audit alert box
+
+
+Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBox')->name('exportAuditAlertBox');
+
+
+
     //Intimation Mail Controller
     Route::resource('intimation_mail', 'IntimationMailController');
     Route::get('/product-attributes/{id}', 'IntimationMailController@getProductAttributes');

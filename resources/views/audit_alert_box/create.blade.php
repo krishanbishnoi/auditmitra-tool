@@ -23,7 +23,7 @@ Create New
                     'role'=>'form',
                     'data-toggle'=>"validator")
                   ) !!}
-        {{-- <input type="hidden" name="company_id" value="{{AUth::User()->company_id}}"> --}}
+        <input type="hidden" name="client_id" value="{{AUth::User()->client_id}}">
 
         <div class="row">
 

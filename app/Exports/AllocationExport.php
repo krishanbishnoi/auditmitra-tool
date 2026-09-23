@@ -2,23 +2,24 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use App\Model\Allocation;
-class AllocationExport implements FromArray,WithHeadings
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+
+class AllocationExport implements FromArray, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function array(): array
     {
-        $data=Allocation::with(['user','sheet'])->get();
-        $final=[];
-        foreach($data as $item){
-            $final[]=[
-                'sheet_name'=>$item->sheet->name,
-                'user_name'=>$item->user->name,
+        $data = Allocation::with(['user', 'sheet'])->get();
+        $final = [];
+        foreach ($data as $item) {
+            $final[] = [
+                'sheet_name' => $item->sheet->name,
+                'user_name' => $item->user->name,
             ];
         }
         return $final;
@@ -26,8 +27,27 @@ class AllocationExport implements FromArray,WithHeadings
     public function headings(): array
     {
         return [
-            'Sheet Name',
-            'User_Name',            
+            'Month',
+            'Audit Date',
+            'Lob',
+            'Agency Location',
+            'State',
+            'Product',
+            'Sheet Type',
+            'Agency Name',
+            'Agency Code',
+            'Collection Manager',
+            'Auditor Name',
+            'Visited Date & Time',
+            'Status'
         ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return
+            [
+                1 => ['font' => ['bold' => true]],
+            ];
     }
 }

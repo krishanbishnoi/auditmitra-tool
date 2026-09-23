@@ -387,7 +387,7 @@ class ClosureController extends Controller{
                     });
 
 
-                //echo '<pre>'; print_r($closureData); die;
+                //echo '<pre>'; print_r($closureData); die;  
             } else {
                 $closureData = DB::table('closure_audits')
                     ->where('closure_audits.client_id', Auth::user()->client_id)

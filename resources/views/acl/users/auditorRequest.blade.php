@@ -39,10 +39,10 @@ Users
 					<a class="btn btn-primary btn-sm float-right" href="{{route('bulkDeactivate')}}">De-Activate
 						user(Bulk)</a>
 					<a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
-						href="{{route('userUpload')}}">Import Users (Create bulk user)</a>
+						href="{{route('userUpload')}}">Import Users (Create bulk user)</a>-->
 
-					<a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
-						href="{{route('excelDownloadUser')}}" target="_blank">Export Users</a> -->
+					{{-- <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
+						href="{{route('excelDownloadUser')}}" target="_blank">Export Users</a>  --}}
 
 				</div>
 
