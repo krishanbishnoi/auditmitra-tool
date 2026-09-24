@@ -12,6 +12,7 @@
 
 use App\Http\Controllers\AuditAgencyController;
 use App\Http\Controllers\ClientManagementController;
+use App\Http\Controllers\ClosureController;
 use App\Http\Controllers\CmsPageController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Artisan;
@@ -431,6 +432,16 @@ Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBo
     Route::post('artifact/approve/{id}', 'ClosureController@approveArtifact')->name('artifact.approve');
     Route::post('artifact/reject/{id}', 'ClosureController@rejectArtifact')->name('artifact.reject');
     Route::post('audit/resend-closure/{auditId}', 'ClosureController@resendAuditClosure')->name('audit.resend_closure');
+
+// export route for send, receicved and approved excel sheet
+
+
+Route::get('export-send-closure-audit-sheet', 'ClosureController@exportSendClosureAudit')->name('exportSendClosureAudit');
+Route::get('export-received-audit-sheet', 'ClosureController@exportReceivedAudit')->name('exportReceivedAudit');
+Route::get('export-approved-audit-sheet', 'ClosureController@exportApprovedAudit')->name('exportApprovedAudit');
+
+
+
 
 // import and export excel the route
 Route::get('export-audit_report-sheet', 'ReportController@exportAuditReportSheet')->name('exportAuditReportSheet');

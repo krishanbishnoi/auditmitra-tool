@@ -31,7 +31,7 @@ class UsersExport implements FromArray, WithEvents, WithStyles
                 ->get();
         }
 
-
+ 
         $final = [
             ['Name', 'Role', 'Email id', 'Phone Number', 'Employee ID', 'Active Status', 'Created At', 'Created By','Audit Agency', 'disable_date', 'auditor_approval_date']
         ];
