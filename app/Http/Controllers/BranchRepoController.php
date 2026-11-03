@@ -23,8 +23,6 @@ use App\Imports\BranchRepoImport;
 use App\Exports\BranchRepoExport;
 use Session;
 use Maatwebsite\Excel\Facades\Excel;
-
-
 class BranchRepoController extends Controller
 
 {
@@ -38,21 +36,16 @@ class BranchRepoController extends Controller
      * @return \Illuminate\Http\Response
 
      */
-   
     public function index()
 
     {
        
         $data=BranchRepo::with('User')->where('client_id',auth()->user()->client_id)->where('status',0)->get();
 
-
        // echo '<pre>'; print_r($data); die;
         return view('branchrepo.list', compact('data'));
 
     }
-
-
-
     /**
 
      * Show the form for creating a new resource.
@@ -66,17 +59,13 @@ class BranchRepoController extends Controller
     public function create()
     {
        
-
         $user=User::get(['id', 'name']);
         $regions = DB::table("regions")->get();
 
         $branch=Branch::get(['id', 'name']);
         $products=Products::where('status','0')->pluck('name', 'id')->toArray();
         return view('branchrepo.create',compact('user','branch','regions','products') );
-
     }
-
-
 
     /**
 
@@ -89,10 +78,9 @@ class BranchRepoController extends Controller
      * @return \Illuminate\Http\Response
 
      */
-
+     
      public function store(Request $request)
      {
-       
          $validator = Validator::make($request->all(), [
              'name' => 'required',
              'agency_id' => 'required',
@@ -107,7 +95,7 @@ class BranchRepoController extends Controller
              'mobile_numbers' => 'required|array',
              'mobile_numbers.*' => 'required|digits_between:10,15',
          ]);
-     
+    
          if ($validator->fails()) {
              return redirect()->back()->with('error', [$validator->errors()->all()])->withInput();
          } else {
@@ -149,10 +137,6 @@ class BranchRepoController extends Controller
              }
          }
      }
-     
-     
-
-
 
     /**
 
@@ -168,8 +152,7 @@ class BranchRepoController extends Controller
 
     public function show($id)
 
-    {
-       
+    {  
         // $data=Agency::where('id',Crypt::decrypt($id))->delete();
         $data=BranchRepo::where('id',Crypt::decrypt($id))->update(['status'=>1]);
 
@@ -178,17 +161,7 @@ class BranchRepoController extends Controller
             return redirect('branchrepo')->with('success', ['Agency deleted successfully.']);
 
         }
-
-        else{
-
-            return redirect()->back()->with('error', ['Agency deletion unsuccessfully.']);
-
-        }
-
     }
-
-
-
     /**
 
      * Show the form for editing the specified resource.
@@ -203,31 +176,22 @@ class BranchRepoController extends Controller
 
      public function edit($id)
      {
-       
         
          $data = BranchRepo::with(['city.state.region', 'emails', 'mobileNumbers'])->find(Crypt::decrypt($id));
-     
          
          $region = $data->city->state->region->id ?? '';
-     
          
          $user = User::get(['id', 'name']);
-     
         
          $regions = DB::table("regions")->get();
-     
          
          $branch = Branch::get(['id', 'name']);
+
          $products=Products::where('status','0')->pluck('name', 'id')->toArray();
         
          return view('branchrepo.edit', compact('data', 'user', 'branch', 'regions', 'region','products'));
      }
-     
-
-
-
     /**
-
      * Update the specified resource in storage.
 
      *
@@ -255,7 +219,6 @@ class BranchRepoController extends Controller
              'city_id' => 'required',
              'emails' => 'required|array|min:1',
              'mobile_numbers' => 'required|array|min:1',
-
          ]);
      
          if ($validator->fails()) {
@@ -290,9 +253,6 @@ class BranchRepoController extends Controller
          return redirect('branchrepo')->with('success', ['Agency updated successfully.']);
      }
      
-
-
-
     /**
 
      * Remove the specified resource from storage.
@@ -309,7 +269,7 @@ class BranchRepoController extends Controller
 
     {
 
-        //
+        
 
     }
 
@@ -318,7 +278,7 @@ class BranchRepoController extends Controller
         ini_set('memory_limit', '-1');
 
         ini_set('max_execution_time', 3000);
-
+ 
         return Excel::download(new BranchRepoExport, 'BranchRepo.xlsx');
 
     }

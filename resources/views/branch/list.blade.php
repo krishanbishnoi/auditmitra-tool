@@ -15,12 +15,12 @@ Users
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header"> 
                     <strong class="card-title">Branch List</strong>
                     <a class="btn btn-primary btn-sm float-right" style="margin-right: 5px"
                         href="{{route('excelDownloadBranch')}}" target="_blank">Export Branch</a>
-                    <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
-                        href="{{route('branchExcelUpload')}}" target="_blank">Import Branch</a>
+                    {{-- <a class="btn btn-info btn-sm float-right" style="margin-right: 5px"
+                        href="{{route('branchExcelUpload')}}" target="_blank">Import Branch</a> --}}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">

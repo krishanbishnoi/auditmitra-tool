@@ -45,8 +45,10 @@ class BranchController extends Controller
 
     {
         
-        $data=Branch::with('User')->where('client_id', auth()->user()->client_id)->where('status',0)->get();
-
+       $data = Branch::with('user')
+        ->where('client_id', auth()->user()->client_id)
+        ->where('status', 0)
+        ->get();
 
        // echo '<pre>'; print_r($data); die;
         return view('branch.list', compact('data'));

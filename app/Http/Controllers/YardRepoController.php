@@ -20,7 +20,8 @@ use App\Model\Products;
 
 use Validator;
 use App\Imports\YardRepoImport;
-use App\Exports\YardRepoExport;
+use App\Exports\ExportYardRepoSheet;
+
 use Session;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -320,7 +321,7 @@ class YardRepoController extends Controller
 
         ini_set('max_execution_time', 3000);
 
-        return Excel::download(new YardRepoExport, 'YardRepo.xlsx');
+        return Excel::download(new ExportYardRepoSheet, 'YardRepo.xlsx');
 
     }
 

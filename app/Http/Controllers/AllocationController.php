@@ -202,8 +202,11 @@ class AllocationController extends Controller
         return view('audit.audit_list_qa', compact('data'));
     }
     public function excelDownloadAllocation(){
+
         ini_set('memory_limit', '-1');
+        
         ini_set('max_execution_time', 3000);
+        
         return Excel::download(new AllocationExport, 'Allocation.xlsx');
     }
 }

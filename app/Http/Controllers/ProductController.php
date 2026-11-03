@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Crypt;
 use DB;
 use App\Exports\ProductHierarchyExport;
 use App\Exports\ExportProductSheet;
+use App\Exports\ExportProductSheetSample;
+use App\Imports\ImportProductSheet;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 use Auth;
 
 class ProductController extends Controller
@@ -33,8 +36,8 @@ class ProductController extends Controller
     public function index()
 
     {
-        $product=Products::where('status',0)->where('client_id', Auth::user()->id)->latest()->get();
-        return view('product.list',compact('product'));
+        $product = Products::where('status', 0)->where('client_id', Auth::user()->id)->latest()->get();
+        return view('product.list', compact('product'));
     }
 
 
@@ -54,7 +57,6 @@ class ProductController extends Controller
     {
 
         return view('product.create');
-
     }
 
 
@@ -125,18 +127,15 @@ class ProductController extends Controller
     {
 
         // $data = Products::where('id', Crypt::decrypt($id))->delete();
-        $data = Products::where('id', Crypt::decrypt($id))->update(['status'=>1]);
+        $data = Products::where('id', Crypt::decrypt($id))->update(['status' => 1]);
 
         if ($data) {
 
             return redirect()->route('product.index')->with('success', ['Product deleted successfully.']);
-
         } else {
 
             return redirect()->back()->with('error', ['Product deletion unsuccessfully.']);
-
         }
-
     }
 
 
@@ -157,12 +156,13 @@ class ProductController extends Controller
 
     {
 
-        $data=Products::find(Crypt::decrypt($id));
+        $data = Products::find(Crypt::decrypt($id));
 
-        return view('product.edit', 
+        return view(
+            'product.edit',
 
-        compact('data'));
-
+            compact('data')
+        );
     }
 
 
@@ -201,37 +201,30 @@ class ProductController extends Controller
 
 
             return redirect()->back()->with('error', [$validator->errors()->all()])->withInput();
-
         } else {
 
-        $yard=Products::where('id',Crypt::decrypt($id))->update(
+            $yard = Products::where('id', Crypt::decrypt($id))->update(
 
-            [
+                [
 
-                'name'=>$camelCaseText,
+                    'name' => $camelCaseText,
 
-                'bucket'=>$request->bucket,
+                    'bucket' => $request->bucket,
 
-                'type'=>0
+                    'type' => 0
 
-            ]
+                ]
 
-        );
+            );
 
-        if($yard){
+            if ($yard) {
 
-            return redirect('product')->with('success', ['Product created successfully.']);
+                return redirect('product')->with('success', ['Product created successfully.']);
+            } else {
 
+                return redirect()->back()->with('error', ['Product creation unsuccessfully.']);
+            }
         }
-
-        else{
-
-            return redirect()->back()->with('error', ['Product creation unsuccessfully.']);
-
-        }
-
-        }
-
     }
 
 
@@ -253,33 +246,44 @@ class ProductController extends Controller
 
     // }
 
-    public function hierarchy(){
+    public function hierarchy()
+    {
 
-        $branch=Branch::all(['id','name']);
-        $product=Products::all();
-        $puser=ProductUser::all()->pluck('user_id');
-        $user=User::with('roles')->whereNotIn('id',$puser)->get();
+        $branch = Branch::all(['id', 'name']);
+        $product = Products::all();
+        $puser = ProductUser::all()->pluck('user_id');
+        $user = User::with('roles')->whereNotIn('id', $puser)->get();
         //echo '<pre>';print_r($user);die();
-    
-        $col_manager_roles = User::where('user_role_id','3')->pluck('name','id')->toArray();
-        $quality_auditor_roles = User::where('user_role_id','2')->pluck('name','id')->toArray();
-        $quality_control_roles = User::where('user_role_id','10')->pluck('name','id')->toArray();
-        $area_col_manager_roles = User::where('user_role_id','4')->pluck('name','id')->toArray();
-        $reg_col_manager_roles = User::where('user_role_id','5')->pluck('name','id')->toArray();
-        $zonal_col_manager_roles = User::where('user_role_id','6')->pluck('name','id')->toArray();
-        $national_col_manager_roles = User::where('user_role_id','7')->pluck('name','id')->toArray();
-        $group_product_head_roles = User::where('user_role_id','8')->pluck('name','id')->toArray();
-        $head_collection_roles = User::where('user_role_id','9')->pluck('name','id')->toArray();
 
-        return view('product.productHierarchy',compact('product','branch','col_manager_roles','quality_auditor_roles','quality_control_roles','area_col_manager_roles',
-        'reg_col_manager_roles','zonal_col_manager_roles','national_col_manager_roles','group_product_head_roles','head_collection_roles'));
+        $col_manager_roles = User::where('user_role_id', '3')->pluck('name', 'id')->toArray();
+        $quality_auditor_roles = User::where('user_role_id', '2')->pluck('name', 'id')->toArray();
+        $quality_control_roles = User::where('user_role_id', '10')->pluck('name', 'id')->toArray();
+        $area_col_manager_roles = User::where('user_role_id', '4')->pluck('name', 'id')->toArray();
+        $reg_col_manager_roles = User::where('user_role_id', '5')->pluck('name', 'id')->toArray();
+        $zonal_col_manager_roles = User::where('user_role_id', '6')->pluck('name', 'id')->toArray();
+        $national_col_manager_roles = User::where('user_role_id', '7')->pluck('name', 'id')->toArray();
+        $group_product_head_roles = User::where('user_role_id', '8')->pluck('name', 'id')->toArray();
+        $head_collection_roles = User::where('user_role_id', '9')->pluck('name', 'id')->toArray();
 
+        return view('product.productHierarchy', compact(
+            'product',
+            'branch',
+            'col_manager_roles',
+            'quality_auditor_roles',
+            'quality_control_roles',
+            'area_col_manager_roles',
+            'reg_col_manager_roles',
+            'zonal_col_manager_roles',
+            'national_col_manager_roles',
+            'group_product_head_roles',
+            'head_collection_roles'
+        ));
     }
 
     //V Fetch Data on chnage
     public function getCmanagerDetails($cm_id)
     {
-        $userHierarchy = UserHierarchy::where('cm_id',$cm_id)->first()->toArray();
+        $userHierarchy = UserHierarchy::where('cm_id', $cm_id)->first()->toArray();
         //echo '<pre>'; print_r($col_manager_roles); die;
         if (!$userHierarchy) {
             return response()->json(['error' => 'Collection Manager not found'], 404);
@@ -289,7 +293,8 @@ class ProductController extends Controller
     }
 
 
-    public function doHierarchy(Request $request) {
+    public function doHierarchy(Request $request)
+    {
         //echo '<pre>'; print_r($request->all()); die;
 
         $validator = Validator::make($request->all(), [
@@ -297,7 +302,7 @@ class ProductController extends Controller
             'product_id' => 'required',
 
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -312,7 +317,7 @@ class ProductController extends Controller
             'ncm_id' => $request->ncm_id,
             'gph_id' => $request->gph_id,
         ]);
-    
+
         if ($data) {
             return redirect()->route('HierarchyView')->with('success', 'Product Hierarchy created successfully.');
         } else {
@@ -326,63 +331,76 @@ class ProductController extends Controller
         $producthierarchy->delete();
         return redirect()->back()->with('success', ['Product Hierarchy deleted successfully.']);
     }
-    
 
-    public function hierarchyView(){
+
+    public function hierarchyView()
+    {
 
         $id = Auth::user()->id;
         $data = DB::table('branchables')
-        ->leftJoin('branches', 'branches.id', '=', 'branchables.branch_id')
-        ->leftJoin('products', 'products.id', '=', 'branchables.product_id')
-        ->leftJoin('users as cm_users', 'cm_users.id', '=', 'branchables.cm_id')
-        ->leftJoin('users as acm_users', 'acm_users.id', '=', 'branchables.acm_id')
-        ->leftJoin('users as rcm_users', 'rcm_users.id', '=', 'branchables.rcm_id')
-        ->leftJoin('users as zcm_users', 'zcm_users.id', '=', 'branchables.zcm_id')
-        ->leftJoin('users as ncm_users', 'ncm_users.id', '=', 'branchables.ncm_id')
-        ->leftJoin('users as gph_users', 'gph_users.id', '=', 'branchables.gph_id')
-        ->leftJoin('roles', 'roles.id', '=', 'cm_users.user_role_id')
-        ->select(
-            'branches.name as br_name',
-            'products.name as pr_name',
-            'cm_users.name as cm_name',
-            'acm_users.name as acm_name',
-            'rcm_users.name as rcm_name',
-            'zcm_users.name as zcm_name',
-            'ncm_users.name as ncm_name',
-            'gph_users.name as gph_name',
-            'roles.name as cmrolename',
-            'branchables.*'
-        )
-        ->where('branchables.status', 1)
-        ->get();
+            ->leftJoin('branches', 'branches.id', '=', 'branchables.branch_id')
+            ->leftJoin('products', 'products.id', '=', 'branchables.product_id')
+            ->leftJoin('users as cm_users', 'cm_users.id', '=', 'branchables.cm_id')
+            ->leftJoin('users as acm_users', 'acm_users.id', '=', 'branchables.acm_id')
+            ->leftJoin('users as rcm_users', 'rcm_users.id', '=', 'branchables.rcm_id')
+            ->leftJoin('users as zcm_users', 'zcm_users.id', '=', 'branchables.zcm_id')
+            ->leftJoin('users as ncm_users', 'ncm_users.id', '=', 'branchables.ncm_id')
+            ->leftJoin('users as gph_users', 'gph_users.id', '=', 'branchables.gph_id')
+            ->leftJoin('roles', 'roles.id', '=', 'cm_users.user_role_id')
+            ->select(
+                'branches.name as br_name',
+                'products.name as pr_name',
+                'cm_users.name as cm_name',
+                'acm_users.name as acm_name',
+                'rcm_users.name as rcm_name',
+                'zcm_users.name as zcm_name',
+                'ncm_users.name as ncm_name',
+                'gph_users.name as gph_name',
+                'roles.name as cmrolename',
+                'branchables.*'
+            )
+            ->where('branchables.status', 1)
+            ->get();
 
         //echo '<pre>'; print_r($data); die();
         return view('product.view', ['data' => $data]);
     }
 
-    public function hierarchyEdit($id){
+    public function hierarchyEdit($id)
+    {
 
         $id = Auth::user()->id;
-        $branch=Branch::all(['id','name']);
-        $product=Products::all();
-        $puser=ProductUser::all()->pluck('user_id');
-        $user=User::with('roles')->whereNotIn('id',$puser)->get();
+        $branch = Branch::all(['id', 'name']);
+        $product = Products::all();
+        $puser = ProductUser::all()->pluck('user_id');
+        $user = User::with('roles')->whereNotIn('id', $puser)->get();
         //echo '<pre>';print_r($user);die();
-    
-        $col_manager_roles = User::where('user_role_id','3')->pluck('name','id')->toArray();
-        $quality_auditor_roles = User::where('user_role_id','2')->pluck('name','id')->toArray();
-        $quality_control_roles = User::where('user_role_id','10')->pluck('name','id')->toArray();
-        $area_col_manager_roles = User::where('user_role_id','4')->pluck('name','id')->toArray();
-        $reg_col_manager_roles = User::where('user_role_id','5')->pluck('name','id')->toArray();
-        $zonal_col_manager_roles = User::where('user_role_id','6')->pluck('name','id')->toArray();
-        $national_col_manager_roles = User::where('user_role_id','7')->pluck('name','id')->toArray();
-        $group_product_head_roles = User::where('user_role_id','8')->pluck('name','id')->toArray();
-        $head_collection_roles = User::where('user_role_id','9')->pluck('name','id')->toArray();
+
+        $col_manager_roles = User::where('user_role_id', '3')->pluck('name', 'id')->toArray();
+        $quality_auditor_roles = User::where('user_role_id', '2')->pluck('name', 'id')->toArray();
+        $quality_control_roles = User::where('user_role_id', '10')->pluck('name', 'id')->toArray();
+        $area_col_manager_roles = User::where('user_role_id', '4')->pluck('name', 'id')->toArray();
+        $reg_col_manager_roles = User::where('user_role_id', '5')->pluck('name', 'id')->toArray();
+        $zonal_col_manager_roles = User::where('user_role_id', '6')->pluck('name', 'id')->toArray();
+        $national_col_manager_roles = User::where('user_role_id', '7')->pluck('name', 'id')->toArray();
+        $group_product_head_roles = User::where('user_role_id', '8')->pluck('name', 'id')->toArray();
+        $head_collection_roles = User::where('user_role_id', '9')->pluck('name', 'id')->toArray();
 
         //echo '<pre>'; print_r($data); die();
-       
-        return view('product.productHierarchyEdit', compact('product','branch','col_manager_roles','quality_auditor_roles','quality_control_roles','area_col_manager_roles',
-        'reg_col_manager_roles','zonal_col_manager_roles','national_col_manager_roles','group_product_head_roles','head_collection_roles'));
+
+        return view('product.productHierarchyEdit', compact(
+            'product',
+            'branch',
+            'col_manager_roles',
+            'quality_auditor_roles',
+            'quality_control_roles',
+            'area_col_manager_roles',
+            'reg_col_manager_roles',
+            'zonal_col_manager_roles',
+            'national_col_manager_roles',
+            'group_product_head_roles',
+            'head_collection_roles'
+        ));
     }
 
 
@@ -500,14 +518,33 @@ class ProductController extends Controller
     //     // return Excel::download(new QcAndQaChangesExport, 'users.xlsx');
     // }
 
-   public function exportProductSheet()
-   {
-ini_set('memory_limit', '-1');
+    public function exportProductSheet()
+    {
+        ini_set('memory_limit', '-1');
 
-ini_set('max_execution_time', 3000);
+        ini_set('max_execution_time', 3000);
 
-return Excel::download(new ExportProductSheet, 'products-sheet.xlsx');
-   }
+        return Excel::download(new ExportProductSheet, 'products-sheet.xlsx');
+    }
 
+
+    public function uploadProductList()
+    {
+        return view('product.productsheetimport');
+    }
+
+    public function exportProductSample()
+    {
+        return Excel::download(new ExportProductSheetSample, 'Products_Sample.xlsx');
+    }
+
+    public function productSheetImport()
+    {
+        Excel::import(new ImportProductSheet, request()->file('file'));
+
+        return redirect()->back()->with(
+            'success',
+            'Product Sheet imported successfully.'
+        );
+    }
 }
-

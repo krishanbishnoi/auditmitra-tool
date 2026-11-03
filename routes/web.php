@@ -27,6 +27,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GovernanceDashboard;
 use App\Http\Controllers\IssueTypeController;
 use App\Http\Controllers\ProductattributeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QmSheetController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -144,9 +145,9 @@ Route::group(['middleware' => ['auth']], function () {
     // PermissionController
     Route::resource('permissions', 'PermissionController');
 
-// Route for export the permission Sheet
+    // Route for export the permission Sheet
 
-Route::get('export-permission-sheet', 'PermissionController@exportPermissionSheet')->name('exportPermissionSheet');
+    Route::get('export-permission-sheet', 'PermissionController@exportPermissionSheet')->name('exportPermissionSheet');
 
 
     //sumeet
@@ -185,7 +186,7 @@ Route::get('export-permission-sheet', 'PermissionController@exportPermissionShee
 
 
 
-    // end here 
+    // end here
     Route::get('user/status/{user_id}/{status}', 'UserController@change_user_status');
     Route::resource('yard', 'YardController');
     Route::get('yard-excel-import', 'YardController@showYardImport')->name('yardExcelUpload');
@@ -206,9 +207,9 @@ Route::get('export-permission-sheet', 'PermissionController@exportPermissionShee
     Route::get('list-audit-cycle', 'AuditController@listCycle')->name('listCycle');
     Route::post('/toggle-status', 'AuditController@toggleStatus')->name('toggle.status');
 
-// Route for export the excel of Audit Cycle
+    // Route for export the excel of Audit Cycle
 
-Route::get('export-audit_cycle-sheet', 'AuditController@exportAuditCycleSheet')->name('exportAuditCycleSheet');
+    Route::get('export-audit_cycle-sheet', 'AuditController@exportAuditCycleSheet')->name('exportAuditCycleSheet');
 
 
     Route::get('get-agencies-upload/{branch}', 'UploadController@getAgencies')->name('get-upload-agency');
@@ -246,8 +247,21 @@ Route::get('export-audit_cycle-sheet', 'AuditController@exportAuditCycleSheet')-
 
 
     // route for export the product excel
-    
+
     Route::get('export-product-sheet', 'ProductController@exportProductSheet')->name('exportProductSheet');
+    Route::get('export-productSheet-sample', 'ProductController@exportProductSample')->name('exportProductSample');
+    Route::get('import-product-sheet', 'ProductController@uploadProductList')->name('importProductSheet');
+    Route::post('importProductList', 'ProductController@productSheetImport')->name('importProductList');
+
+
+
+    // Route::get('export-audit_checksheet-sheet', 'QmSheetController@exportQmSheet')->name('exportQmSheet');
+    // Route::get('export-audit_checksheet-sample', 'QmSheetController@exportQmSample')->name('exportQmSample');
+    // Route::get('import-qm_checksheet', 'QmSheetController@uploadQmSheet')->name('importQmSheet');
+    // Route::post('importQmCheckSheet', 'QmSheetController@qmSheetImport')->name('importQmCheckSheet');
+
+
+
 
 
 
@@ -255,7 +269,7 @@ Route::get('export-audit_cycle-sheet', 'AuditController@exportAuditCycleSheet')-
     Route::resource('productattribute', 'ProductattributeController');
     // Route::delete('/productattribute/{id}', 'ProductattributeController@destroy')->name('productattribute.destroy');
 
-Route::get('export-product_attribute-sheet', 'ProductattributeController@exportProductAttribute')->name('exportProductAttribute');
+    Route::get('export-product_attribute-sheet', 'ProductattributeController@exportProductAttribute')->name('exportProductAttribute');
 
 
     Route::get('/get-regions', 'BranchController@getRegions');
@@ -266,10 +280,10 @@ Route::get('export-product_attribute-sheet', 'ProductattributeController@exportP
     Route::resource('audit_alert_box', 'AuditAlertBoxController');
     Route::resource('beat_plan', 'BeatPlanController');
 
-// route for export audit alert box
+    // route for export audit alert box
 
 
-Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBox')->name('exportAuditAlertBox');
+    Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBox')->name('exportAuditAlertBox');
 
 
 
@@ -388,6 +402,7 @@ Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBo
     //Route::get('/dashboard/getbranchdata', 'DashboardController@getBranchData');
 
 
+    Route::get('export-yardrepo-sheet', 'YardRepoController@excelDownloadYardRepo')->name('excelDownloadYardRepo');
 
 
     Route::resource('auditReport', 'AuditReportController');
@@ -433,21 +448,21 @@ Route::get('export-audit-alert-box', 'AuditAlertBoxController@exportAuditAlertBo
     Route::post('artifact/reject/{id}', 'ClosureController@rejectArtifact')->name('artifact.reject');
     Route::post('audit/resend-closure/{auditId}', 'ClosureController@resendAuditClosure')->name('audit.resend_closure');
 
-// export route for send, receicved and approved excel sheet
+    // export route for send, receicved and approved excel sheet
 
 
-Route::get('export-send-closure-audit-sheet', 'ClosureController@exportSendClosureAudit')->name('exportSendClosureAudit');
-Route::get('export-received-audit-sheet', 'ClosureController@exportReceivedAudit')->name('exportReceivedAudit');
-Route::get('export-approved-audit-sheet', 'ClosureController@exportApprovedAudit')->name('exportApprovedAudit');
+    Route::get('export-send-closure-audit-sheet', 'ClosureController@exportSendClosureAudit')->name('exportSendClosureAudit');
+    Route::get('export-received-audit-sheet', 'ClosureController@exportReceivedAudit')->name('exportReceivedAudit');
+    Route::get('export-approved-audit-sheet', 'ClosureController@exportApprovedAudit')->name('exportApprovedAudit');
 
 
 
 
-// import and export excel the route
-Route::get('export-audit_report-sheet', 'ReportController@exportAuditReportSheet')->name('exportAuditReportSheet');
-Route::get('export-audit_report-sample', 'ReportController@exportAuditReportSample')->name('exportAuditReportSample');
-Route::get('import-audit_report-sheet', 'ReportController@uploadAuditReportSheet')->name('importA_ReportSheet');
-Route::post('importAuditReportSheet', 'ReportController@importReportSheet')->name('importAuditReportSheet');
+    // import and export excel the route
+    Route::get('export-audit_report-sheet', 'ReportController@exportAuditReportSheet')->name('exportAuditReportSheet');
+    Route::get('export-audit_report-sample', 'ReportController@exportAuditReportSample')->name('exportAuditReportSample');
+    Route::get('import-audit_report-sheet', 'ReportController@uploadAuditReportSheet')->name('importA_ReportSheet');
+    Route::post('importAuditReportSheet', 'ReportController@importReportSheet')->name('importAuditReportSheet');
 
 
 
@@ -476,12 +491,12 @@ Route::post('importAuditReportSheet', 'ReportController@importReportSheet')->nam
 
     Route::resource('support_tickets', SupportTicketController::class);
 
-// import and Export excel route for the support Tickets
+    // import and Export excel route for the support Tickets
 
-Route::get('export-support_ticket-sheet', 'SupportTicketController@exportSupportTicketSheet')->name('exportSupportTicketSheet');
-Route::get('export-support_ticket-sample', 'SupportTicketController@exportSupportTicketSample')->name('exportSupportTicketSample');
-Route::get('import-support_ticket-sheet', 'SupportTicketController@uploadSupportTicketSheet')->name('importS_TicketSheet');
-Route::post('importsupportTicketSheet', 'SupportTicketController@supportTicketsImport')->name('importsupportTicketSheet');
+    Route::get('export-support_ticket-sheet', 'SupportTicketController@exportSupportTicketSheet')->name('exportSupportTicketSheet');
+    Route::get('export-support_ticket-sample', 'SupportTicketController@exportSupportTicketSample')->name('exportSupportTicketSample');
+    Route::get('import-support_ticket-sheet', 'SupportTicketController@uploadSupportTicketSheet')->name('importS_TicketSheet');
+    Route::post('importsupportTicketSheet', 'SupportTicketController@supportTicketsImport')->name('importsupportTicketSheet');
 
 
 
@@ -496,10 +511,10 @@ Route::post('importsupportTicketSheet', 'SupportTicketController@supportTicketsI
     Route::get('/get-issue-types', 'SupportTicketController@getIssueTypes')
         ->name('get.issue_types');
 
-// Export excel for issue Controller
+    // Export excel for issue Controller
 
-Route::get('export-issue_type-sheet', 'IssueTypeController@exportIssueTypeSheet')->name('exportIssueTypeSheet');
-Route::get('export-help_topics-sheet', 'HelpTopicController@exportHelpTopicSheet')->name('exportHelpTopicSheet');
+    Route::get('export-issue_type-sheet', 'IssueTypeController@exportIssueTypeSheet')->name('exportIssueTypeSheet');
+    Route::get('export-help_topics-sheet', 'HelpTopicController@exportHelpTopicSheet')->name('exportHelpTopicSheet');
 
 
     Route::prefix('legal')->name('legal.')->group(function () {

@@ -15,8 +15,17 @@ Users
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <strong class="card-title">Yard Repo List</strong>
+                        <div class="d-flex align-items-center">
+                                <a class="btn btn-primary btn-sm mr-2" href="{{ route('excelDownloadYardRepo') }}" target="_blank">
+                                Export YardRepo List
+                            </a>
+{{-- 
+                            <a class="btn btn-info btn-sm mr-2" href="{{ route('importA_ReportSheet') }}" target="_blank">
+                                Import Audit Report List
+                            </a> --}}
+</div>
                    </div>
                 <div class="card-body">
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">

@@ -42,7 +42,6 @@ class ExportQmCheckSheet implements WithStyles, WithHeadings, FromArray
                 'Details' => $qmSheet->details,
                 'Type' => $qmSheet->type,
                 'Lob' => $qmSheet->lob,
-
                 'Created At' => $qmSheet->created_at->format('Y-m-d H:i:s'),
             ];
         }
@@ -59,7 +58,6 @@ class ExportQmCheckSheet implements WithStyles, WithHeadings, FromArray
                 'Details',
                 'Type',
                 'Lob',
-
                 'Created At'
             ];
     }

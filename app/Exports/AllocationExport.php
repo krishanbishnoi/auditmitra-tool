@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use App\Audit;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-// use App\Model\Allocation;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class AllocationExport implements FromArray, WithHeadings
@@ -32,11 +31,7 @@ class AllocationExport implements FromArray, WithHeadings
         ])
             ->where('status', '<=', 1);
 
-        /*
-         * Super Admin
-         * ----------------
-         * Export all clients
-         */
+       
         if (!$user->hasRole('Super Admin')) {
 
             // Client-wise restriction
@@ -59,10 +54,7 @@ class AllocationExport implements FromArray, WithHeadings
             $agencyCode = '';
             $state = '';
 
-            /*
-             * Get Name, Agency Code and State
-             * based on Sheet Type
-             */
+           
             switch ($row->qmsheet->type ?? '') {
 
                 case 'agency':
@@ -98,11 +90,6 @@ class AllocationExport implements FromArray, WithHeadings
 
             return [
                 '00' . $row->id,
-
-                // // Audit Type
-                // $row->virtual_audit == 1
-                //     ? 'Virtual'
-                //     : 'Physical',
 
                 // Month
                 $row->created_at
