@@ -19,11 +19,7 @@ class ExportProductSheet implements FromArray, WithHeadings, WithStyles
         return
             [
                 'Product Name',
-                'Type',
                 'Bucket',
-                'Capacity',
-                'Status',
-                'Created At'
             ];
     }
     public function array(): array
@@ -39,11 +35,8 @@ class ExportProductSheet implements FromArray, WithHeadings, WithStyles
         foreach ($data as $products) {
             $final[] = [
                 'Product Name' => $products->name,
-                'Type' => $products->type,
                 'Bucket' => $products->bucket,
-                'Capacity' => $products->capacity,
-                'Status' =>  $products->status,
-                'Created At' => $products->created_at
+                
             ];
         }
         return $final;

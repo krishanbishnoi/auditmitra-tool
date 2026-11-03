@@ -17,11 +17,9 @@ class ExportProductSheetSample implements WithHeadings, WithStyles, FromArray
         return
             [
                 'Product Name',
-                'Type',
                 'Bucket',
-                'Capacity',
-                'Status',
-                'Created At'
+                
+    
             ];
     }
 
@@ -30,12 +28,10 @@ class ExportProductSheetSample implements WithHeadings, WithStyles, FromArray
         return [
             [
 
-                'Two-Wheeler Loan',
-                '',
-                'Test Bucket',
-                '',
-                '',
-                '2025-07-08 11:39:47'
+                'Test Product Name',     
+                'Test Bucket Name',
+              
+    
 
             ],
         ];

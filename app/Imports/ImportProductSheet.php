@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Model\Products;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ImportProductSheet implements ToModel, WithHeadingRow
 {
@@ -16,22 +17,77 @@ class ImportProductSheet implements ToModel, WithHeadingRow
      */
 
 
-    public function model(array $row)
-    {
-                 
+public function model(array $row)
+{
+  
+    if (empty(trim($row['products'] ?? ''))) {
+        return null;
+    }
 
-      if (empty($row['products'])) {
+   
+    $camelCaseText = ucwords(trim($row['products']));
+    $bucketName = ucwords(trim($row['bucket'] ?? ''));
+
+
+    $validator = Validator::make([
+        'name' => $camelCaseText,
+        'bucket' => $bucketName,
+    ], [
+        'name' => 'required|string|max:255',
+        'bucket' => 'nullable|string|max:255',
+    ]);
+
+    if ($validator->fails()) {
+        return null;
+    }
+
+    $clientId = Auth::id();
+
+    // Find existing product using Excel ID
+    $existingProduct = null;
+
+    if (!empty($row['id'])) {
+        $existingProduct = Products::where('id', $row['id'])
+            ->where('client_id', $clientId)
+            ->first();
+    }
+
+   
+    if ($existingProduct) {
+
+   
+        if (
+            $existingProduct->name === $camelCaseText &&
+            $existingProduct->bucket === ($bucketName ?: null)
+        ) {
             return null;
         }
 
-        return Products::create([
-            'name'      => ucwords(trim($row['products'])),
-            'type'      => $row['type'] ?? 0,
-            'bucket'    => $row['bucket'] ?? null,
-            'capacity'  => $row['capacity'] ?? null,
-            'status'    => 0,
-            'client_id' => Auth::id(),
+
+        $existingProduct->update([
+            'name' => $camelCaseText,
+            'bucket' => $bucketName ?: null,
         ]);
 
-       }
+        return $existingProduct;
+    }
+
+    
+    $duplicateProduct = Products::where('name', $camelCaseText)
+        ->where('bucket', $bucketName ?: null)
+        ->where('client_id', $clientId)
+        ->first();
+
+    if ($duplicateProduct) {
+        return null;
+    }
+
+
+    return Products::create([
+        'name' => $camelCaseText,
+        'bucket' => $bucketName ?: null,
+        'type' => 0,
+        'client_id' => $clientId,
+    ]);
+}
 } 
