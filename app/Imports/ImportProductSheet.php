@@ -24,10 +24,8 @@ public function model(array $row)
         return null;
     }
 
-   
     $camelCaseText = ucwords(trim($row['products']));
     $bucketName = ucwords(trim($row['bucket'] ?? ''));
-
 
     $validator = Validator::make([
         'name' => $camelCaseText,
@@ -43,7 +41,6 @@ public function model(array $row)
 
     $clientId = Auth::id();
 
-    // Find existing product using Excel ID
     $existingProduct = null;
 
     if (!empty($row['id'])) {
@@ -52,10 +49,8 @@ public function model(array $row)
             ->first();
     }
 
-   
     if ($existingProduct) {
 
-   
         if (
             $existingProduct->name === $camelCaseText &&
             $existingProduct->bucket === ($bucketName ?: null)

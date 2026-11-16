@@ -15,27 +15,29 @@ use Illuminate\Support\Facades\Crypt;
 use DB;
 use App\Exports\ProductHierarchyExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Auth; 
+use Auth;
 use App\Exports\ExportProductAttribute;
+use App\Exports\ExportProductAttributeSample;
+use App\Imports\ImportProductAttributeSheet;
 
 class ProductattributeController extends Controller
 {
 
     public function index()
-    {        
+    {
         $productattdata = Productattribute::with('productName')
-        ->join('products', 'productattributes.product_id', '=', 'products.id')
-        ->where('products.client_id', Auth::user()->id)
-        ->orderBy('products.name', 'ASC')
-        ->select('productattributes.*')
-        ->get();
+            ->join('products', 'productattributes.product_id', '=', 'products.id')
+            ->where('products.client_id', Auth::user()->id)
+            ->orderBy('products.name', 'ASC')
+            ->select('productattributes.*')
+            ->get();
         return view('productattribute.list', compact('productattdata'));
     }
 
 
     public function create()
     {
-        $products=Products::where('status',0)->where('products.client_id', Auth::user()->id)->get();
+        $products = Products::where('status', 0)->where('products.client_id', Auth::user()->id)->get();
         return view('productattribute.create', compact('products'));
     }
 
@@ -69,17 +71,17 @@ class ProductattributeController extends Controller
 
 
     public function edit($id)
-    {      
-        $data=Productattribute::find(Crypt::decrypt($id));
-        $products=Products::where('status',0)->latest()->get();
+    {
+        $data = Productattribute::find(Crypt::decrypt($id));
+        $products = Products::where('status', 0)->latest()->get();
         return view('productattribute.edit', compact('data', 'products'));
     }
 
     public function show($id)
     {
-        $productattdata=Productattribute::find(Crypt::decrypt($id));
+        $productattdata = Productattribute::find(Crypt::decrypt($id));
         //echo '<pre>'; print_r($productattdata); die();
-        $products=Products::where('status',0)->latest()->get();
+        $products = Products::where('status', 0)->latest()->get();
         return view('productattribute.showproductattributes', compact('productattdata', 'products'));
     }
 
@@ -92,32 +94,27 @@ class ProductattributeController extends Controller
             'product_id' => 'required',
             // 'type' => 'required'
         ]);
-  
+
         if ($validator->fails()) {
             return redirect()->back()->with('error', [$validator->errors()->all()])->withInput();
-
         } else {
 
-        $yard=Productattribute::where('id',Crypt::decrypt($id))->update(
-            [
-                'product_attribute_name'=>$request->product_attribute_name,
-                'product_id'=>$request->product_id,
-                'type'=>0
-            ]
-        );
+            $yard = Productattribute::where('id', Crypt::decrypt($id))->update(
+                [
+                    'product_attribute_name' => $request->product_attribute_name,
+                    'product_id' => $request->product_id,
+                    'type' => 0
+                ]
+            );
 
-        // echo '<pre>'; print_r($yard);
+            // echo '<pre>'; print_r($yard);
 
-        if($yard){
-            return redirect('productattribute')->with('success', ['Product Attributes updated successfully.']);
+            if ($yard) {
+                return redirect('productattribute')->with('success', ['Product Attributes updated successfully.']);
+            } else {
+                return redirect()->back()->with('error', ['Product Attributes updated unsuccessfully.']);
+            }
         }
-        else{
-            return redirect()->back()->with('error', ['Product Attributes updated unsuccessfully.']);
-
-        }
-
-        }
-
     }
 
 
@@ -125,19 +122,83 @@ class ProductattributeController extends Controller
     {
         $productattribute = Productattribute::findOrFail($id);
         $productattribute->delete();
-        
+
         return redirect()->back()->with('success', 'Product Attributes deleted successfully.');
-    } 
+    }
 
 
-public function exportProductAttribute()
+    public function exportProductAttribute()
+    {
+        ini_set('memory_limit', '-1');
+
+        ini_set('max_execution_time', 3000);
+
+        return Excel::download(new ExportProductAttribute, 'product_attribute-sheet.xlsx');
+    }
+
+    public function exportProductAttributeSample()
+    {
+        return Excel::download(new ExportProductAttributeSample, 'product_attribute-sample.xlsx');
+    }
+
+    public function uploadProductAttributeSheet()
+    {
+        return view('productattribute.importProductAttributeSheet');
+    }
+
+
+public function importProductAttribute(Request $request)
 {
-    ini_set('memory_limit', '-1');
 
-    ini_set('max_execution_time', 3000);
+//    dd('Import controller is working');
 
-    return Excel::download(new ExportProductAttribute, 'product_attribute-sheet.xlsx');
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv'
+    ]);
+
+    try {
+
+        $import = new ImportProductAttributeSheet();
+
+        Excel::import($import, $request->file('file'));
+
+        $newProducts = $import->getNewProducts();
+        $hasImportedAttributes = $import->getHasImportedAttributes();
+
+        // Check missing products first
+        if (!empty($newProducts)) {
+
+            session()->flash(
+                'warning',
+                'First create product and then add attribute.'
+            );
+
+        } elseif ($hasImportedAttributes) {
+
+            session()->flash(
+                'success',
+                'Product attributes imported successfully.'
+            );
+
+        } else {
+
+            session()->flash(
+                'warning',
+                'No new product attributes found. Duplicate attributes were skipped.'
+            );
+        }
+
+    } catch (\Throwable $e) {
+
+        \Log::error('Product Attribute Import Error: ' . $e->getMessage());
+
+        session()->flash(
+            'error',
+            'Excel import failed. Please check your file and try again.'
+        );
+    }
+
+    return redirect()->route('productattribute.index');
 }
 
 }
-

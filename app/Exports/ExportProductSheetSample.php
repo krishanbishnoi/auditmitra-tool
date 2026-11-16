@@ -18,8 +18,6 @@ class ExportProductSheetSample implements WithHeadings, WithStyles, FromArray
             [
                 'Product Name',
                 'Bucket',
-                
-    
             ];
     }
 
@@ -27,12 +25,8 @@ class ExportProductSheetSample implements WithHeadings, WithStyles, FromArray
     {
         return [
             [
-
                 'Test Product Name',     
                 'Test Bucket Name',
-              
-    
-
             ],
         ];
     }

@@ -255,22 +255,14 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-    // Route::get('export-audit_checksheet-sheet', 'QmSheetController@exportQmSheet')->name('exportQmSheet');
-    // Route::get('export-audit_checksheet-sample', 'QmSheetController@exportQmSample')->name('exportQmSample');
-    // Route::get('import-qm_checksheet', 'QmSheetController@uploadQmSheet')->name('importQmSheet');
-    // Route::post('importQmCheckSheet', 'QmSheetController@qmSheetImport')->name('importQmCheckSheet');
-
-
-
-
-
-
     // ProductattributeController
     Route::resource('productattribute', 'ProductattributeController');
     // Route::delete('/productattribute/{id}', 'ProductattributeController@destroy')->name('productattribute.destroy');
 
     Route::get('export-product_attribute-sheet', 'ProductattributeController@exportProductAttribute')->name('exportProductAttribute');
-
+    Route::get('export-productAttribute-sample', 'ProductattributeController@exportProductAttributeSample')->name('exportProductAttributeSample');
+    Route::get('import-productAttribute-sheet', 'ProductattributeController@uploadProductAttributeSheet')->name('importProductAttributeSheet');
+    Route::post('importProductAttributeList', 'ProductattributeController@importProductAttribute')->name('importProductAttributeList');
 
     Route::get('/get-regions', 'BranchController@getRegions');
     Route::get('/getStates/{id}', 'BranchController@getStates');
