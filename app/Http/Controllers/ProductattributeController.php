@@ -184,7 +184,7 @@ public function importProductAttribute(Request $request)
 
             session()->flash(
                 'warning',
-                'No new product attributes found. Duplicate attributes were skipped.'
+                'No new product attributes found. D uplicate attributes were skipped.'
             );
         }
 
