@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Model\Products;
 use App\Model\Productattribute;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ImportProductAttributeSheet implements ToCollection, WithHeadingRow
@@ -18,7 +18,7 @@ class ImportProductAttributeSheet implements ToCollection, WithHeadingRow
 
 public function collection(Collection $rows)
 {
-    $clientId = Auth::user()->client_id;
+    // $clientId = Auth::user()->client_id;
 
     // Get unique product names from Excel
     $productNames = $rows->pluck('product_name')
@@ -56,13 +56,13 @@ public function collection(Collection $rows)
 
             if ($productName === '' || $attributeName === '') {
                 continue;
-            }
+            } 
 
             $product = $products->get(strtolower($productName));
 
-            $normalizedAttribute = strtolower($attributeName);
+            $productAttribute = strtolower($attributeName);
 
-            $uniqueKey = $product->id . '_' . $normalizedAttribute;
+            $uniqueKey = $product->id . '_' . $productAttribute;
 
             if (isset($processedAttributes[$uniqueKey])) {
                 continue;
@@ -74,7 +74,7 @@ public function collection(Collection $rows)
                 ->where('product_id', $product->id)
                 ->whereRaw(
                     'LOWER(TRIM(product_attribute_name)) = ?',
-                    [$normalizedAttribute]
+                    [$productAttribute]
                 )
                 ->exists();
 
@@ -85,7 +85,6 @@ public function collection(Collection $rows)
             Productattribute::create([
                 'product_id' => $product->id,
                 'product_attribute_name' => ucwords($attributeName),
-                'type' => 0,
             ]);
 
             $this->hasImportedAttributes = true;
