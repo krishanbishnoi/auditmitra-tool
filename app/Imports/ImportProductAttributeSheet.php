@@ -28,9 +28,8 @@ public function collection(Collection $rows)
         ->values();
 
     // Fetch existing products
-    $products = Products::where('client_id', $clientId)
-        ->get()
-        ->keyBy(fn($product) => strtolower(trim($product->name)));
+     $products = Products::all()
+    ->keyBy(fn($product) => strtolower(trim($product->name)));
 
     // First check whether all products exist
     foreach ($productNames as $productName) {
@@ -43,10 +42,10 @@ public function collection(Collection $rows)
     // If any product is missing, stop the import
     if (!empty($this->newProduct)) {
         return;
-    }
+    } 
 
     // All products exist, now import attributes
-    DB::transaction(function () use ($rows, $products, $clientId) {
+    DB::transaction(function () use ($rows, $products)  {
 
         $processedAttributes = [];
 
@@ -71,7 +70,7 @@ public function collection(Collection $rows)
 
             $processedAttributes[$uniqueKey] = true;
 
-            $exists = Productattribute::where('client_id', $clientId)
+           $exists = Productattribute::where('product_id', $product->id)
                 ->where('product_id', $product->id)
                 ->whereRaw(
                     'LOWER(TRIM(product_attribute_name)) = ?',
@@ -87,7 +86,6 @@ public function collection(Collection $rows)
                 'product_id' => $product->id,
                 'product_attribute_name' => ucwords($attributeName),
                 'type' => 0,
-                'client_id' => $clientId,
             ]);
 
             $this->hasImportedAttributes = true;

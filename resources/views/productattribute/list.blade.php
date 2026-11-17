@@ -47,7 +47,7 @@
                         <div class="d-flex align-items-center">
 
                             <a href="{{ route('importProductAttributeSheet') }}"
-                                class="btn btn-primary btn-sm mr-2" >
+                                class="btn btn-primary btn-sm mr-2">
                                 Import Product Attribute List
                             </a>
 
